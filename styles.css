@@ -196,8 +196,11 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
 @media (max-width: 600px) {
   .name-full { display: none; }
   .name-short { display: inline; }
-  .rankings-table th, .rankings-table td { padding: 7px 4px; }
+  .rankings-table { font-size: .78rem; }
+  .rankings-table th, .rankings-table td { padding: 6px 3px; }
   .rankings-table th { white-space: normal; }
+  .rankings-table th:first-child, .rankings-table td.pos-col { display: none; }
+  .rankings-table td.sched-col .rank { display: block; }
 }
 
 .chip {

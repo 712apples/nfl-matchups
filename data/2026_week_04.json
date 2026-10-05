@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 4,
  "stats_through_week": 3,
- "generated_at": "2026-10-05T17:51:32-04:00",
+ "generated_at": "2026-10-05T18:47:08-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -2796,6 +2796,264 @@
    "luck_gap": -0.0479
   }
  },
+ "schedule": {
+  "ARI": {
+   "off_sos": 0.1431,
+   "def_sos": 0.0714,
+   "sos": 0.2145,
+   "off_sos_rank": 3,
+   "def_sos_rank": 9,
+   "sos_rank": 5
+  },
+  "ATL": {
+   "off_sos": -0.0749,
+   "def_sos": -0.1525,
+   "sos": -0.2274,
+   "off_sos_rank": 28,
+   "def_sos_rank": 30,
+   "sos_rank": 32
+  },
+  "BAL": {
+   "off_sos": -0.103,
+   "def_sos": 0.062,
+   "sos": -0.041,
+   "off_sos_rank": 31,
+   "def_sos_rank": 11,
+   "sos_rank": 18
+  },
+  "BUF": {
+   "off_sos": 0.0931,
+   "def_sos": -0.1806,
+   "sos": -0.0875,
+   "off_sos_rank": 5,
+   "def_sos_rank": 31,
+   "sos_rank": 22
+  },
+  "CAR": {
+   "off_sos": -0.0212,
+   "def_sos": -0.0973,
+   "sos": -0.1185,
+   "off_sos_rank": 17,
+   "def_sos_rank": 27,
+   "sos_rank": 24
+  },
+  "CHI": {
+   "off_sos": -0.0496,
+   "def_sos": -0.0944,
+   "sos": -0.144,
+   "off_sos_rank": 23,
+   "def_sos_rank": 26,
+   "sos_rank": 26
+  },
+  "CIN": {
+   "off_sos": 0.0597,
+   "def_sos": -0.2515,
+   "sos": -0.1919,
+   "off_sos_rank": 10,
+   "def_sos_rank": 32,
+   "sos_rank": 31
+  },
+  "CLE": {
+   "off_sos": -0.0144,
+   "def_sos": -0.0513,
+   "sos": -0.0657,
+   "off_sos_rank": 15,
+   "def_sos_rank": 21,
+   "sos_rank": 20
+  },
+  "DAL": {
+   "off_sos": -0.0035,
+   "def_sos": -0.002,
+   "sos": -0.0055,
+   "off_sos_rank": 13,
+   "def_sos_rank": 15,
+   "sos_rank": 13
+  },
+  "DEN": {
+   "off_sos": 0.2229,
+   "def_sos": 0.136,
+   "sos": 0.3589,
+   "off_sos_rank": 1,
+   "def_sos_rank": 5,
+   "sos_rank": 1
+  },
+  "DET": {
+   "off_sos": -0.0446,
+   "def_sos": 0.0683,
+   "sos": 0.0238,
+   "off_sos_rank": 22,
+   "def_sos_rank": 10,
+   "sos_rank": 12
+  },
+  "GB": {
+   "off_sos": -0.0073,
+   "def_sos": -0.1412,
+   "sos": -0.1485,
+   "off_sos_rank": 14,
+   "def_sos_rank": 29,
+   "sos_rank": 27
+  },
+  "HOU": {
+   "off_sos": -0.1822,
+   "def_sos": 0.1398,
+   "sos": -0.0424,
+   "off_sos_rank": 32,
+   "def_sos_rank": 4,
+   "sos_rank": 19
+  },
+  "IND": {
+   "off_sos": 0.097,
+   "def_sos": -0.0044,
+   "sos": 0.0926,
+   "off_sos_rank": 4,
+   "def_sos_rank": 16,
+   "sos_rank": 10
+  },
+  "JAX": {
+   "off_sos": 0.06,
+   "def_sos": 0.1004,
+   "sos": 0.1603,
+   "off_sos_rank": 9,
+   "def_sos_rank": 7,
+   "sos_rank": 6
+  },
+  "KC": {
+   "off_sos": -0.0663,
+   "def_sos": 0.0546,
+   "sos": -0.0117,
+   "off_sos_rank": 25,
+   "def_sos_rank": 13,
+   "sos_rank": 14
+  },
+  "LA": {
+   "off_sos": 0.0733,
+   "def_sos": 0.2144,
+   "sos": 0.2876,
+   "off_sos_rank": 8,
+   "def_sos_rank": 1,
+   "sos_rank": 2
+  },
+  "LAC": {
+   "off_sos": -0.0654,
+   "def_sos": 0.2087,
+   "sos": 0.1433,
+   "off_sos_rank": 24,
+   "def_sos_rank": 2,
+   "sos_rank": 7
+  },
+  "LV": {
+   "off_sos": 0.0432,
+   "def_sos": -0.077,
+   "sos": -0.0338,
+   "off_sos_rank": 11,
+   "def_sos_rank": 23,
+   "sos_rank": 16
+  },
+  "MIA": {
+   "off_sos": 0.0741,
+   "def_sos": 0.1956,
+   "sos": 0.2698,
+   "off_sos_rank": 7,
+   "def_sos_rank": 3,
+   "sos_rank": 3
+  },
+  "MIN": {
+   "off_sos": -0.0248,
+   "def_sos": -0.1299,
+   "sos": -0.1547,
+   "off_sos_rank": 18,
+   "def_sos_rank": 28,
+   "sos_rank": 29
+  },
+  "NE": {
+   "off_sos": 0.1733,
+   "def_sos": -0.033,
+   "sos": 0.1403,
+   "off_sos_rank": 2,
+   "def_sos_rank": 19,
+   "sos_rank": 8
+  },
+  "NO": {
+   "off_sos": 0.0203,
+   "def_sos": 0.0818,
+   "sos": 0.1022,
+   "off_sos_rank": 12,
+   "def_sos_rank": 8,
+   "sos_rank": 9
+  },
+  "NYG": {
+   "off_sos": -0.0404,
+   "def_sos": 0.0037,
+   "sos": -0.0367,
+   "off_sos_rank": 21,
+   "def_sos_rank": 14,
+   "sos_rank": 17
+  },
+  "NYJ": {
+   "off_sos": -0.0906,
+   "def_sos": -0.0858,
+   "sos": -0.1764,
+   "off_sos_rank": 30,
+   "def_sos_rank": 25,
+   "sos_rank": 30
+  },
+  "PHI": {
+   "off_sos": -0.0729,
+   "def_sos": -0.0591,
+   "sos": -0.132,
+   "off_sos_rank": 27,
+   "def_sos_rank": 22,
+   "sos_rank": 25
+  },
+  "PIT": {
+   "off_sos": -0.0827,
+   "def_sos": -0.0136,
+   "sos": -0.0963,
+   "off_sos_rank": 29,
+   "def_sos_rank": 18,
+   "sos_rank": 23
+  },
+  "SEA": {
+   "off_sos": -0.0278,
+   "def_sos": 0.061,
+   "sos": 0.0332,
+   "off_sos_rank": 19,
+   "def_sos_rank": 12,
+   "sos_rank": 11
+  },
+  "SF": {
+   "off_sos": 0.0819,
+   "def_sos": 0.1337,
+   "sos": 0.2156,
+   "off_sos_rank": 6,
+   "def_sos_rank": 6,
+   "sos_rank": 4
+  },
+  "TB": {
+   "off_sos": -0.0292,
+   "def_sos": -0.0441,
+   "sos": -0.0733,
+   "off_sos_rank": 20,
+   "def_sos_rank": 20,
+   "sos_rank": 21
+  },
+  "TEN": {
+   "off_sos": -0.0679,
+   "def_sos": -0.0838,
+   "sos": -0.1516,
+   "off_sos_rank": 26,
+   "def_sos_rank": 24,
+   "sos_rank": 28
+  },
+  "WAS": {
+   "off_sos": -0.0164,
+   "def_sos": -0.0135,
+   "sos": -0.0298,
+   "off_sos_rank": 16,
+   "def_sos_rank": 17,
+   "sos_rank": 15
+  }
+ },
  "games": [
   {
    "game_id": "2026_04_PIT_CLE",
@@ -3212,8 +3470,8 @@
    "home_team": "NO",
    "spread_line": 1.5,
    "total_line": 47.5,
-   "away_moneyline": 100.0,
-   "home_moneyline": -120.0,
+   "away_moneyline": 102.0,
+   "home_moneyline": -122.0,
    "roof": "dome",
    "away_rest": 11,
    "home_rest": 8,
@@ -3233,6 +3491,13 @@
      "total_line": 47.5,
      "away_moneyline": 100.0,
      "home_moneyline": -120.0
+    },
+    {
+     "time": "2026-10-05T18:47:08-04:00",
+     "spread_line": 1.5,
+     "total_line": 47.5,
+     "away_moneyline": 102.0,
+     "home_moneyline": -122.0
     }
    ]
   }

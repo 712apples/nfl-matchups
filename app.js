@@ -108,7 +108,10 @@ const RANKING_COLUMNS = [
   { key: 'off', label: 'Offense', bestHigh: true },
   { key: 'def', label: 'Defense (allowed)', bestHigh: false },
   { key: 'net', label: 'Net', bestHigh: true },
+  { key: 'sos', label: 'Schedule', short: 'SOS', bestHigh: true, needsSchedule: true },
 ];
+const SOS_MIN_WEEKS = 3;   // Matches SOS_MIN_WEEKS in nfl_team_stats.py
+const SOS_NOTE_TIER = 6;   // Mention a unit's schedule in the context card if it's this close to either end
 
 const state = {
   index: null,
@@ -185,6 +188,22 @@ function rankHtml(rank) {
   if (rank == null) return '<span class="rank">—</span>';
   const cls = rank <= TOP_TIER ? 'top' : rank >= BOTTOM_TIER ? 'bottom' : '';
   return `<span class="rank ${cls}">${ordinal(rank)}</span>`;
+}
+
+/**
+ * Describe a strength-of-schedule rank in plain words.
+ * @param {number|null} rank - Rank 1-32 (1 = toughest schedule), or null.
+ * @param {boolean} hyphen - True for "3rd-toughest" (before a noun), false for "3rd toughest".
+ * @returns {string} e.g. "3rd toughest", "toughest", or "5th easiest"; an em dash when missing.
+ */
+function scheduleText(rank, hyphen = false) {
+  if (rank == null) return '—';
+  const total = Object.keys(state.snapshot.teams).length;
+  const toughest = rank <= total / 2;
+  const n = toughest ? rank : total + 1 - rank;
+  const word = toughest ? 'toughest' : 'easiest';
+  if (n === 1) return word;
+  return `${ordinal(n)}${hyphen ? '-' : ' '}${word}`;
 }
 
 /**
@@ -806,7 +825,8 @@ function renderComposite(away, home, game) {
 }
 
 /**
- * Context: record vs Pythagorean expectation (luck gap), pace, rest, and roof.
+ * Context: record vs Pythagorean expectation (luck gap), pace, rest, roof,
+ * and strength of schedule.
  * @param {string} away - Away team abbreviation.
  * @param {string} home - Home team abbreviation.
  * @param {object|null} game - Scheduled game, or null for a custom matchup.
@@ -837,6 +857,17 @@ function renderContext(away, home, game) {
   ];
   if (game) rows.push(['Rest days', game.away_rest ?? '—', game.home_rest ?? '—']);
 
+  const schedule = state.snapshot.schedule || {};
+  const hasSchedule = Object.keys(schedule).length > 0;
+  const s = (abbr) => schedule[abbr] || {};
+  if (hasSchedule) {
+    rows.push(
+      ['Schedule faced (opponent strength)', scheduleText(s(away).sos_rank), scheduleText(s(home).sos_rank)],
+      ['Defenses its offense has faced', scheduleText(s(away).off_sos_rank), scheduleText(s(home).off_sos_rank)],
+      ['Offenses its defense has faced', scheduleText(s(away).def_sos_rank), scheduleText(s(home).def_sos_rank)],
+    );
+  }
+
   const roof = game ? (ROOF_LABELS[game.roof] || game.roof || 'Unknown') : null;
   let restNote = '';
   if (game && game.away_rest != null && game.home_rest != null && game.away_rest !== game.home_rest) {
@@ -852,7 +883,41 @@ function renderContext(away, home, game) {
       <tbody>${rows.map(([label, a, h]) => `<tr><td>${esc(label)}</td><td class="num">${a}</td><td class="num">${h}</td></tr>`).join('')}</tbody>
     </table></div>
     ${roof ? `<p class="explain"><strong>Roof:</strong> ${esc(roof)}.${esc(restNote)}</p>` : ''}
-    <p class="explain">Pythagorean win % is the record a team "should" have from its points scored and allowed. A big positive luck gap means it has won more than its scoring suggests (often close games) and may cool off; a big negative gap suggests it's better than its record.</p>`;
+    <p class="explain">Pythagorean win % is the record a team "should" have from its points scored and allowed. A big positive luck gap means it has won more than its scoring suggests (often close games) and may cool off; a big negative gap suggests it's better than its record.</p>
+    ${scheduleNotesHtml(away, home, schedule)}`;
+}
+
+/**
+ * Plain-English strength-of-schedule notes for the context card.
+ * Only units whose schedule is near either end (SOS_NOTE_TIER) get a note.
+ * @param {string} away - Away team abbreviation.
+ * @param {string} home - Home team abbreviation.
+ * @param {object} schedule - The snapshot's schedule table (may be empty).
+ * @returns {string} HTML paragraphs.
+ */
+function scheduleNotesHtml(away, home, schedule) {
+  if (!Object.keys(schedule).length) {
+    return `<p class="explain">Strength of schedule appears once teams have ${SOS_MIN_WEEKS} weeks of games.</p>`;
+  }
+  const total = Object.keys(state.snapshot.teams).length;
+  const notes = [];
+  [away, home].forEach((abbr) => {
+    const { nick } = team(abbr);
+    const offRank = schedule[abbr]?.off_sos_rank;
+    const defRank = schedule[abbr]?.def_sos_rank;
+    if (offRank != null && offRank > total - SOS_NOTE_TIER) {
+      notes.push(`The ${nick} offense has faced the ${scheduleText(offRank, true)} set of defenses, so its numbers may be inflated.`);
+    } else if (offRank != null && offRank <= SOS_NOTE_TIER) {
+      notes.push(`The ${nick} offense has faced the ${scheduleText(offRank, true)} set of defenses, so it may be better than its numbers show.`);
+    }
+    if (defRank != null && defRank > total - SOS_NOTE_TIER) {
+      notes.push(`The ${nick} defense has faced the ${scheduleText(defRank, true)} set of offenses, so its numbers may be inflated.`);
+    } else if (defRank != null && defRank <= SOS_NOTE_TIER) {
+      notes.push(`The ${nick} defense has faced the ${scheduleText(defRank, true)} set of offenses, so it may be better than its numbers show.`);
+    }
+  });
+  return `${notes.length ? `<p class="explain"><strong>Schedule check:</strong> ${esc(notes.join(' '))}</p>` : ''}
+    <p class="explain">Strength of schedule is background only. In a 2017–2025 test, adjusting EPA for opponents didn't predict games any better, so the stats on this page are not adjusted for it.</p>`;
 }
 
 /**
@@ -906,12 +971,17 @@ function matchupTableHtml(off, def) {
 }
 
 /**
- * League rankings: every team's offense, defense, and net EPA per play in a
- * sortable table, with the selected matchup's two teams highlighted.
+ * League rankings: every team's offense, defense, and net EPA per play (plus
+ * strength of schedule once available) in a sortable table, with the selected
+ * matchup's two teams highlighted.
  * @returns {void}
  */
 function renderRankings() {
   const { offense, defense, teams } = state.snapshot;
+  const schedule = state.snapshot.schedule || {};
+  const hasSchedule = Object.keys(schedule).length > 0;
+  const columns = RANKING_COLUMNS.filter((c) => hasSchedule || !c.needsSchedule);
+  if (!columns.some((c) => c.key === state.sort.key)) state.sort = { key: 'off', bestFirst: true };
   const { away, home } = currentSelection();
 
   const rows = Object.keys(teams).map((abbr) => {
@@ -924,6 +994,10 @@ function renderRankings() {
       net: off == null || def == null ? null : off - def,
       offRank: offense[abbr]?.epa_per_play_rank ?? null,
       defRank: defense[abbr]?.epa_per_play_rank ?? null,
+      sos: schedule[abbr]?.sos ?? null,
+      sosRank: schedule[abbr]?.sos_rank ?? null,
+      offSosRank: schedule[abbr]?.off_sos_rank ?? null,
+      defSosRank: schedule[abbr]?.def_sos_rank ?? null,
     };
   });
 
@@ -931,7 +1005,7 @@ function renderRankings() {
   netOrder.forEach((r, i) => { r.netRank = i + 1; });
 
   const { key, bestFirst } = state.sort;
-  const column = RANKING_COLUMNS.find((c) => c.key === key);
+  const column = columns.find((c) => c.key === key);
   const highFirst = column.bestHigh === bestFirst;
   rows.sort((a, b) => {
     if (a[key] == null) return 1;
@@ -939,10 +1013,13 @@ function renderRankings() {
     return highFirst ? b[key] - a[key] : a[key] - b[key];
   });
 
-  const header = RANKING_COLUMNS.map((c) => {
+  const header = columns.map((c) => {
     const active = c.key === key;
     const arrow = active ? (highFirst ? ' ▼' : ' ▲') : '';
-    return `<th class="num"><button type="button" class="sort-btn${active ? ' active' : ''}" data-sort="${c.key}">${esc(c.label)}${arrow}</button></th>`;
+    const label = c.short
+      ? `<span class="name-full">${esc(c.label)}</span><span class="name-short">${esc(c.short)}</span>`
+      : esc(c.label);
+    return `<th class="num"><button type="button" class="sort-btn${active ? ' active' : ''}" data-sort="${c.key}">${label}${arrow}</button></th>`;
   }).join('');
 
   const body = rows.map((r, i) => `
@@ -953,7 +1030,16 @@ function renderRankings() {
       <td class="num">${fmtStat(r.off, 'epa')}<br>${rankHtml(r.offRank)}</td>
       <td class="num">${fmtStat(r.def, 'epa')}<br>${rankHtml(r.defRank)}</td>
       <td class="num">${fmtStat(r.net, 'epa')}<br>${rankHtml(r.netRank ?? null)}</td>
+      ${hasSchedule ? `<td class="num sched-col">
+        <span class="name-full">${esc(scheduleText(r.sosRank))}</span><span class="name-short">${r.sosRank == null ? '—' : ordinal(r.sosRank)}</span><br>
+        <span class="rank">O&nbsp;${r.offSosRank ?? '—'}</span> <span class="rank">D&nbsp;${r.defSosRank ?? '—'}</span></td>` : ''}
     </tr>`).join('');
+
+  const scheduleMeta = hasSchedule
+    ? `<p class="meta">Schedule (SOS, strength of schedule): how tough each team's opponents have been (1st = toughest), adjusted for who those
+      opponents played. The small line ranks the defenses its offense has faced (O) and the offenses its defense
+      has faced (D), also 1 = toughest. It's background only; the EPA numbers are not adjusted for it.</p>`
+    : `<p class="meta">Strength of schedule appears once teams have ${SOS_MIN_WEEKS} weeks of games.</p>`;
 
   const view = $('rankings-view');
   view.innerHTML = `
@@ -961,6 +1047,7 @@ function renderRankings() {
     <p class="meta">Offense: higher is better. Defense: lower allowed is better. Net (offense minus defense allowed)
       is a quick overall strength measure. Tap a column header to re-sort; tap it again to reverse.
       Highlighted rows are the teams in your selected matchup.</p>
+    ${scheduleMeta}
     <div class="table-scroll"><table class="rankings-table">
       <thead><tr><th>#</th><th>Team</th>${header}</tr></thead>
       <tbody>${body}</tbody>
@@ -992,6 +1079,10 @@ function renderGlossary() {
       dominate.</p>
     <p><strong>Snapshots:</strong> each week uses only stats from earlier weeks, so past weeks show what the numbers
       said before kickoff. Hover over or long-press a row to see what the stat means.</p>
+    <p><strong>Strength of schedule:</strong> how good a team's opponents have been, measured by their EPA per play
+      after adjusting for who <em>they</em> played. "Defenses its offense has faced" is about the offense's opponents;
+      "Offenses its defense has faced" is about the defense's. It's shown for context only and appears after
+      ${SOS_MIN_WEEKS} weeks.</p>
     <dl>${STATS.map((s) => `<dt>${esc(s.label)}</dt><dd>${esc(s.help)}</dd>`).join('')}</dl>`;
 }
 
