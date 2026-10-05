@@ -10,7 +10,10 @@
  *   context (Pythagorean record, pace, rest, roof), and two stat-by-stat
  *   tables (away offense vs home defense, home offense vs away defense).
  *   A separate "League rankings" view lists every team's offense, defense,
- *   and net EPA per play in a sortable table.
+ *   and net EPA per play (plus strength of schedule) in a sortable table.
+ *   A Raw / Opponent-adjusted toggle switches the stat tables and rankings
+ *   to stats adjusted for the opponents each team has faced; the composite
+ *   box always shows both. The game script always uses raw stats.
  *
  *   Ranks in the data always mean "1 = best for that side": for a defense,
  *   best means allowed the least, except sacks, QB hits, and turnovers, where
@@ -119,6 +122,7 @@ const state = {
   view: 'matchup',
   mode: 'game',
   gameId: null,
+  stats: 'raw',
   sort: { key: 'off', bestFirst: true },
 };
 
@@ -419,6 +423,58 @@ async function loadWeek(week) {
   state.snapshot = await fetchJson(`data/${entry.file}`);
   fillGameAndTeamSelects();
   renderHeader();
+  updateStatsToggle();
+  render();
+}
+
+/**
+ * Whether this week's snapshot has opponent-adjusted stats (they start after SOS_MIN_WEEKS weeks).
+ * @returns {boolean}
+ */
+function hasAdjusted() {
+  return Object.keys(state.snapshot.offense_adj || {}).length > 0;
+}
+
+/**
+ * The offense and defense tables the stat tables and rankings should use,
+ * based on the Raw / Opponent-adjusted toggle.
+ * @returns {{offense: object, defense: object, adjusted: boolean}}
+ */
+function statTables() {
+  const snap = state.snapshot;
+  return state.stats === 'adj' && hasAdjusted()
+    ? { offense: snap.offense_adj, defense: snap.defense_adj, adjusted: true }
+    : { offense: snap.offense, defense: snap.defense, adjusted: false };
+}
+
+/**
+ * Sync the Raw / Opponent-adjusted buttons and hint with the current week.
+ * The adjusted button is disabled for weeks that don't have adjusted stats yet;
+ * the user's choice is kept so it comes back on later weeks.
+ * @returns {void}
+ */
+function updateStatsToggle() {
+  const available = hasAdjusted();
+  const shown = available ? state.stats : 'raw';
+  document.querySelectorAll('#stats-toggle button').forEach((b) => {
+    b.classList.toggle('active', b.dataset.stats === shown);
+    if (b.dataset.stats === 'adj') b.disabled = !available;
+  });
+  let hint = '';
+  if (!available) hint = `Opponent-adjusted stats appear once teams have ${SOS_MIN_WEEKS} weeks of games.`;
+  else if (shown === 'adj') hint = 'Each stat is adjusted for the opponents faced. Shown for context: in testing, adjusted numbers predicted games slightly worse than raw. The game script and pace stay raw.';
+  $('stats-hint').textContent = hint;
+  $('stats-hint').classList.toggle('hidden', !hint);
+}
+
+/**
+ * Switch the stat tables and rankings between raw and opponent-adjusted stats.
+ * @param {string} stats - "raw" or "adj".
+ * @returns {void}
+ */
+function setStats(stats) {
+  state.stats = stats;
+  updateStatsToggle();
   render();
 }
 
@@ -657,7 +713,8 @@ function renderGameScript(away, home, game) {
       each game. <span class="chip lean">Lean</span> calls were right about 6 times in 10 and
       <span class="chip strong">Strong</span> calls about 7 in 10. Third downs, red zone, and turnovers are left out
       because they're mostly luck from game to game. The test blended in last season's stats during the first six
-      weeks; this page uses this season only, so treat early-season calls as less certain than these percentages.</p>`;
+      weeks; this page uses this season only, so treat early-season calls as less certain than these percentages.</p>
+    ${statTables().adjusted ? '<p class="explain">The game script always uses raw stats, because its percentages were tested on them.</p>' : ''}`;
 }
 
 /**
@@ -778,50 +835,97 @@ function lineMovementHtml(game) {
 }
 
 /**
- * Composite projection: average of offense EPA/play and opposing defense EPA/play allowed.
+ * Calculate both offenses' composites (average of offense EPA/play and
+ * opposing defense EPA/play allowed) from one pair of offense/defense tables.
+ * @param {string} away - Away team abbreviation.
+ * @param {string} home - Home team abbreviation.
+ * @param {object} offense - Offense table (raw or opponent-adjusted).
+ * @param {object} defense - Defense table (raw or opponent-adjusted).
+ * @returns {object} { sides: [away side, home side], better, diff } where each
+ *   side has off, def, o, d, oRank, dRank, value; better is the side with the
+ *   higher composite and diff is home minus away (null if data is missing).
+ */
+function compositeSides(away, home, offense, defense) {
+  const sides = [[away, home], [home, away]].map(([off, def]) => {
+    const o = offense[off]?.epa_per_play;
+    const d = defense[def]?.epa_per_play;
+    return {
+      off, def, o, d,
+      oRank: offense[off]?.epa_per_play_rank ?? null,
+      dRank: defense[def]?.epa_per_play_rank ?? null,
+      value: o == null || d == null ? null : (o + d) / 2,
+    };
+  });
+  const [a, h] = sides;
+  if (a.value == null || h.value == null) return { sides, better: null, diff: null };
+  const diff = h.value - a.value;
+  return { sides, better: diff > 0 ? h : a, diff };
+}
+
+/**
+ * Composite projection, raw and opponent-adjusted side by side.
  * @param {string} away - Away team abbreviation.
  * @param {string} home - Home team abbreviation.
  * @param {object|null} game - Scheduled game (used to compare with a final score).
  * @returns {void}
  */
 function renderComposite(away, home, game) {
-  const { offense, defense } = state.snapshot;
-  const sides = [[away, home], [home, away]].map(([off, def]) => {
-    const o = offense[off]?.epa_per_play;
-    const d = defense[def]?.epa_per_play;
-    return { off, def, o, d, value: o == null || d == null ? null : (o + d) / 2 };
-  });
+  const snap = state.snapshot;
+  const raw = compositeSides(away, home, snap.offense, snap.defense);
+  const adj = hasAdjusted() ? compositeSides(away, home, snap.offense_adj, snap.defense_adj) : null;
 
-  const tiles = sides.map((s) => `
+  const valueHtml = (value) => `<span class="${value > 0 ? 'pos' : value < 0 ? 'neg' : ''}">${value == null ? '—' : signed(value, 3)}</span>`;
+  const detailHtml = (s) => `${esc(s.off)} offense ${fmtStat(s.o, 'epa')} (${s.oRank == null ? '—' : ordinal(s.oRank)}) ·
+    ${esc(s.def)} defense allows ${fmtStat(s.d, 'epa')} (${s.dRank == null ? '—' : ordinal(s.dRank)})`;
+
+  const tiles = raw.sides.map((s, i) => {
+    const a = adj?.sides[i];
+    return `
     <div class="tile">
       <div class="label">${esc(team(s.off).nick)} offense vs ${esc(team(s.def).nick)} defense</div>
-      <div class="value ${s.value > 0 ? 'pos' : s.value < 0 ? 'neg' : ''}">${s.value == null ? '—' : signed(s.value, 3)} EPA/play</div>
-      <div class="detail">${esc(s.off)} offense ${fmtStat(s.o, 'epa')} (${ordinal(offense[s.off]?.epa_per_play_rank ?? 0)}) ·
-        ${esc(s.def)} defense allows ${fmtStat(s.d, 'epa')} (${ordinal(defense[s.def]?.epa_per_play_rank ?? 0)})</div>
-    </div>`).join('');
+      <div class="value">${valueHtml(s.value)} <span class="unit">EPA/play</span></div>
+      <div class="detail">Raw: ${detailHtml(s)}</div>
+      ${a ? `<div class="adj-row"><span class="adj-label">Opponent-adjusted</span> <strong>${valueHtml(a.value)}</strong></div>
+      <div class="detail">${detailHtml(a)}</div>` : ''}
+    </div>`;
+  }).join('');
+
+  const winner = game && isFinal(game)
+    ? (game.home_score > game.away_score ? home : game.home_score < game.away_score ? away : 'tie')
+    : null;
+  const matchText = (better) => {
+    if (!winner) return '';
+    if (winner === 'tie') return ' Result: tie.';
+    return ` Result: the ${team(winner).nick} won${winner === better.off ? ', matching it' : ', against it'}.`;
+  };
 
   let verdict = '';
-  const [a, h] = sides;
-  if (a.value != null && h.value != null) {
-    const diff = h.value - a.value;
-    const better = diff > 0 ? h : a;
-    verdict = Math.abs(diff) < 0.005
+  if (raw.better) {
+    verdict = Math.abs(raw.diff) < 0.005
       ? 'The two offenses project about the same in this matchup.'
-      : `The ${team(better.off).nick}' offense has the stronger matchup by ${Math.abs(diff).toFixed(3)} EPA per play.`;
-    if (game && isFinal(game)) {
-      const margin = game.home_score - game.away_score;
-      const winner = margin > 0 ? home : margin < 0 ? away : null;
-      verdict += winner
-        ? ` Result: the ${team(winner).nick} won${winner === better.off ? ', matching the composite' : ', against the composite'}.`
-        : ' Result: tie.';
-    }
+      : `The ${team(raw.better.off).nick}' offense has the stronger matchup by ${Math.abs(raw.diff).toFixed(3)} EPA per play.`;
+    verdict += matchText(raw.better);
   }
+
+  let adjVerdict = '';
+  if (adj?.better && raw.better) {
+    const nick = team(adj.better.off).nick;
+    const size = Math.abs(adj.diff).toFixed(3);
+    if (Math.abs(adj.diff) < 0.005) adjVerdict = 'Adjusted for opponents, the two offenses project about the same.';
+    else if (adj.better.off === raw.better.off) adjVerdict = `Adjusted for opponents, the ${nick}' offense still has the edge, by ${size}.`;
+    else adjVerdict = `Adjusted for opponents, the edge flips to the ${nick}' offense, by ${size}.`;
+    if (Math.abs(adj.diff) >= 0.005 && adj.better.off !== raw.better.off) adjVerdict += matchText(adj.better);
+  }
+
+  const adjNote = adj
+    ? 'The opponent-adjusted numbers give each team credit or blame for who it has played. They\'re shown for context: in a 2017–2025 test they picked winners slightly less often than the raw numbers.'
+    : `Opponent-adjusted numbers appear once teams have ${SOS_MIN_WEEKS} weeks of games.`;
 
   $('composite-card').innerHTML = `
     <h2>Composite matchup</h2>
     <div class="tiles">${tiles}</div>
-    <p class="explain"><strong>${esc(verdict)}</strong></p>
-    <p class="explain">Each number averages how well the offense has moved the ball (EPA per play) with how much the opposing defense usually gives up, so a higher number means that offense should have an easier time.</p>`;
+    <p class="explain"><strong>${esc(verdict)}</strong>${adjVerdict ? `<br>${esc(adjVerdict)}` : ''}</p>
+    <p class="explain">Each number averages how well the offense has moved the ball (EPA per play) with how much the opposing defense usually gives up, so a higher number means that offense should have an easier time. ${esc(adjNote)}</p>`;
 }
 
 /**
@@ -917,7 +1021,7 @@ function scheduleNotesHtml(away, home, schedule) {
     }
   });
   return `${notes.length ? `<p class="explain"><strong>Schedule check:</strong> ${esc(notes.join(' '))}</p>` : ''}
-    <p class="explain">Strength of schedule is background only. In a 2017–2025 test, adjusting EPA for opponents didn't predict games any better, so the stats on this page are not adjusted for it.</p>`;
+    <p class="explain">The stat tables show raw numbers unless you switch Stats to Opponent-adjusted. In a 2017–2025 test, adjusting for opponents didn't predict games any better, so raw is the default.</p>`;
 }
 
 /**
@@ -927,8 +1031,9 @@ function scheduleNotesHtml(away, home, schedule) {
  * @returns {string} HTML for the card contents.
  */
 function matchupTableHtml(off, def) {
-  const o = state.snapshot.offense[off] || {};
-  const d = state.snapshot.defense[def] || {};
+  const { offense, defense, adjusted } = statTables();
+  const o = offense[off] || {};
+  const d = defense[def] || {};
   let offEdges = 0;
   let defEdges = 0;
   let bigEdges = 0;
@@ -958,7 +1063,7 @@ function matchupTableHtml(off, def) {
 
   return `
     <h2>${teamBadge(off, false)} offense vs ${teamBadge(def, false)} defense</h2>
-    <p class="meta">${esc(team(off).nick)} offense has the better rank in ${offEdges} of ${STATS.length} stats, ${esc(team(def).nick)} defense in ${defEdges}. Big edges (${BIG_EDGE_GAP}+ spots): ${bigEdges}.</p>
+    <p class="meta">${adjusted ? '<strong>Opponent-adjusted stats.</strong> ' : ''}${esc(team(off).nick)} offense has the better rank in ${offEdges} of ${STATS.length} stats, ${esc(team(def).nick)} defense in ${defEdges}. Big edges (${BIG_EDGE_GAP}+ spots): ${bigEdges}.</p>
     <div class="table-scroll"><table>
       <thead><tr><th>Stat</th><th class="num">${esc(off)} offense</th><th class="num">${esc(def)} defense (allowed)</th><th>Edge</th></tr></thead>
       <tbody>${rows}</tbody>
@@ -977,7 +1082,8 @@ function matchupTableHtml(off, def) {
  * @returns {void}
  */
 function renderRankings() {
-  const { offense, defense, teams } = state.snapshot;
+  const { teams } = state.snapshot;
+  const { offense, defense, adjusted } = statTables();
   const schedule = state.snapshot.schedule || {};
   const hasSchedule = Object.keys(schedule).length > 0;
   const columns = RANKING_COLUMNS.filter((c) => hasSchedule || !c.needsSchedule);
@@ -1038,12 +1144,12 @@ function renderRankings() {
   const scheduleMeta = hasSchedule
     ? `<p class="meta">Schedule (SOS, strength of schedule): how tough each team's opponents have been (1st = toughest), adjusted for who those
       opponents played. The small line ranks the defenses its offense has faced (O) and the offenses its defense
-      has faced (D), also 1 = toughest. It's background only; the EPA numbers are not adjusted for it.</p>`
+      has faced (D), also 1 = toughest. Switch Stats to Opponent-adjusted above to see EPA adjusted for it.</p>`
     : `<p class="meta">Strength of schedule appears once teams have ${SOS_MIN_WEEKS} weeks of games.</p>`;
 
   const view = $('rankings-view');
   view.innerHTML = `
-    <h2>EPA per play, week ${state.snapshot.week} snapshot (stats through week ${state.snapshot.stats_through_week})</h2>
+    <h2>${adjusted ? 'Opponent-adjusted EPA' : 'EPA'} per play, week ${state.snapshot.week} snapshot (stats through week ${state.snapshot.stats_through_week})</h2>
     <p class="meta">Offense: higher is better. Defense: lower allowed is better. Net (offense minus defense allowed)
       is a quick overall strength measure. Tap a column header to re-sort; tap it again to reverse.
       Highlighted rows are the teams in your selected matchup.</p>
@@ -1081,8 +1187,12 @@ function renderGlossary() {
       said before kickoff. Hover over or long-press a row to see what the stat means.</p>
     <p><strong>Strength of schedule:</strong> how good a team's opponents have been, measured by their EPA per play
       after adjusting for who <em>they</em> played. "Defenses its offense has faced" is about the offense's opponents;
-      "Offenses its defense has faced" is about the defense's. It's shown for context only and appears after
-      ${SOS_MIN_WEEKS} weeks.</p>
+      "Offenses its defense has faced" is about the defense's. It appears after ${SOS_MIN_WEEKS} weeks.</p>
+    <p><strong>Raw vs opponent-adjusted:</strong> raw stats are exactly what each team has done. Opponent-adjusted
+      stats give credit for facing good opponents and take some away for facing weak ones (every team's rating is
+      worked out together, so opponents are adjusted too). Use the Stats toggle to switch the matchup tables and
+      league rankings. Raw is the default because, in a 2017–2025 test, adjusted numbers picked winners slightly less
+      often, especially early in the season. The game script, pace, and records always use raw numbers.</p>
     <dl>${STATS.map((s) => `<dt>${esc(s.label)}</dt><dd>${esc(s.help)}</dd>`).join('')}</dl>`;
 }
 
@@ -1161,6 +1271,7 @@ async function init() {
   });
   document.querySelectorAll('#mode-toggle button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
   document.querySelectorAll('#view-toggle button').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
+  document.querySelectorAll('#stats-toggle button').forEach((b) => b.addEventListener('click', () => setStats(b.dataset.stats)));
 }
 
 init();

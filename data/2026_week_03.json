@@ -3246,5 +3246,7 @@
    ]
   }
  ],
- "schedule": {}
+ "schedule": {},
+ "offense_adj": {},
+ "defense_adj": {}
 }

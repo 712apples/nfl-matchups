@@ -11,7 +11,9 @@
     with Lean/Strong confidence labels from a 2015-2025 backtest, plus pace,
     game flow, and fantasy angles. A "League rankings" view lists every team's offense,
     defense, and net EPA per play in a sortable table, with the selected
-    matchup's teams highlighted. Data comes from weekly JSON snapshots made by
+    matchup's teams highlighted. A Raw / Opponent-adjusted toggle switches the
+    stat tables and rankings to versions adjusted for the opponents each team
+    has faced; the composite box shows both. Data comes from weekly JSON snapshots made by
     nfl_team_stats.py. Each snapshot holds stats through the previous week,
     the week's games with betting lines, line movement, and final scores.
 
@@ -74,6 +76,15 @@
           <button type="button" data-mode="manual">Any two teams</button>
         </div>
       </div>
+    </div>
+
+    <div class="field" id="stats-field">
+      <label>Stats</label>
+      <div class="segmented" id="stats-toggle">
+        <button type="button" data-stats="raw" class="active">Raw</button>
+        <button type="button" data-stats="adj">Opponent-adjusted</button>
+      </div>
+      <p class="meta hidden" id="stats-hint"></p>
     </div>
 
     <div class="field" id="game-picker">

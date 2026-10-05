@@ -106,6 +106,8 @@ select:focus, button:focus-visible { outline: 2px solid var(--accent); border-co
   font-size: .9rem;
 }
 .segmented button.active { background: var(--accent); color: var(--bg); font-weight: 600; }
+.segmented button:disabled { opacity: .4; cursor: not-allowed; }
+#stats-hint { margin: 6px 0 0; font-size: .8rem; }
 
 .view-toggle { margin-bottom: 16px; }
 .view-toggle button { padding: 11px 10px; font-size: .95rem; }
@@ -157,6 +159,9 @@ select:focus, button:focus-visible { outline: 2px solid var(--accent); border-co
 .tile .label { color: var(--muted); font-size: .78rem; }
 .tile .value { font-size: 1.2rem; font-weight: 600; margin: 2px 0; font-variant-numeric: tabular-nums; }
 .tile .detail { color: var(--muted); font-size: .78rem; }
+.tile .unit { font-size: .8rem; font-weight: 400; color: var(--muted); }
+.tile .adj-row { margin-top: 8px; padding-top: 6px; border-top: 1px solid var(--border); font-size: .95rem; }
+.tile .adj-label { color: var(--muted); font-size: .78rem; }
 
 .explain { color: var(--muted); font-size: .88rem; margin: 10px 0 0; }
 
