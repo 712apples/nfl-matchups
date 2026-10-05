@@ -107,6 +107,9 @@ select:focus, button:focus-visible { outline: 2px solid var(--accent); border-co
 }
 .segmented button.active { background: var(--accent); color: var(--bg); font-weight: 600; }
 
+.view-toggle { margin-bottom: 16px; }
+.view-toggle button { padding: 11px 10px; font-size: .95rem; }
+
 .hidden { display: none !important; }
 
 /* ---------- Alerts ---------- */
@@ -173,6 +176,29 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .matchups-grid { margin-bottom: 16px; }
 
 tr.big-edge td { background: rgba(56, 189, 248, .08); }
+
+/* ---------- League rankings ---------- */
+.sort-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+.sort-btn.active { color: var(--accent); font-weight: 600; }
+.rankings-table td.pos-col { color: var(--muted); width: 2.5em; }
+.rankings-table tr.selected td { background: rgba(56, 189, 248, .14); }
+.rankings-table tr.selected td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
+.name-short { display: none; }
+@media (max-width: 600px) {
+  .name-full { display: none; }
+  .name-short { display: inline; }
+  .rankings-table th, .rankings-table td { padding: 7px 4px; }
+  .rankings-table th { white-space: normal; }
+}
 
 .chip {
   display: inline-block;

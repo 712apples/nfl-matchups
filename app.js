@@ -7,6 +7,8 @@
  *   lines and line movement, a composite EPA projection for each offense,
  *   context (Pythagorean record, pace, rest, roof), and two stat-by-stat
  *   tables (away offense vs home defense, home offense vs away defense).
+ *   A separate "League rankings" view lists every team's offense, defense,
+ *   and net EPA per play in a sortable table.
  *
  *   Ranks in the data always mean "1 = best for that side": for a defense,
  *   best means allowed the least, except sacks, QB hits, and turnovers, where
@@ -60,7 +62,21 @@ const ROOF_LABELS = {
   open: 'Retractable roof (open)',
 };
 
-const state = { index: null, snapshot: null, mode: 'game', gameId: null };
+// League rankings columns. bestHigh = true means a higher number is better.
+const RANKING_COLUMNS = [
+  { key: 'off', label: 'Offense', bestHigh: true },
+  { key: 'def', label: 'Defense (allowed)', bestHigh: false },
+  { key: 'net', label: 'Net', bestHigh: true },
+];
+
+const state = {
+  index: null,
+  snapshot: null,
+  view: 'matchup',
+  mode: 'game',
+  gameId: null,
+  sort: { key: 'off', bestFirst: true },
+};
 
 const $ = (id) => document.getElementById(id);
 
@@ -373,6 +389,11 @@ function renderHeader() {
  */
 function render() {
   const errorBox = $('error-box');
+  if (state.view === 'rankings') {
+    errorBox.classList.add('hidden');
+    renderRankings();
+    return;
+  }
   const { away, home, game } = currentSelection();
   if (away === home) {
     errorBox.textContent = 'Pick two different teams.';
@@ -679,6 +700,76 @@ function matchupTableHtml(off, def) {
 }
 
 /**
+ * League rankings: every team's offense, defense, and net EPA per play in a
+ * sortable table, with the selected matchup's two teams highlighted.
+ * @returns {void}
+ */
+function renderRankings() {
+  const { offense, defense, teams } = state.snapshot;
+  const { away, home } = currentSelection();
+
+  const rows = Object.keys(teams).map((abbr) => {
+    const off = offense[abbr]?.epa_per_play ?? null;
+    const def = defense[abbr]?.epa_per_play ?? null;
+    return {
+      abbr,
+      off,
+      def,
+      net: off == null || def == null ? null : off - def,
+      offRank: offense[abbr]?.epa_per_play_rank ?? null,
+      defRank: defense[abbr]?.epa_per_play_rank ?? null,
+    };
+  });
+
+  const netOrder = rows.filter((r) => r.net != null).sort((a, b) => b.net - a.net);
+  netOrder.forEach((r, i) => { r.netRank = i + 1; });
+
+  const { key, bestFirst } = state.sort;
+  const column = RANKING_COLUMNS.find((c) => c.key === key);
+  const highFirst = column.bestHigh === bestFirst;
+  rows.sort((a, b) => {
+    if (a[key] == null) return 1;
+    if (b[key] == null) return -1;
+    return highFirst ? b[key] - a[key] : a[key] - b[key];
+  });
+
+  const header = RANKING_COLUMNS.map((c) => {
+    const active = c.key === key;
+    const arrow = active ? (highFirst ? ' ▼' : ' ▲') : '';
+    return `<th class="num"><button type="button" class="sort-btn${active ? ' active' : ''}" data-sort="${c.key}">${esc(c.label)}${arrow}</button></th>`;
+  }).join('');
+
+  const body = rows.map((r, i) => `
+    <tr class="${r.abbr === away || r.abbr === home ? 'selected' : ''}">
+      <td class="pos-col">${i + 1}</td>
+      <td><span class="team-badge"><span class="team-swatch" style="background:${esc(team(r.abbr).color)}"></span>
+        <span class="name-full">${esc(team(r.abbr).name)}</span><span class="name-short">${esc(team(r.abbr).nick)}</span></span></td>
+      <td class="num">${fmtStat(r.off, 'epa')}<br>${rankHtml(r.offRank)}</td>
+      <td class="num">${fmtStat(r.def, 'epa')}<br>${rankHtml(r.defRank)}</td>
+      <td class="num">${fmtStat(r.net, 'epa')}<br>${rankHtml(r.netRank ?? null)}</td>
+    </tr>`).join('');
+
+  const view = $('rankings-view');
+  view.innerHTML = `
+    <h2>EPA per play, week ${state.snapshot.week} snapshot (stats through week ${state.snapshot.stats_through_week})</h2>
+    <p class="meta">Offense: higher is better. Defense: lower allowed is better. Net (offense minus defense allowed)
+      is a quick overall strength measure. Tap a column header to re-sort; tap it again to reverse.
+      Highlighted rows are the teams in your selected matchup.</p>
+    <div class="table-scroll"><table class="rankings-table">
+      <thead><tr><th>#</th><th>Team</th>${header}</tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>`;
+
+  view.querySelectorAll('.sort-btn').forEach((btn) => btn.addEventListener('click', () => {
+    const clicked = btn.dataset.sort;
+    state.sort = clicked === state.sort.key
+      ? { key: clicked, bestFirst: !state.sort.bestFirst }
+      : { key: clicked, bestFirst: true };
+    renderRankings();
+  }));
+}
+
+/**
  * Fill the "How to read this page" section (only needs to run once).
  * @returns {void}
  */
@@ -723,6 +814,25 @@ function setMode(mode) {
 }
 
 /**
+ * Switch between the matchup view and the league rankings view.
+ * The week picker stays visible in both; the game/team pickers are hidden
+ * in rankings view, but the selection is kept for highlighting.
+ * @param {string} view - "matchup" or "rankings".
+ * @returns {void}
+ */
+function setView(view) {
+  state.view = view;
+  const rankings = view === 'rankings';
+  document.querySelectorAll('#view-toggle button').forEach((b) => b.classList.toggle('active', b.dataset.view === view));
+  $('mode-field').classList.toggle('hidden', rankings);
+  $('game-picker').classList.toggle('hidden', rankings || state.mode !== 'game');
+  $('team-picker').classList.toggle('hidden', rankings || state.mode !== 'manual');
+  $('matchup').classList.toggle('hidden', rankings);
+  $('rankings-view').classList.toggle('hidden', !rankings);
+  render();
+}
+
+/**
  * Load the week list, show the current week, and hook up the controls.
  * @returns {Promise<void>}
  */
@@ -753,6 +863,7 @@ async function init() {
     render();
   });
   document.querySelectorAll('#mode-toggle button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
+  document.querySelectorAll('#view-toggle button').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
 }
 
 init();

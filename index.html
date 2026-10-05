@@ -6,7 +6,9 @@
   Summary:
     Static web page (no server) that compares one team's offense against the
     other team's defense, stat by stat, for any game on the schedule or any two
-    teams you pick. Data comes from weekly JSON snapshots made by
+    teams you pick. A "League rankings" view lists every team's offense,
+    defense, and net EPA per play in a sortable table, with the selected
+    matchup's teams highlighted. Data comes from weekly JSON snapshots made by
     nfl_team_stats.py. Each snapshot holds stats through the previous week,
     the week's games with betting lines, line movement, and final scores.
 
@@ -51,13 +53,18 @@
 
   <div class="alert warn" id="sample-warning"></div>
 
+  <div class="segmented view-toggle" id="view-toggle">
+    <button type="button" data-view="matchup" class="active">Matchup</button>
+    <button type="button" data-view="rankings">League rankings</button>
+  </div>
+
   <section class="card controls">
     <div class="row2">
       <div class="field">
         <label for="week-select">Week</label>
         <select id="week-select"></select>
       </div>
-      <div class="field">
+      <div class="field" id="mode-field">
         <label>Pick by</label>
         <div class="segmented" id="mode-toggle">
           <button type="button" data-mode="game" class="active">Scheduled game</button>
@@ -87,6 +94,8 @@
   </section>
 
   <div id="error-box" class="alert error hidden"></div>
+
+  <section class="card hidden" id="rankings-view"></section>
 
   <main id="matchup" class="hidden">
     <section class="card" id="game-card"></section>
