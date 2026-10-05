@@ -1,0 +1,212 @@
+/*
+  NFL Matchup Analyzer - styles.
+
+  Summary:
+    Dark, mobile-first styling that matches the Parlay Hedge Calculator.
+    Two matchup tables sit side by side on wide screens and stack on phones.
+
+  Input files: None.
+  Output files: None.
+  Location: D:\OneDrive\Code\DFS_direct\NFL\nfl-matchups\styles.css
+*/
+
+:root {
+  --bg: #0f172a;
+  --panel: #1e293b;
+  --panel2: #273449;
+  --border: #334155;
+  --text: #e2e8f0;
+  --muted: #94a3b8;
+  --accent: #38bdf8;
+  --good: #4ade80;
+  --bad: #f87171;
+  --warn: #fbbf24;
+  --purple: #c084fc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.4;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+a { color: var(--accent); }
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    calc(14px + env(safe-area-inset-right))
+    calc(40px + env(safe-area-inset-bottom))
+    calc(14px + env(safe-area-inset-left));
+}
+
+h1 { margin: 0 0 4px; font-size: 1.6rem; }
+.subtitle { color: var(--muted); margin: 0 0 16px; }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.card h2 {
+  font-size: .85rem;
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--muted);
+}
+
+/* ---------- Controls ---------- */
+label { display: block; font-size: .85rem; color: var(--muted); margin-bottom: 4px; }
+.field { margin-bottom: 12px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 560px) { .controls .row2 { grid-template-columns: 1fr; } }
+
+select {
+  width: 100%;
+  padding: 9px 10px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1rem; /* 16px minimum stops iOS Safari from zooming in on focus */
+}
+select:focus, button:focus-visible { outline: 2px solid var(--accent); border-color: transparent; }
+
+.select-with-btn { display: flex; gap: 6px; }
+#swap-btn {
+  flex: none;
+  width: 42px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.segmented { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.segmented button {
+  flex: 1;
+  background: transparent;
+  color: var(--muted);
+  border: 0;
+  padding: 9px 10px;
+  cursor: pointer;
+  font-size: .9rem;
+}
+.segmented button.active { background: var(--accent); color: var(--bg); font-weight: 600; }
+
+.hidden { display: none !important; }
+
+/* ---------- Alerts ---------- */
+.alert {
+  border-left: 4px solid var(--accent);
+  background: var(--panel);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: .9rem;
+}
+.alert.warn { border-color: var(--warn); background: #2a2210; }
+.alert.error { border-color: var(--bad); background: #2a1215; }
+
+/* ---------- Team badges and game header ---------- */
+.team-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+.team-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, .35);
+  flex: none;
+}
+
+.game-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.game-title .at { color: var(--muted); font-weight: 400; }
+.meta { color: var(--muted); font-size: .9rem; }
+.final-line { margin-top: 10px; font-size: .95rem; }
+
+/* ---------- Stat tiles ---------- */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.tile { background: var(--panel2); border-radius: 10px; padding: 10px 12px; }
+.tile .label { color: var(--muted); font-size: .78rem; }
+.tile .value { font-size: 1.2rem; font-weight: 600; margin: 2px 0; font-variant-numeric: tabular-nums; }
+.tile .detail { color: var(--muted); font-size: .78rem; }
+
+.explain { color: var(--muted); font-size: .88rem; margin: 10px 0 0; }
+
+/* ---------- Tables ---------- */
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+th, td { padding: 7px 6px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
+th { color: var(--muted); font-weight: 500; font-size: .72rem; text-transform: uppercase; letter-spacing: .04em; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.rank { color: var(--muted); font-size: .78rem; margin-left: 4px; }
+.rank.top { color: var(--good); }
+.rank.bottom { color: var(--bad); }
+
+.matchups-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.matchups-grid .card { margin-bottom: 0; }
+@media (max-width: 900px) { .matchups-grid { grid-template-columns: 1fr; } }
+.matchups-grid { margin-bottom: 16px; }
+
+tr.big-edge td { background: rgba(56, 189, 248, .08); }
+
+.chip {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 6px;
+  font-size: .74rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.chip.off { background: rgba(74, 222, 128, .15); color: var(--good); }
+.chip.def { background: rgba(248, 113, 113, .15); color: var(--bad); }
+.chip.even { background: rgba(148, 163, 184, .15); color: var(--muted); }
+.chip.svs { background: rgba(192, 132, 252, .18); color: var(--purple); margin-top: 3px; }
+.chip.big { outline: 1px solid currentColor; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: .8rem; color: var(--muted); }
+
+/* ---------- Line movement ---------- */
+.moves { margin: 0; padding-left: 18px; }
+.moves li { margin-bottom: 6px; }
+
+/* ---------- Footer / glossary ---------- */
+details summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+details[open] summary { margin-bottom: 10px; }
+.footnote { color: var(--muted); font-size: .82rem; line-height: 1.5; }
+.footnote dt { color: var(--text); font-weight: 600; margin-top: 8px; }
+.footnote dd { margin: 2px 0 0; }
+footer { margin-top: 8px; }
+
+.pos { color: var(--good); }
+.neg { color: var(--bad); }

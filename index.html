@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!--
+  NFL Matchup Analyzer
+  ====================
+
+  Summary:
+    Static web page (no server) that compares one team's offense against the
+    other team's defense, stat by stat, for any game on the schedule or any two
+    teams you pick. Data comes from weekly JSON snapshots made by
+    nfl_team_stats.py. Each snapshot holds stats through the previous week,
+    the week's games with betting lines, line movement, and final scores.
+
+  Input files (same folder):
+    styles.css            - Page styling.
+    app.js                - Loads the data and builds every section of the page.
+    data\weeks.json       - List of available weekly snapshots.
+    data\<season>_week_NN.json - One snapshot per week.
+    manifest.webmanifest  - App name, colors, and icons (phone install).
+    sw.js                 - Service worker for offline use.
+    icons\*.png           - App icons (created by generate_icons.py).
+  Output files: None. Results are shown on the page only.
+
+  Location: D:\OneDrive\Code\DFS_direct\NFL\nfl-matchups\index.html
+  Usage:
+    - Hosted: https://712apples.github.io/nfl-matchups/
+    - Local test: browsers block loading JSON from a file:// page, so run
+      "python -m http.server" in this folder and open http://localhost:8000
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Compare NFL offenses against opposing defenses, stat by stat, for any matchup.">
+<meta name="theme-color" content="#0f172a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NFL Matchups">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="styles.css">
+<title>NFL Matchup Analyzer</title>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>NFL Matchup Analyzer</h1>
+    <p class="subtitle" id="updated-label">Loading data…</p>
+  </header>
+
+  <div class="alert warn" id="sample-warning"></div>
+
+  <section class="card controls">
+    <div class="row2">
+      <div class="field">
+        <label for="week-select">Week</label>
+        <select id="week-select"></select>
+      </div>
+      <div class="field">
+        <label>Pick by</label>
+        <div class="segmented" id="mode-toggle">
+          <button type="button" data-mode="game" class="active">Scheduled game</button>
+          <button type="button" data-mode="manual">Any two teams</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="field" id="game-picker">
+      <label for="game-select">Game</label>
+      <select id="game-select"></select>
+    </div>
+
+    <div class="row2 hidden" id="team-picker">
+      <div class="field">
+        <label for="away-select">Away team</label>
+        <select id="away-select"></select>
+      </div>
+      <div class="field">
+        <label for="home-select">Home team</label>
+        <div class="select-with-btn">
+          <select id="home-select"></select>
+          <button type="button" id="swap-btn" title="Swap home and away">⇄</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="error-box" class="alert error hidden"></div>
+
+  <main id="matchup" class="hidden">
+    <section class="card" id="game-card"></section>
+    <section class="card" id="lines-card"></section>
+    <section class="card" id="composite-card"></section>
+    <section class="card" id="context-card"></section>
+
+    <div class="matchups-grid">
+      <section class="card" id="away-matchup"></section>
+      <section class="card" id="home-matchup"></section>
+    </div>
+
+    <section class="card">
+      <details>
+        <summary>How to read this page</summary>
+        <div class="footnote" id="glossary"></div>
+      </details>
+    </section>
+  </main>
+
+  <footer class="footnote">
+    <p><strong>Stats, not betting advice.</strong> These numbers describe what has happened so far; they
+      don't account for injuries, weather, or coaching changes. Please bet responsibly.</p>
+    <p>Data: <a href="https://github.com/nflverse" target="_blank" rel="noopener">nflverse</a> play-by-play
+      (regular season, pass and run plays, garbage time removed when win probability is under 5% or over 95%).</p>
+  </footer>
+</div>
+
+<script src="app.js"></script>
+<script>
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('sw.js');
+  }
+</script>
+</body>
+</html>

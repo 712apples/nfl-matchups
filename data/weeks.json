@@ -1,0 +1,31 @@
+{
+ "season": 2026,
+ "current_week": 4,
+ "updated_at": "2026-10-05T13:04:25-04:00",
+ "weeks": [
+  {
+   "week": 2,
+   "file": "2026_week_02.json",
+   "stats_through_week": 1,
+   "games": 16,
+   "games_final": 16,
+   "backfilled": true
+  },
+  {
+   "week": 3,
+   "file": "2026_week_03.json",
+   "stats_through_week": 2,
+   "games": 16,
+   "games_final": 16,
+   "backfilled": true
+  },
+  {
+   "week": 4,
+   "file": "2026_week_04.json",
+   "stats_through_week": 3,
+   "games": 16,
+   "games_final": 15,
+   "backfilled": false
+  }
+ ]
+}
