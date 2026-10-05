@@ -3,7 +3,9 @@
  *
  * Summary:
  *   Loads the weekly snapshot list (data/weeks.json), then the chosen week's
- *   snapshot, and builds the page: game header and final result, betting
+ *   snapshot, and builds the page: game header and final result, a game
+ *   script (where each offense should excel or struggle, with backtested
+ *   confidence labels, fantasy angles, pace, and game flow), betting
  *   lines and line movement, a composite EPA projection for each offense,
  *   context (Pythagorean record, pace, rest, roof), and two stat-by-stat
  *   tables (away offense vs home defense, home offense vs away defense).
@@ -54,6 +56,45 @@ const STATS = [
   { key: 'turnover_rate', label: 'Turnover rate', fmt: 'pct',
     help: 'Interceptions plus lost fumbles per play. Offense rank 1 = fewest; defense rank 1 = most forced.' },
 ];
+
+// Game script areas. A matchup score averages, for each listed stat, how far the
+// offense and the opposing defense are from league average (in standard
+// deviations), signed so positive = the offense should excel. Thresholds and hit
+// rates must match the latest run of nfl_game_script_backtest.py.
+const SCRIPT_AREAS = [
+  {
+    label: 'Passing', stats: ['pass_epa', 'pass_success'], sign: 1,
+    lean: 0.5, leanHit: 63, strong: 1.0, strongHit: 73,
+    excel: 'should move the ball efficiently through the air',
+    struggle: 'may have trouble passing efficiently',
+    fantasyExcel: 'QB, WR and TE upgrade', fantasyStruggle: 'QB, WR and TE downgrade',
+  },
+  {
+    label: 'Pass protection', stats: ['sack_rate', 'qb_hit_rate'], sign: -1,
+    lean: 0.5, leanHit: 62, strong: 1.0, strongHit: 69,
+    excel: 'QB should stay mostly clean',
+    struggle: 'QB likely to take sacks and hits',
+    fantasyExcel: 'QB upgrade (clean pocket)', fantasyStruggle: 'QB downgrade; {def} defense/DST upgrade (sacks)',
+  },
+  {
+    label: 'Running', stats: ['rush_epa', 'rush_success'], sign: 1,
+    lean: 0.75, leanHit: 62, strong: 1.0, strongHit: 68,
+    excel: 'should run the ball well',
+    struggle: 'may struggle to run the ball',
+    fantasyExcel: 'RB upgrade', fantasyStruggle: 'RB downgrade',
+  },
+  {
+    label: 'Explosive plays', stats: ['explosive_rate'], sign: 1,
+    lean: null, leanHit: null, strong: 1.0, strongHit: 67,
+    excel: 'good chance of big plays (20+ yard passes, 10+ yard runs)',
+    struggle: 'big plays likely hard to come by',
+    fantasyExcel: 'boom potential for deep threats and big-play backs', fantasyStruggle: 'lower ceilings for big-play receivers',
+  },
+];
+const PACE_TAIL = 0.10;         // Mention pace when a matchup is in the fastest/slowest 10% of possible pairings
+const PACE_FAST_HIT = 64;       // % of fast-projected games that actually ran above average
+const PACE_SLOW_HIT = 71;       // % of slow-projected games that actually ran below average
+const BIG_FAVORITE = 7;         // Spread at which to add the game-flow note
 
 const ROOF_LABELS = {
   dome: 'Dome',
@@ -405,6 +446,7 @@ function render() {
   $('matchup').classList.remove('hidden');
 
   renderGameCard(away, home, game);
+  renderGameScript(away, home, game);
   renderLinesCard(away, home, game);
   renderComposite(away, home, game);
   renderContext(away, home, game);
@@ -433,6 +475,170 @@ function renderGameCard(away, home, game) {
   $('game-card').innerHTML = `
     <div class="game-title">${teamBadge(away)} <span class="at">@</span> ${teamBadge(home)}</div>
     <div class="meta">${esc(meta)}</div>${final}`;
+}
+
+/**
+ * League mean and standard deviation of one stat column in the current snapshot.
+ * @param {string} side - "offense" or "defense".
+ * @param {string} stat - Stat key, e.g. "pass_epa".
+ * @returns {{mean: number, sd: number}} Spread of the stat across teams (sample SD).
+ */
+function statSpread(side, stat) {
+  const snap = state.snapshot;
+  snap.spreadCache = snap.spreadCache || {};
+  const key = `${side}.${stat}`;
+  if (!snap.spreadCache[key]) {
+    const values = Object.values(snap[side]).map((t) => t[stat]).filter((v) => v != null);
+    const mean = values.reduce((a, b) => a + b, 0) / values.length;
+    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / (values.length - 1);
+    snap.spreadCache[key] = { mean, sd: Math.sqrt(variance) };
+  }
+  return snap.spreadCache[key];
+}
+
+/**
+ * Matchup score for one game script area (positive = the offense should excel).
+ * @param {object} area - Entry from SCRIPT_AREAS.
+ * @param {string} off - Offense team abbreviation.
+ * @param {string} def - Defense team abbreviation.
+ * @returns {number|null} Average of the offense and defense z-scores, or null if data is missing.
+ */
+function areaScore(area, off, def) {
+  const scores = area.stats.map((stat) => {
+    const o = state.snapshot.offense[off]?.[stat];
+    const d = state.snapshot.defense[def]?.[stat];
+    if (o == null || d == null) return null;
+    const os = statSpread('offense', stat);
+    const ds = statSpread('defense', stat);
+    return area.sign * ((o - os.mean) / os.sd + (d - ds.mean) / ds.sd) / 2;
+  }).filter((s) => s != null);
+  return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
+}
+
+/**
+ * Projected total plays in a game: each offense's plays per game averaged with
+ * the plays per game the opposing defense faces (offense pace only if missing).
+ * @param {string} away - Away team abbreviation.
+ * @param {string} home - Home team abbreviation.
+ * @returns {number|null} Projected plays for both teams combined.
+ */
+function gamePace(away, home) {
+  const { offense, defense } = state.snapshot;
+  const side = (off, def) => {
+    const o = offense[off]?.plays_per_game;
+    const d = defense[def]?.plays_per_game ?? o;
+    return o == null ? null : (o + d) / 2;
+  };
+  const a = side(away, home);
+  const h = side(home, away);
+  return a == null || h == null ? null : a + h;
+}
+
+/**
+ * Projected pace for every possible pairing of teams in the current snapshot,
+ * used to judge whether a matchup is unusually fast or slow.
+ * @returns {number[]} One projected play total per pairing.
+ */
+function allPairingPaces() {
+  const snap = state.snapshot;
+  if (!snap.paceCache) {
+    const abbrs = Object.keys(snap.teams);
+    snap.paceCache = abbrs.flatMap((a) => abbrs.filter((h) => h !== a).map((h) => gamePace(a, h)))
+      .filter((p) => p != null);
+  }
+  return snap.paceCache;
+}
+
+/**
+ * Game script calls (excel/struggle with confidence) and fantasy angles for one offense.
+ * @param {string} off - Offense team abbreviation.
+ * @param {string} def - Defense team abbreviation.
+ * @returns {{excel: string[], struggle: string[], fantasy: string[]}} HTML list items.
+ */
+function scriptCalls(off, def) {
+  const result = { excel: [], struggle: [], fantasy: [] };
+  SCRIPT_AREAS.forEach((area) => {
+    const score = areaScore(area, off, def);
+    if (score == null) return;
+    const size = Math.abs(score);
+    let level = null;
+    if (size >= area.strong) level = { name: 'Strong', cls: 'strong', hit: area.strongHit };
+    else if (area.lean != null && size >= area.lean) level = { name: 'Lean', cls: 'lean', hit: area.leanHit };
+    if (!level) return;
+
+    const excels = score > 0;
+    const primary = STATS.find((s) => s.key === area.stats[0]);
+    const offRank = state.snapshot.offense[off]?.[`${primary.key}_rank`];
+    const defRank = state.snapshot.defense[def]?.[`${primary.key}_rank`];
+    const ranks = offRank && defRank
+      ? ` <span class="meta">(${esc(primary.label)}: offense ${ordinal(offRank)}, ${esc(def)} defense ${ordinal(defRank)})</span>`
+      : '';
+    const item = `<span class="chip ${level.cls}">${level.name}</span> <strong>${esc(area.label)}:</strong> ` +
+      `${esc(excels ? area.excel : area.struggle)}.${ranks} ` +
+      `<span class="meta">Right in ${level.hit}% of similar past matchups.</span>`;
+    (excels ? result.excel : result.struggle).push(item);
+    const angle = (excels ? area.fantasyExcel : area.fantasyStruggle).replace('{def}', def);
+    result.fantasy.push(`${esc(angle)} <span class="meta">(${level.name.toLowerCase()})</span>`);
+  });
+  return result;
+}
+
+/**
+ * Game script card: where each offense should excel or struggle, fantasy angles,
+ * and pace / game-flow notes.
+ * @param {string} away - Away team abbreviation.
+ * @param {string} home - Home team abbreviation.
+ * @param {object|null} game - Scheduled game (for the spread), or null for a custom matchup.
+ * @returns {void}
+ */
+function renderGameScript(away, home, game) {
+  const { offense, defense } = state.snapshot;
+  const notes = [];
+  const sideHtml = (off, def) => {
+    const calls = scriptCalls(off, def);
+    const list = (items, empty) => (items.length ? `<ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>` : `<p class="none">${empty}</p>`);
+    return `<div class="script-side">
+      <h3>${teamBadge(off, false)} offense vs ${esc(team(def).nick)} defense</h3>
+      <h4>Should excel</h4>${list(calls.excel, 'No clear strengths in this matchup.')}
+      <h4>Should struggle</h4>${list(calls.struggle, 'No clear weaknesses in this matchup.')}
+      <h4>Fantasy angle</h4>${list(calls.fantasy, 'No strong angle from these stats.')}
+    </div>`;
+  };
+
+  const projected = gamePace(away, home);
+  if (projected != null) {
+    const all = allPairingPaces();
+    const share = all.filter((p) => p < projected).length / all.length;
+    const diff = projected - all.reduce((a, b) => a + b, 0) / all.length;
+    if (share >= 1 - PACE_TAIL) {
+      notes.push(`<strong>Pace:</strong> one of the fastest projected matchups (about ${diff.toFixed(1)} more plays than average). ` +
+        `${PACE_FAST_HIT}% of games projected this fast ran above average. Fantasy: extra volume for both teams.`);
+    } else if (share <= PACE_TAIL) {
+      notes.push(`<strong>Pace:</strong> one of the slowest projected matchups (about ${(-diff).toFixed(1)} fewer plays than average). ` +
+        `${PACE_SLOW_HIT}% of games projected this slow ran below average. Fantasy: less volume for both teams.`);
+    } else {
+      notes.push('<strong>Pace:</strong> projects close to an average number of plays, so no volume angle.');
+    }
+  }
+
+  const spread = game ? latestLine(game).spread_line : null;
+  if (spread != null && Math.abs(spread) >= BIG_FAVORITE) {
+    const fav = spread > 0 ? home : away;
+    notes.push(`<strong>Game flow:</strong> the ${esc(team(fav).nick)} are big favorites (${esc(spreadText(spread, away, home))}). ` +
+      'Historically, teams favored by 7+ throw only about 1 percentage point less than usual, and underdogs barely change, ' +
+      `so expect only a slight lean toward the run. Fantasy: small volume bump for ${esc(fav)} RBs.`);
+  }
+
+  $('script-card').innerHTML = `
+    <h2>Game script</h2>
+    <div class="script-grid">${sideHtml(away, home)}${sideHtml(home, away)}</div>
+    ${notes.length ? `<ul class="script-notes">${notes.map((n) => `<li>${n}</li>`).join('')}</ul>` : ''}
+    <p class="explain">Calls compare each offense with the opposing defense against league average. Labels and
+      percentages come from testing the same method on every game from 2015 to 2025, using only stats from before
+      each game. <span class="chip lean">Lean</span> calls were right about 6 times in 10 and
+      <span class="chip strong">Strong</span> calls about 7 in 10. Third downs, red zone, and turnovers are left out
+      because they're mostly luck from game to game. The test blended in last season's stats during the first six
+      weeks; this page uses this season only, so treat early-season calls as less certain than these percentages.</p>`;
 }
 
 /**

@@ -6,7 +6,10 @@
   Summary:
     Static web page (no server) that compares one team's offense against the
     other team's defense, stat by stat, for any game on the schedule or any two
-    teams you pick. A "League rankings" view lists every team's offense,
+    teams you pick. A "Game script" card summarizes where each offense should
+    excel or struggle (passing, pass protection, running, explosive plays),
+    with Lean/Strong confidence labels from a 2015-2025 backtest, plus pace,
+    game flow, and fantasy angles. A "League rankings" view lists every team's offense,
     defense, and net EPA per play in a sortable table, with the selected
     matchup's teams highlighted. Data comes from weekly JSON snapshots made by
     nfl_team_stats.py. Each snapshot holds stats through the previous week,
@@ -99,6 +102,7 @@
 
   <main id="matchup" class="hidden">
     <section class="card" id="game-card"></section>
+    <section class="card" id="script-card"></section>
     <section class="card" id="lines-card"></section>
     <section class="card" id="composite-card"></section>
     <section class="card" id="context-card"></section>

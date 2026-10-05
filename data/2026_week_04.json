@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 4,
  "stats_through_week": 3,
- "generated_at": "2026-10-05T13:04:25-04:00",
+ "generated_at": "2026-10-05T17:51:32-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -1338,6 +1338,7 @@
    "qb_hit_rate": 0.1184,
    "cpoe": -2.62,
    "turnover_rate": 0.021,
+   "plays_per_game": 55.6667,
    "epa_per_play_rank": 29,
    "success_rate_rank": 26,
    "pass_epa_rank": 31,
@@ -1352,7 +1353,8 @@
    "sack_rate_rank": 27,
    "qb_hit_rate_rank": 27,
    "cpoe_rank": 6,
-   "turnover_rate_rank": 12
+   "turnover_rate_rank": 12,
+   "plays_per_game_rank": 7
   },
   "ATL": {
    "plays": 142,
@@ -1371,6 +1373,7 @@
    "qb_hit_rate": 0.1524,
    "cpoe": -0.0124,
    "turnover_rate": 0.007,
+   "plays_per_game": 61.0,
    "epa_per_play_rank": 8,
    "success_rate_rank": 4,
    "pass_epa_rank": 14,
@@ -1385,7 +1388,8 @@
    "sack_rate_rank": 25,
    "qb_hit_rate_rank": 17,
    "cpoe_rank": 10,
-   "turnover_rate_rank": 28
+   "turnover_rate_rank": 28,
+   "plays_per_game_rank": 15
   },
   "BAL": {
    "plays": 173,
@@ -1404,6 +1408,7 @@
    "qb_hit_rate": 0.1735,
    "cpoe": 1.7298,
    "turnover_rate": 0.0173,
+   "plays_per_game": 63.0,
    "epa_per_play_rank": 16,
    "success_rate_rank": 15,
    "pass_epa_rank": 18,
@@ -1418,7 +1423,8 @@
    "sack_rate_rank": 22,
    "qb_hit_rate_rank": 9,
    "cpoe_rank": 17,
-   "turnover_rate_rank": 18
+   "turnover_rate_rank": 18,
+   "plays_per_game_rank": 20
   },
   "BUF": {
    "plays": 173,
@@ -1437,6 +1443,7 @@
    "qb_hit_rate": 0.2245,
    "cpoe": 1.4396,
    "turnover_rate": 0.0173,
+   "plays_per_game": 66.3333,
    "epa_per_play_rank": 17,
    "success_rate_rank": 24,
    "pass_epa_rank": 15,
@@ -1451,7 +1458,8 @@
    "sack_rate_rank": 6,
    "qb_hit_rate_rank": 3,
    "cpoe_rank": 15,
-   "turnover_rate_rank": 18
+   "turnover_rate_rank": 18,
+   "plays_per_game_rank": 28
   },
   "CAR": {
    "plays": 146,
@@ -1470,6 +1478,7 @@
    "qb_hit_rate": 0.1447,
    "cpoe": -5.1333,
    "turnover_rate": 0.0205,
+   "plays_per_game": 66.3333,
    "epa_per_play_rank": 22,
    "success_rate_rank": 16,
    "pass_epa_rank": 19,
@@ -1484,7 +1493,8 @@
    "sack_rate_rank": 12,
    "qb_hit_rate_rank": 20,
    "cpoe_rank": 3,
-   "turnover_rate_rank": 13
+   "turnover_rate_rank": 13,
+   "plays_per_game_rank": 28
   },
   "CHI": {
    "plays": 137,
@@ -1503,6 +1513,7 @@
    "qb_hit_rate": 0.1169,
    "cpoe": -0.4878,
    "turnover_rate": 0.0365,
+   "plays_per_game": 53.3333,
    "epa_per_play_rank": 6,
    "success_rate_rank": 7,
    "pass_epa_rank": 2,
@@ -1517,7 +1528,8 @@
    "sack_rate_rank": 7,
    "qb_hit_rate_rank": 28,
    "cpoe_rank": 9,
-   "turnover_rate_rank": 2
+   "turnover_rate_rank": 2,
+   "plays_per_game_rank": 1
   },
   "CIN": {
    "plays": 160,
@@ -1536,6 +1548,7 @@
    "qb_hit_rate": 0.1553,
    "cpoe": -1.5024,
    "turnover_rate": 0.0312,
+   "plays_per_game": 61.0,
    "epa_per_play_rank": 7,
    "success_rate_rank": 13,
    "pass_epa_rank": 13,
@@ -1550,7 +1563,8 @@
    "sack_rate_rank": 19,
    "qb_hit_rate_rank": 16,
    "cpoe_rank": 8,
-   "turnover_rate_rank": 6
+   "turnover_rate_rank": 6,
+   "plays_per_game_rank": 15
   },
   "CLE": {
    "plays": 166,
@@ -1569,6 +1583,7 @@
    "qb_hit_rate": 0.1442,
    "cpoe": 3.0755,
    "turnover_rate": 0.012,
+   "plays_per_game": 63.0,
    "epa_per_play_rank": 11,
    "success_rate_rank": 9,
    "pass_epa_rank": 8,
@@ -1583,7 +1598,8 @@
    "sack_rate_rank": 20,
    "qb_hit_rate_rank": 22,
    "cpoe_rank": 23,
-   "turnover_rate_rank": 23
+   "turnover_rate_rank": 23,
+   "plays_per_game_rank": 20
   },
   "DAL": {
    "plays": 168,
@@ -1602,6 +1618,7 @@
    "qb_hit_rate": 0.1333,
    "cpoe": 7.7709,
    "turnover_rate": 0.0119,
+   "plays_per_game": 63.3333,
    "epa_per_play_rank": 30,
    "success_rate_rank": 31,
    "pass_epa_rank": 30,
@@ -1616,7 +1633,8 @@
    "sack_rate_rank": 29,
    "qb_hit_rate_rank": 24,
    "cpoe_rank": 29,
-   "turnover_rate_rank": 24
+   "turnover_rate_rank": 24,
+   "plays_per_game_rank": 24
   },
   "DEN": {
    "plays": 183,
@@ -1635,6 +1653,7 @@
    "qb_hit_rate": 0.2091,
    "cpoe": -3.3522,
    "turnover_rate": 0.0219,
+   "plays_per_game": 66.3333,
    "epa_per_play_rank": 18,
    "success_rate_rank": 10,
    "pass_epa_rank": 4,
@@ -1649,7 +1668,8 @@
    "sack_rate_rank": 13,
    "qb_hit_rate_rank": 4,
    "cpoe_rank": 5,
-   "turnover_rate_rank": 11
+   "turnover_rate_rank": 11,
+   "plays_per_game_rank": 28
   },
   "DET": {
    "plays": 200,
@@ -1668,6 +1688,7 @@
    "qb_hit_rate": 0.1679,
    "cpoe": 4.0737,
    "turnover_rate": 0.02,
+   "plays_per_game": 71.6667,
    "epa_per_play_rank": 28,
    "success_rate_rank": 25,
    "pass_epa_rank": 23,
@@ -1682,7 +1703,8 @@
    "sack_rate_rank": 4,
    "qb_hit_rate_rank": 13,
    "cpoe_rank": 25,
-   "turnover_rate_rank": 14
+   "turnover_rate_rank": 14,
+   "plays_per_game_rank": 32
   },
   "GB": {
    "plays": 176,
@@ -1701,6 +1723,7 @@
    "qb_hit_rate": 0.1505,
    "cpoe": 2.1145,
    "turnover_rate": 0.0114,
+   "plays_per_game": 65.0,
    "epa_per_play_rank": 15,
    "success_rate_rank": 18,
    "pass_epa_rank": 17,
@@ -1715,7 +1738,8 @@
    "sack_rate_rank": 8,
    "qb_hit_rate_rank": 18,
    "cpoe_rank": 20,
-   "turnover_rate_rank": 25
+   "turnover_rate_rank": 25,
+   "plays_per_game_rank": 27
   },
   "HOU": {
    "plays": 170,
@@ -1734,6 +1758,7 @@
    "qb_hit_rate": 0.165,
    "cpoe": 1.3792,
    "turnover_rate": 0.0176,
+   "plays_per_game": 60.3333,
    "epa_per_play_rank": 19,
    "success_rate_rank": 6,
    "pass_epa_rank": 21,
@@ -1748,7 +1773,8 @@
    "sack_rate_rank": 2,
    "qb_hit_rate_rank": 15,
    "cpoe_rank": 14,
-   "turnover_rate_rank": 17
+   "turnover_rate_rank": 17,
+   "plays_per_game_rank": 13
   },
   "IND": {
    "plays": 169,
@@ -1767,6 +1793,7 @@
    "qb_hit_rate": 0.1111,
    "cpoe": 1.7103,
    "turnover_rate": 0.0,
+   "plays_per_game": 63.0,
    "epa_per_play_rank": 31,
    "success_rate_rank": 28,
    "pass_epa_rank": 29,
@@ -1781,7 +1808,8 @@
    "sack_rate_rank": 23,
    "qb_hit_rate_rank": 29,
    "cpoe_rank": 16,
-   "turnover_rate_rank": 31
+   "turnover_rate_rank": 31,
+   "plays_per_game_rank": 20
   },
   "JAX": {
    "plays": 106,
@@ -1800,6 +1828,7 @@
    "qb_hit_rate": 0.1695,
    "cpoe": 6.7371,
    "turnover_rate": 0.0472,
+   "plays_per_game": 55.0,
    "epa_per_play_rank": 2,
    "success_rate_rank": 8,
    "pass_epa_rank": 1,
@@ -1814,7 +1843,8 @@
    "sack_rate_rank": 11,
    "qb_hit_rate_rank": 10,
    "cpoe_rank": 28,
-   "turnover_rate_rank": 1
+   "turnover_rate_rank": 1,
+   "plays_per_game_rank": 5
   },
   "KC": {
    "plays": 161,
@@ -1833,6 +1863,7 @@
    "qb_hit_rate": 0.092,
    "cpoe": -2.0229,
    "turnover_rate": 0.0248,
+   "plays_per_game": 58.6667,
    "epa_per_play_rank": 13,
    "success_rate_rank": 5,
    "pass_epa_rank": 11,
@@ -1847,7 +1878,8 @@
    "sack_rate_rank": 26,
    "qb_hit_rate_rank": 30,
    "cpoe_rank": 7,
-   "turnover_rate_rank": 9
+   "turnover_rate_rank": 9,
+   "plays_per_game_rank": 11
   },
   "LA": {
    "plays": 159,
@@ -1866,6 +1898,7 @@
    "qb_hit_rate": 0.1196,
    "cpoe": -9.4078,
    "turnover_rate": 0.0189,
+   "plays_per_game": 60.3333,
    "epa_per_play_rank": 12,
    "success_rate_rank": 12,
    "pass_epa_rank": 6,
@@ -1880,7 +1913,8 @@
    "sack_rate_rank": 30,
    "qb_hit_rate_rank": 26,
    "cpoe_rank": 1,
-   "turnover_rate_rank": 16
+   "turnover_rate_rank": 16,
+   "plays_per_game_rank": 13
   },
   "LAC": {
    "plays": 177,
@@ -1899,6 +1933,7 @@
    "qb_hit_rate": 0.1939,
    "cpoe": 2.5144,
    "turnover_rate": 0.0339,
+   "plays_per_game": 62.6667,
    "epa_per_play_rank": 20,
    "success_rate_rank": 22,
    "pass_epa_rank": 22,
@@ -1913,7 +1948,8 @@
    "sack_rate_rank": 16,
    "qb_hit_rate_rank": 6,
    "cpoe_rank": 21,
-   "turnover_rate_rank": 4
+   "turnover_rate_rank": 4,
+   "plays_per_game_rank": 19
   },
   "LV": {
    "plays": 165,
@@ -1932,6 +1968,7 @@
    "qb_hit_rate": 0.2333,
    "cpoe": 0.0344,
    "turnover_rate": 0.0364,
+   "plays_per_game": 61.3333,
    "epa_per_play_rank": 4,
    "success_rate_rank": 20,
    "pass_epa_rank": 12,
@@ -1946,7 +1983,8 @@
    "sack_rate_rank": 5,
    "qb_hit_rate_rank": 2,
    "cpoe_rank": 11,
-   "turnover_rate_rank": 3
+   "turnover_rate_rank": 3,
+   "plays_per_game_rank": 17
   },
   "MIA": {
    "plays": 123,
@@ -1965,6 +2003,7 @@
    "qb_hit_rate": 0.15,
    "cpoe": 14.6178,
    "turnover_rate": 0.0163,
+   "plays_per_game": 53.3333,
    "epa_per_play_rank": 32,
    "success_rate_rank": 32,
    "pass_epa_rank": 32,
@@ -1979,7 +2018,8 @@
    "sack_rate_rank": 32,
    "qb_hit_rate_rank": 19,
    "cpoe_rank": 32,
-   "turnover_rate_rank": 20
+   "turnover_rate_rank": 20,
+   "plays_per_game_rank": 1
   },
   "MIN": {
    "plays": 185,
@@ -1998,6 +2038,7 @@
    "qb_hit_rate": 0.2743,
    "cpoe": -8.8392,
    "turnover_rate": 0.027,
+   "plays_per_game": 66.6667,
    "epa_per_play_rank": 1,
    "success_rate_rank": 1,
    "pass_epa_rank": 3,
@@ -2012,7 +2053,8 @@
    "sack_rate_rank": 1,
    "qb_hit_rate_rank": 1,
    "cpoe_rank": 2,
-   "turnover_rate_rank": 8
+   "turnover_rate_rank": 8,
+   "plays_per_game_rank": 31
   },
   "NE": {
    "plays": 143,
@@ -2031,6 +2073,7 @@
    "qb_hit_rate": 0.1928,
    "cpoe": 0.1689,
    "turnover_rate": 0.014,
+   "plays_per_game": 57.6667,
    "epa_per_play_rank": 10,
    "success_rate_rank": 11,
    "pass_epa_rank": 5,
@@ -2045,7 +2088,8 @@
    "sack_rate_rank": 17,
    "qb_hit_rate_rank": 7,
    "cpoe_rank": 12,
-   "turnover_rate_rank": 21
+   "turnover_rate_rank": 21,
+   "plays_per_game_rank": 10
   },
   "NO": {
    "plays": 185,
@@ -2064,6 +2108,7 @@
    "qb_hit_rate": 0.1667,
    "cpoe": 4.1584,
    "turnover_rate": 0.0108,
+   "plays_per_game": 63.6667,
    "epa_per_play_rank": 26,
    "success_rate_rank": 30,
    "pass_epa_rank": 24,
@@ -2078,7 +2123,8 @@
    "sack_rate_rank": 21,
    "qb_hit_rate_rank": 14,
    "cpoe_rank": 26,
-   "turnover_rate_rank": 27
+   "turnover_rate_rank": 27,
+   "plays_per_game_rank": 25
   },
   "NYG": {
    "plays": 135,
@@ -2097,6 +2143,7 @@
    "qb_hit_rate": 0.0824,
    "cpoe": 5.2913,
    "turnover_rate": 0.0296,
+   "plays_per_game": 55.0,
    "epa_per_play_rank": 25,
    "success_rate_rank": 19,
    "pass_epa_rank": 28,
@@ -2111,7 +2158,8 @@
    "sack_rate_rank": 31,
    "qb_hit_rate_rank": 32,
    "cpoe_rank": 27,
-   "turnover_rate_rank": 7
+   "turnover_rate_rank": 7,
+   "plays_per_game_rank": 5
   },
   "NYJ": {
    "plays": 143,
@@ -2130,6 +2178,7 @@
    "qb_hit_rate": 0.1279,
    "cpoe": -3.5851,
    "turnover_rate": 0.007,
+   "plays_per_game": 53.6667,
    "epa_per_play_rank": 9,
    "success_rate_rank": 21,
    "pass_epa_rank": 16,
@@ -2144,7 +2193,8 @@
    "sack_rate_rank": 9,
    "qb_hit_rate_rank": 25,
    "cpoe_rank": 4,
-   "turnover_rate_rank": 29
+   "turnover_rate_rank": 29,
+   "plays_per_game_rank": 3
   },
   "PHI": {
    "plays": 166,
@@ -2163,6 +2213,7 @@
    "qb_hit_rate": 0.0899,
    "cpoe": 1.853,
    "turnover_rate": 0.0,
+   "plays_per_game": 62.0,
    "epa_per_play_rank": 24,
    "success_rate_rank": 14,
    "pass_epa_rank": 25,
@@ -2177,7 +2228,8 @@
    "sack_rate_rank": 28,
    "qb_hit_rate_rank": 31,
    "cpoe_rank": 18,
-   "turnover_rate_rank": 31
+   "turnover_rate_rank": 31,
+   "plays_per_game_rank": 18
   },
   "PIT": {
    "plays": 153,
@@ -2196,6 +2248,7 @@
    "qb_hit_rate": 0.1839,
    "cpoe": 3.4799,
    "turnover_rate": 0.0327,
+   "plays_per_game": 54.6667,
    "epa_per_play_rank": 14,
    "success_rate_rank": 27,
    "pass_epa_rank": 10,
@@ -2210,7 +2263,8 @@
    "sack_rate_rank": 3,
    "qb_hit_rate_rank": 8,
    "cpoe_rank": 24,
-   "turnover_rate_rank": 5
+   "turnover_rate_rank": 5,
+   "plays_per_game_rank": 4
   },
   "SEA": {
    "plays": 172,
@@ -2229,6 +2283,7 @@
    "qb_hit_rate": 0.2083,
    "cpoe": 1.1159,
    "turnover_rate": 0.0233,
+   "plays_per_game": 59.0,
    "epa_per_play_rank": 3,
    "success_rate_rank": 2,
    "pass_epa_rank": 7,
@@ -2243,7 +2298,8 @@
    "sack_rate_rank": 14,
    "qb_hit_rate_rank": 5,
    "cpoe_rank": 13,
-   "turnover_rate_rank": 10
+   "turnover_rate_rank": 10,
+   "plays_per_game_rank": 12
   },
   "SF": {
    "plays": 151,
@@ -2262,6 +2318,7 @@
    "qb_hit_rate": 0.1687,
    "cpoe": 2.0261,
    "turnover_rate": 0.0066,
+   "plays_per_game": 64.0,
    "epa_per_play_rank": 27,
    "success_rate_rank": 29,
    "pass_epa_rank": 20,
@@ -2276,7 +2333,8 @@
    "sack_rate_rank": 17,
    "qb_hit_rate_rank": 11,
    "cpoe_rank": 19,
-   "turnover_rate_rank": 30
+   "turnover_rate_rank": 30,
+   "plays_per_game_rank": 26
   },
   "TB": {
    "plays": 155,
@@ -2295,6 +2353,7 @@
    "qb_hit_rate": 0.1443,
    "cpoe": 2.738,
    "turnover_rate": 0.0129,
+   "plays_per_game": 56.6667,
    "epa_per_play_rank": 5,
    "success_rate_rank": 3,
    "pass_epa_rank": 9,
@@ -2309,7 +2368,8 @@
    "sack_rate_rank": 15,
    "qb_hit_rate_rank": 21,
    "cpoe_rank": 22,
-   "turnover_rate_rank": 22
+   "turnover_rate_rank": 22,
+   "plays_per_game_rank": 9
   },
   "TEN": {
    "plays": 177,
@@ -2328,6 +2388,7 @@
    "qb_hit_rate": 0.1379,
    "cpoe": 9.0458,
    "turnover_rate": 0.0113,
+   "plays_per_game": 63.0,
    "epa_per_play_rank": 21,
    "success_rate_rank": 17,
    "pass_epa_rank": 26,
@@ -2342,7 +2403,8 @@
    "sack_rate_rank": 10,
    "qb_hit_rate_rank": 23,
    "cpoe_rank": 31,
-   "turnover_rate_rank": 26
+   "turnover_rate_rank": 26,
+   "plays_per_game_rank": 20
   },
   "WAS": {
    "plays": 154,
@@ -2361,6 +2423,7 @@
    "qb_hit_rate": 0.1683,
    "cpoe": 7.8724,
    "turnover_rate": 0.0195,
+   "plays_per_game": 56.3333,
    "epa_per_play_rank": 23,
    "success_rate_rank": 23,
    "pass_epa_rank": 27,
@@ -2375,7 +2438,8 @@
    "sack_rate_rank": 24,
    "qb_hit_rate_rank": 12,
    "cpoe_rank": 30,
-   "turnover_rate_rank": 15
+   "turnover_rate_rank": 15,
+   "plays_per_game_rank": 8
   }
  },
  "pythagorean": {
@@ -3148,8 +3212,8 @@
    "home_team": "NO",
    "spread_line": 1.5,
    "total_line": 47.5,
-   "away_moneyline": 102.0,
-   "home_moneyline": -122.0,
+   "away_moneyline": 100.0,
+   "home_moneyline": -120.0,
    "roof": "dome",
    "away_rest": 11,
    "home_rest": 8,
@@ -3162,6 +3226,13 @@
      "total_line": 47.5,
      "away_moneyline": 102.0,
      "home_moneyline": -122.0
+    },
+    {
+     "time": "2026-10-05T17:51:32-04:00",
+     "spread_line": 1.5,
+     "total_line": 47.5,
+     "away_moneyline": 100.0,
+     "home_moneyline": -120.0
     }
    ]
   }
