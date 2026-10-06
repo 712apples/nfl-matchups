@@ -5527,8 +5527,8 @@
    "roof": "dome",
    "away_rest": 11,
    "home_rest": 8,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 45.0,
+   "home_score": 24.0,
    "line_history": [
     {
      "time": "2026-10-05T13:01:14-04:00",
