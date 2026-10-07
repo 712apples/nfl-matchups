@@ -172,6 +172,7 @@ const WEATHER_SNOW_NOTE = 0.25;      // Inches of snow for a "Snow" tag (not an 
 const WEATHER_HISTORY = {
   wind: { games: 445, under: 61, points: 2.3 },
   rain: { games: 125, under: 65, points: 4.2 },
+  both: { games: 56, under: 70, points: 5.3 },   // wind alert and rain alert in the same game
   snow: { games: 18, under: 50 },
   openAirUnder: 52,
 };
@@ -1234,6 +1235,19 @@ function weatherFlags(w, venue) {
 }
 
 /**
+ * Historical under record for a game's weather alerts (wind, rain, or both).
+ * @param {{wind: boolean, rain: boolean}} flags - Output of weatherFlags().
+ * @returns {object|null} { games, under (%), points, what } or null when there's no alert.
+ */
+function underHistory(flags) {
+  const h = WEATHER_HISTORY;
+  if (flags.wind && flags.rain) return { ...h.both, what: 'strong wind and rain' };
+  if (flags.wind) return { ...h.wind, what: `${WEATHER_WIND_ALERT}+ mph wind or ${WEATHER_GUST_ALERT}+ mph gusts` };
+  if (flags.rain) return { ...h.rain, what: `${WEATHER_RAIN_ALERT.toFixed(2)}+ inches of rain` };
+  return null;
+}
+
+/**
  * Plain-English name for an Open-Meteo weather code.
  * @param {number|null} code - WMO weather code.
  * @returns {string} e.g. "Partly cloudy".
@@ -1279,6 +1293,16 @@ function weatherTags(game) {
   if (flags.rain) chips.push('<span class="chip def big">Rain alert</span>');
   if (flags.snow) chips.push('<span class="chip lean">Snow</span>');
   return chips.join(' ');
+}
+
+/**
+ * "Under 61%" chip for the weekly overview when a weather alert applies.
+ * @param {object} game - Game from the snapshot.
+ * @returns {string} HTML chip ('' when there's no alert).
+ */
+function underChip(game) {
+  const under = underHistory(weatherFlags(gameWeather(game), gameVenue(game)));
+  return under ? `<span class="sub"><span class="chip under" title="In past games with ${esc(under.what)}, the under hit ${under.under}% of the time">Under ${under.under}%</span></span>` : '';
 }
 
 /**
@@ -1351,11 +1375,26 @@ function renderWeather(game) {
     notes.push('This stadium has a retractable roof, which is usually closed in bad or cold weather, so no alerts are shown. The forecast applies only if the roof is open.');
   }
 
+  const under = underHistory(flags);
+  let underNote = '';
+  if (under) {
+    const total = latestLine(game).total_line;
+    let outcome = '';
+    if (final && total != null) {
+      const points = game.home_score + game.away_score;
+      outcome = ` This game finished with ${points} points: ${points < total ? 'the under hit' : points > total ? 'the over hit' : 'a push'}.`;
+    }
+    underNote = `<div class="under-note"><strong>Under note:</strong> in games with ${under.what}, the under has hit more often
+      than not: ${under.under}% of ${under.games} open-air games since 2015, scoring ${under.points} points below the total on
+      average.${total != null ? ` This game's total ${final ? 'was' : 'is'} ${total}.` : ''}${outcome}${final ? '' : ' Not a sure thing: the total may already include the forecast.'}</div>`;
+  }
+
   card.innerHTML = `
     <h2>${title}</h2>
     ${where}
     ${tiles}
     ${alerts.map((a) => `<div class="weather-alert">${a}</div>`).join('')}
+    ${underNote}
     ${notes.map((n) => `<p class="explain">${n}</p>`).join('')}
     <p class="explain">${final ? 'Weather that happened' : 'Forecast'} for kickoff through the next ${WEATHER_GAME_HOURS - 1} hours, from
       <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>${final ? '' : `, checked ${esc(timeText(new Date(entry.fetchedAt).toISOString()))}`}.
@@ -2028,6 +2067,7 @@ function renderOverview() {
         ${tags ? `<span class="sub result-chips">${tags}</span>` : ''}</td>
       <td class="num"><strong>${esc(spreadText(line.spread_line, away, home))}</strong>
         <span class="sub">O/U ${line.total_line ?? '—'}</span>
+        ${underChip(game)}
         <span class="sub">${esc(away)} ${fmtMoneyline(line.away_moneyline)}</span>
         <span class="sub">${esc(home)} ${fmtMoneyline(line.home_moneyline)}</span></td>
       ${versionCell(raw, game, line)}
@@ -2100,7 +2140,9 @@ function renderOverview() {
         Open-Meteo; finished games show the weather that happened. <strong>Wind alert:</strong> ${WEATHER_WIND_ALERT}+ mph
         wind or ${WEATHER_GUST_ALERT}+ mph gusts. <strong>Rain alert:</strong> ${WEATHER_RAIN_ALERT.toFixed(2)}+ inches of rain
         likely. In 2015–2025 open-air games, those went under the total ${WEATHER_HISTORY.wind.under}% and
-        ${WEATHER_HISTORY.rain.under}% of the time (all open-air games: about ${WEATHER_HISTORY.openAirUnder}%). Snow is tagged
+        ${WEATHER_HISTORY.rain.under}% of the time (both together: ${WEATHER_HISTORY.both.under}%; all open-air games: about
+        ${WEATHER_HISTORY.openAirUnder}%). The <strong>Under %</strong> tag under the total shows that rate for the game's
+        alert; the total may already include the forecast. Snow is tagged
         but isn't an alert, since snow games split evenly in testing. Domes and retractable roofs get no alerts.</p>
       <p><strong>Injury tags:</strong> key players (starters) who are out, doubtful, on IR/PUP, or sat last game
         before this week's report is filed ("out"), or
