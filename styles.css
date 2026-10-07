@@ -212,6 +212,7 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
 .overview-table td { vertical-align: top; }
 .overview-table .sub { display: block; color: var(--muted); font-size: .74rem; margin-top: 1px; }
 .overview-table .result-chips { margin-top: 4px; }
+.overview-table .sub.qb-spread { color: var(--purple); }
 .overview-table .result-chips .chip { margin: 2px 0 0 2px; }
 .overview-table tr.clickable { cursor: pointer; }
 .overview-table tr.clickable:hover td { background: rgba(56, 189, 248, .06); }
@@ -222,6 +223,7 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
   .overview-table th, .overview-table td { padding: 6px 3px; }
   .overview-table th { white-space: normal; }
   .overview-table .result-chips { white-space: normal; }
+  .overview-table .sub.qb-spread { white-space: normal; }
 }
 
 .chip {

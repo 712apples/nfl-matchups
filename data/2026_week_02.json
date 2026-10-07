@@ -4682,5 +4682,586 @@
     }
    ]
   }
+ },
+ "qb": {
+  "other_qb_weight": 0.25,
+  "teams": {
+   "ARI": {
+    "starter": "Jacoby Brissett",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.2029,
+    "by_qb": [
+     {
+      "name": "Jacoby Brissett",
+      "games": 1,
+      "epa_per_play": 0.2029
+     }
+    ],
+    "epa_per_play_rank": 9
+   },
+   "ATL": {
+    "starter": "Tua Tagovailoa",
+    "starter_games": 0,
+    "games": 1,
+    "changed": true,
+    "replaced": null,
+    "switch": "starter_for_backup",
+    "switch_adj": 0.016,
+    "epa_per_play": -0.305,
+    "by_qb": [
+     {
+      "name": "Cooper Rush",
+      "games": 1,
+      "epa_per_play": -0.321
+     }
+    ],
+    "epa_per_play_rank": 29
+   },
+   "BAL": {
+    "starter": "Lamar Jackson",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.4643,
+    "by_qb": [
+     {
+      "name": "Lamar Jackson",
+      "games": 1,
+      "epa_per_play": 0.4643
+     }
+    ],
+    "epa_per_play_rank": 1
+   },
+   "BUF": {
+    "starter": "Josh Allen",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.2293,
+    "by_qb": [
+     {
+      "name": "Josh Allen",
+      "games": 1,
+      "epa_per_play": 0.2293
+     }
+    ],
+    "epa_per_play_rank": 7
+   },
+   "CAR": {
+    "starter": "Bryce Young",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0878,
+    "by_qb": [
+     {
+      "name": "Bryce Young",
+      "games": 1,
+      "epa_per_play": 0.0878
+     }
+    ],
+    "epa_per_play_rank": 12
+   },
+   "CHI": {
+    "starter": "Caleb Williams",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.3598,
+    "by_qb": [
+     {
+      "name": "Caleb Williams",
+      "games": 1,
+      "epa_per_play": 0.3598
+     }
+    ],
+    "epa_per_play_rank": 4
+   },
+   "CIN": {
+    "starter": "Joe Burrow",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0052,
+    "by_qb": [
+     {
+      "name": "Joe Burrow",
+      "games": 1,
+      "epa_per_play": 0.0052
+     }
+    ],
+    "epa_per_play_rank": 16
+   },
+   "CLE": {
+    "starter": "Deshaun Watson",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -1.1062,
+    "by_qb": [
+     {
+      "name": "Deshaun Watson",
+      "games": 1,
+      "epa_per_play": -1.1062
+     }
+    ],
+    "epa_per_play_rank": 32
+   },
+   "DAL": {
+    "starter": "Dak Prescott",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1772,
+    "by_qb": [
+     {
+      "name": "Dak Prescott",
+      "games": 1,
+      "epa_per_play": 0.1772
+     }
+    ],
+    "epa_per_play_rank": 10
+   },
+   "DEN": {
+    "starter": "Bo Nix",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.2608,
+    "by_qb": [
+     {
+      "name": "Bo Nix",
+      "games": 1,
+      "epa_per_play": -0.2608
+     }
+    ],
+    "epa_per_play_rank": 28
+   },
+   "DET": {
+    "starter": "Jared Goff",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0303,
+    "by_qb": [
+     {
+      "name": "Jared Goff",
+      "games": 1,
+      "epa_per_play": -0.0303
+     }
+    ],
+    "epa_per_play_rank": 17
+   },
+   "GB": {
+    "starter": "Jordan Love",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.1621,
+    "by_qb": [
+     {
+      "name": "Jordan Love",
+      "games": 1,
+      "epa_per_play": -0.1621
+     }
+    ],
+    "epa_per_play_rank": 25
+   },
+   "HOU": {
+    "starter": "C.J. Stroud",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0689,
+    "by_qb": [
+     {
+      "name": "C.J. Stroud",
+      "games": 1,
+      "epa_per_play": 0.0689
+     }
+    ],
+    "epa_per_play_rank": 14
+   },
+   "IND": {
+    "starter": "Daniel Jones",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.3584,
+    "by_qb": [
+     {
+      "name": "Daniel Jones",
+      "games": 1,
+      "epa_per_play": -0.3584
+     }
+    ],
+    "epa_per_play_rank": 31
+   },
+   "JAX": {
+    "starter": "Trevor Lawrence",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.4219,
+    "by_qb": [
+     {
+      "name": "Trevor Lawrence",
+      "games": 1,
+      "epa_per_play": 0.4219
+     }
+    ],
+    "epa_per_play_rank": 2
+   },
+   "KC": {
+    "starter": "Patrick Mahomes",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1338,
+    "by_qb": [
+     {
+      "name": "Patrick Mahomes",
+      "games": 1,
+      "epa_per_play": 0.1338
+     }
+    ],
+    "epa_per_play_rank": 11
+   },
+   "LA": {
+    "starter": "Matthew Stafford",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0792,
+    "by_qb": [
+     {
+      "name": "Matthew Stafford",
+      "games": 1,
+      "epa_per_play": -0.0792
+     }
+    ],
+    "epa_per_play_rank": 19
+   },
+   "LAC": {
+    "starter": "Justin Herbert",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.153,
+    "by_qb": [
+     {
+      "name": "Justin Herbert",
+      "games": 1,
+      "epa_per_play": -0.153
+     }
+    ],
+    "epa_per_play_rank": 24
+   },
+   "LV": {
+    "starter": "Kirk Cousins",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.2138,
+    "by_qb": [
+     {
+      "name": "Kirk Cousins",
+      "games": 1,
+      "epa_per_play": 0.2138
+     }
+    ],
+    "epa_per_play_rank": 8
+   },
+   "MIA": {
+    "starter": "Malik Willis",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0849,
+    "by_qb": [
+     {
+      "name": "Malik Willis",
+      "games": 1,
+      "epa_per_play": -0.0849
+     }
+    ],
+    "epa_per_play_rank": 20
+   },
+   "MIN": {
+    "starter": "Carson Wentz",
+    "starter_games": 0,
+    "games": 1,
+    "changed": true,
+    "replaced": null,
+    "switch": "backup_for_backup",
+    "switch_adj": -0.099,
+    "epa_per_play": -0.1457,
+    "by_qb": [
+     {
+      "name": "Kyler Murray",
+      "games": 1,
+      "epa_per_play": -0.0467
+     }
+    ],
+    "epa_per_play_rank": 23
+   },
+   "NE": {
+    "starter": "Drake Maye",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.1096,
+    "by_qb": [
+     {
+      "name": "Drake Maye",
+      "games": 1,
+      "epa_per_play": -0.1096
+     }
+    ],
+    "epa_per_play_rank": 22
+   },
+   "NO": {
+    "starter": "Tyler Shough",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0952,
+    "by_qb": [
+     {
+      "name": "Tyler Shough",
+      "games": 1,
+      "epa_per_play": -0.0952
+     }
+    ],
+    "epa_per_play_rank": 21
+   },
+   "NYG": {
+    "starter": "Jaxson Dart",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.3968,
+    "by_qb": [
+     {
+      "name": "Jaxson Dart",
+      "games": 1,
+      "epa_per_play": 0.3968
+     }
+    ],
+    "epa_per_play_rank": 3
+   },
+   "NYJ": {
+    "starter": "Geno Smith",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.2922,
+    "by_qb": [
+     {
+      "name": "Geno Smith",
+      "games": 1,
+      "epa_per_play": 0.2922
+     }
+    ],
+    "epa_per_play_rank": 5
+   },
+   "PHI": {
+    "starter": "Jalen Hurts",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.071,
+    "by_qb": [
+     {
+      "name": "Jalen Hurts",
+      "games": 1,
+      "epa_per_play": 0.071
+     }
+    ],
+    "epa_per_play_rank": 13
+   },
+   "PIT": {
+    "starter": "Aaron Rodgers",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.3115,
+    "by_qb": [
+     {
+      "name": "Aaron Rodgers",
+      "games": 1,
+      "epa_per_play": -0.3115
+     }
+    ],
+    "epa_per_play_rank": 30
+   },
+   "SEA": {
+    "starter": "Drew Lock",
+    "starter_games": 0,
+    "games": 1,
+    "changed": true,
+    "replaced": null,
+    "switch": "backup_for_starter",
+    "switch_adj": -0.098,
+    "epa_per_play": -0.0324,
+    "by_qb": [
+     {
+      "name": "Sam Darnold",
+      "games": 1,
+      "epa_per_play": 0.0656
+     }
+    ],
+    "epa_per_play_rank": 18
+   },
+   "SF": {
+    "starter": "Brock Purdy",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.2624,
+    "by_qb": [
+     {
+      "name": "Brock Purdy",
+      "games": 1,
+      "epa_per_play": 0.2624
+     }
+    ],
+    "epa_per_play_rank": 6
+   },
+   "TB": {
+    "starter": "Baker Mayfield",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.2131,
+    "by_qb": [
+     {
+      "name": "Baker Mayfield",
+      "games": 1,
+      "epa_per_play": -0.2131
+     }
+    ],
+    "epa_per_play_rank": 26
+   },
+   "TEN": {
+    "starter": "Cam Ward",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.2151,
+    "by_qb": [
+     {
+      "name": "Cam Ward",
+      "games": 1,
+      "epa_per_play": -0.2151
+     }
+    ],
+    "epa_per_play_rank": 27
+   },
+   "WAS": {
+    "starter": "Jayden Daniels",
+    "starter_games": 1,
+    "games": 1,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0599,
+    "by_qb": [
+     {
+      "name": "Jayden Daniels",
+      "games": 1,
+      "epa_per_play": 0.0599
+     }
+    ],
+    "epa_per_play_rank": 15
+   }
+  }
  }
 }

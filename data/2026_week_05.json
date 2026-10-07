@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 5,
  "stats_through_week": 4,
- "generated_at": "2026-10-06T22:20:19-04:00",
+ "generated_at": "2026-10-06T22:38:26-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -5112,6 +5112,7 @@
   "teams": {
    "ARI": [
     {
+     "gsis_id": "00-0040751",
      "name": "Will Johnson",
      "position": "LCB",
      "group": "DB",
@@ -5127,12 +5128,14 @@
      "report_week": null,
      "next_up": {
       "name": "Garrett Williams",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0039007"
      }
     }
    ],
    "ATL": [
     {
+     "gsis_id": "00-0036285",
      "name": "A.J. Terrell",
      "position": "LCB",
      "group": "DB",
@@ -5148,12 +5151,14 @@
      "report_week": null,
      "next_up": {
       "name": "C.J. Henderson",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0036281"
      }
     }
    ],
    "BAL": [
     {
+     "gsis_id": "00-0038629",
      "name": "Jovaughn Gwyn",
      "position": "C",
      "group": "OL",
@@ -5169,10 +5174,12 @@
      "report_week": null,
      "next_up": {
       "name": "Olaivavega Ioane",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0040866"
      }
     },
     {
+     "gsis_id": "00-0033935",
      "name": "Trey Hendrickson",
      "position": "SLB",
      "group": "LB",
@@ -5188,12 +5195,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Mike Green",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040722"
      }
     }
    ],
    "BUF": [
     {
+     "gsis_id": "00-0040724",
      "name": "T.J. Sanders",
      "position": "LDE",
      "group": "DL",
@@ -5209,12 +5218,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Landon Jackson",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040132"
      }
     }
    ],
    "CHI": [
     {
+     "gsis_id": "00-0037081",
      "name": "Braxton Jones",
      "position": "LT",
      "group": "OL",
@@ -5230,10 +5241,12 @@
      "report_week": null,
      "next_up": {
       "name": "Ozzy Trapilo",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0040740"
      }
     },
     {
+     "gsis_id": "00-0039918",
      "name": "Caleb Williams",
      "position": "QB",
      "group": "QB",
@@ -5249,10 +5262,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Tyson Bagent",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0038416"
      }
     },
     {
+     "gsis_id": "00-0035357",
      "name": "Cam Lewis",
      "position": "NB",
      "group": "DB",
@@ -5268,12 +5283,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Malik Muhammad",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0041060"
      }
     }
    ],
    "CIN": [
     {
+     "gsis_id": "00-0038619",
      "name": "Andrei Iosivas",
      "position": "WR",
      "group": "WR",
@@ -5290,6 +5307,7 @@
      "next_up": null
     },
     {
+     "gsis_id": "00-0034446",
      "name": "Jalen Davis",
      "position": "NB",
      "group": "DB",
@@ -5305,10 +5323,12 @@
      "report_week": null,
      "next_up": {
       "name": "Dax Hill",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0037743"
      }
     },
     {
+     "gsis_id": "00-0041069",
      "name": "Colbie Young",
      "position": "WR",
      "group": "WR",
@@ -5325,6 +5345,7 @@
      "next_up": null
     },
     {
+     "gsis_id": "00-0036231",
      "name": "Kyle Dugger",
      "position": "SS",
      "group": "DB",
@@ -5340,12 +5361,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Jordan Battle",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038560"
      }
     }
    ],
    "CLE": [
     {
+     "gsis_id": "00-0035526",
      "name": "Elgton Jenkins",
      "position": "C",
      "group": "OL",
@@ -5361,12 +5384,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Luke Wypler",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038609"
      }
     }
    ],
    "DAL": [
     {
+     "gsis_id": "00-0035705",
      "name": "Jalen Thompson",
      "position": "SS",
      "group": "DB",
@@ -5382,10 +5407,12 @@
      "report_week": null,
      "next_up": {
       "name": "Caleb Downs",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0040865"
      }
     },
     {
+     "gsis_id": "00-0038556",
      "name": "DeMarvion Overshown",
      "position": "LILB",
      "group": "LB",
@@ -5401,10 +5428,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Jaishawn Barham",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040872"
      }
     },
     {
+     "gsis_id": "00-0037839",
      "name": "Cobie Durant",
      "position": "LCB",
      "group": "DB",
@@ -5420,13 +5449,15 @@
      "report_week": 4,
      "next_up": {
       "name": "Joey Porter Jr.",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0039167"
      }
     }
    ],
    "DEN": [],
    "DET": [
     {
+     "gsis_id": "00-0034377",
      "name": "Avonte Maddox",
      "position": "SS",
      "group": "DB",
@@ -5442,10 +5473,12 @@
      "report_week": null,
      "next_up": {
       "name": "Christian Izien",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038820"
      }
     },
     {
+     "gsis_id": "00-0039660",
      "name": "Thomas Harper",
      "position": "SS",
      "group": "DB",
@@ -5461,10 +5494,12 @@
      "report_week": null,
      "next_up": {
       "name": "Christian Izien",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038820"
      }
     },
     {
+     "gsis_id": "00-0036272",
      "name": "Ben Bartch",
      "position": "LG",
      "group": "OL",
@@ -5480,12 +5515,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Christian Mahogany",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0039408"
      }
     }
    ],
    "GB": [
     {
+     "gsis_id": "00-0037817",
      "name": "Zach Bako-Bewele",
      "position": "RT",
      "group": "OL",
@@ -5501,10 +5538,12 @@
      "report_week": null,
      "next_up": {
       "name": "Anthony Belton",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0040726"
      }
     },
     {
+     "gsis_id": "00-0036551",
      "name": "Aaron Banks",
      "position": "LG",
      "group": "OL",
@@ -5520,10 +5559,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Laken Tomlinson",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0032234"
      }
     },
     {
+     "gsis_id": "00-0039817",
      "name": "Jacob Monk",
      "position": "RG",
      "group": "OL",
@@ -5539,12 +5580,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Kevin Zeitler",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0029592"
      }
     }
    ],
    "HOU": [
     {
+     "gsis_id": "00-0038599",
      "name": "Henry To'oTo'o",
      "position": "WLB",
      "group": "LB",
@@ -5560,10 +5603,12 @@
      "report_week": null,
      "next_up": {
       "name": "Aiden Fisher",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0041449"
      }
     },
     {
+     "gsis_id": "00-0035166",
      "name": "Azeez Al-Shaair",
      "position": "MLB",
      "group": "LB",
@@ -5584,6 +5629,7 @@
    "JAX": [],
    "LA": [
     {
+     "gsis_id": "00-0033868",
      "name": "Myles Garrett",
      "position": "SLB",
      "group": "LB",
@@ -5599,10 +5645,12 @@
      "report_week": null,
      "next_up": {
       "name": "Desjuan Johnson",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0039061"
      }
     },
     {
+     "gsis_id": "00-0031388",
      "name": "Aaron Donald",
      "position": "RDE",
      "group": "DL",
@@ -5618,10 +5666,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Braden Fiske",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0039734"
      }
     },
     {
+     "gsis_id": "00-0037195",
      "name": "Jaylen Watson",
      "position": "LCB",
      "group": "DB",
@@ -5637,12 +5687,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Josh Wallace",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0039772"
      }
     }
    ],
    "LAC": [
     {
+     "gsis_id": "00-0038046",
      "name": "Charlie Kolar",
      "position": "TE",
      "group": "TE",
@@ -5658,10 +5710,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Oronde Gadsden",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040189"
      }
     },
     {
+     "gsis_id": "00-0036736",
      "name": "Kayode Awosika",
      "position": "LG",
      "group": "OL",
@@ -5677,12 +5731,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Trevor Penning",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0037241"
      }
     }
    ],
    "LV": [
     {
+     "gsis_id": "00-0039735",
      "name": "Jackson Powers-Johnson",
      "position": "RG",
      "group": "OL",
@@ -5698,12 +5754,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Caleb Rogers",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040150"
      }
     }
    ],
    "MIA": [
     {
+     "gsis_id": "00-0039040",
      "name": "De'Von Achane",
      "position": "RB",
      "group": "RB",
@@ -5719,10 +5777,12 @@
      "report_week": null,
      "next_up": {
       "name": "Ollie Gordon II",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0040198"
      }
     },
     {
+     "gsis_id": "00-0041523",
      "name": "Caleb Douglas",
      "position": "WR",
      "group": "WR",
@@ -5738,12 +5798,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Jalen Tolbert",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0037666"
      }
     }
    ],
    "MIN": [
     {
+     "gsis_id": "00-0035249",
      "name": "Josh Oliver",
      "position": "TE",
      "group": "TE",
@@ -5759,10 +5821,12 @@
      "report_week": null,
      "next_up": {
       "name": "T.J. Hockenson",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0035229"
      }
     },
     {
+     "gsis_id": "00-0036322",
      "name": "Justin Jefferson",
      "position": "WR",
      "group": "WR",
@@ -5778,12 +5842,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Tai Felton",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040154"
      }
     }
    ],
    "NE": [
     {
+     "gsis_id": "00-0036198",
      "name": "Mike Onwenu",
      "position": "RG",
      "group": "OL",
@@ -5799,10 +5865,12 @@
      "report_week": null,
      "next_up": {
       "name": "Ben Brown",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0037413"
      }
     },
     {
+     "gsis_id": "00-0036981",
      "name": "Christian Barmore",
      "position": "LDE",
      "group": "DL",
@@ -5818,10 +5886,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Joshua Farmer",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040171"
      }
     },
     {
+     "gsis_id": "00-0039147",
      "name": "Christian Gonzalez",
      "position": "RCB",
      "group": "DB",
@@ -5837,12 +5907,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Charles Woods",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0039770"
      }
     }
    ],
    "NO": [
     {
+     "gsis_id": "00-0036973",
      "name": "Travis Etienne",
      "position": "RB",
      "group": "RB",
@@ -5858,10 +5930,12 @@
      "report_week": null,
      "next_up": {
       "name": "Alvin Kamara",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0033906"
      }
     },
     {
+     "gsis_id": "00-0040125",
      "name": "Kelvin Banks Jr.",
      "position": "LT",
      "group": "OL",
@@ -5877,10 +5951,12 @@
      "report_week": null,
      "next_up": {
       "name": "Asim Richards",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038601"
      }
     },
     {
+     "gsis_id": "00-0035402",
      "name": "Carl Granderson",
      "position": "WLB",
      "group": "LB",
@@ -5896,10 +5972,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Chris Rumph II",
-      "string": 3
+      "string": 3,
+      "gsis_id": "00-0036867"
      }
     },
     {
+     "gsis_id": "00-0035316",
      "name": "Kaden Elliss",
      "position": "LILB",
      "group": "LB",
@@ -5915,12 +5993,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Isaiah Stalbird",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0039622"
      }
     }
    ],
    "NYG": [
     {
+     "gsis_id": "00-0040691",
      "name": "Jaxson Dart",
      "position": "QB",
      "group": "QB",
@@ -5936,10 +6016,12 @@
      "report_week": null,
      "next_up": {
       "name": "Jameis Winston",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0031503"
      }
     },
     {
+     "gsis_id": "00-0035713",
      "name": "Brian Burns",
      "position": "WLB",
      "group": "LB",
@@ -5955,12 +6037,14 @@
      "report_week": null,
      "next_up": {
       "name": "Kayvon Thibodeaux",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0037611"
      }
     }
    ],
    "NYJ": [
     {
+     "gsis_id": "00-0038120",
      "name": "Breece Hall",
      "position": "RB",
      "group": "RB",
@@ -5976,10 +6060,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Braelon Allen",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0039794"
      }
     },
     {
+     "gsis_id": "00-0039890",
      "name": "Adonai Mitchell",
      "position": "WR",
      "group": "WR",
@@ -5995,10 +6081,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Jamaal Pritchett",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040405"
      }
     },
     {
+     "gsis_id": "00-0040736",
      "name": "Mason Taylor",
      "position": "TE",
      "group": "TE",
@@ -6014,10 +6102,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Kenyon Sadiq",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0041032"
      }
     },
     {
+     "gsis_id": "00-0037255",
      "name": "Dylan Parham",
      "position": "LG",
      "group": "OL",
@@ -6033,10 +6123,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Jordan Meredith",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0036604"
      }
     },
     {
+     "gsis_id": "00-0040186",
      "name": "Francisco Mauigoa",
      "position": "SLB",
      "group": "LB",
@@ -6052,12 +6144,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Trevin Wallace",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0039347"
      }
     }
    ],
    "PHI": [
     {
+     "gsis_id": "00-0037002",
      "name": "Landon Dickerson",
      "position": "LG",
      "group": "OL",
@@ -6073,10 +6167,12 @@
      "report_week": null,
      "next_up": {
       "name": "Cam Jurgens",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038112"
      }
     },
     {
+     "gsis_id": "00-0036912",
      "name": "DeVonta Smith",
      "position": "WR",
      "group": "WR",
@@ -6092,10 +6188,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Britain Covey",
-      "string": 3
+      "string": 3,
+      "gsis_id": "00-0037132"
      }
     },
     {
+     "gsis_id": "00-0034351",
      "name": "Dallas Goedert",
      "position": "TE",
      "group": "TE",
@@ -6111,10 +6209,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Johnny Mundt",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0033246"
      }
     },
     {
+     "gsis_id": "00-0036418",
      "name": "Zack Baun",
      "position": "LILB",
      "group": "LB",
@@ -6130,10 +6230,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Smael Mondon Jr.",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0040013"
      }
     },
     {
+     "gsis_id": "00-0034993",
      "name": "Marcus Epps",
      "position": "SS",
      "group": "DB",
@@ -6149,13 +6251,15 @@
      "report_week": 4,
      "next_up": {
       "name": "Michael Carter II",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0036501"
      }
     }
    ],
    "PIT": [],
    "SEA": [
     {
+     "gsis_id": "00-0039020",
      "name": "Anthony Bradford",
      "position": "RG",
      "group": "OL",
@@ -6171,12 +6275,14 @@
      "report_week": null,
      "next_up": {
       "name": "Christian Haynes",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0039839"
      }
     }
    ],
    "SF": [
     {
+     "gsis_id": "00-0035717",
      "name": "Nick Bosa",
      "position": "RDE",
      "group": "DL",
@@ -6192,12 +6298,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Ogbo Okoronkwo",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0034807"
      }
     }
    ],
    "TB": [
     {
+     "gsis_id": "00-0034855",
      "name": "Baker Mayfield",
      "position": "QB",
      "group": "QB",
@@ -6213,10 +6321,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Jalon Daniels",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0041251"
      }
     },
     {
+     "gsis_id": "00-0041031",
      "name": "Rueben Bain Jr.",
      "position": "WLB",
      "group": "LB",
@@ -6232,10 +6342,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Al-Quadin Muhammad",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0033964"
      }
     },
     {
+     "gsis_id": "00-0040747",
      "name": "Benjamin Morrison",
      "position": "RCB",
      "group": "DB",
@@ -6251,12 +6363,14 @@
      "report_week": 4,
      "next_up": {
       "name": "Ayden Garnes",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0041253"
      }
     }
    ],
    "TEN": [
     {
+     "gsis_id": "00-0040881",
      "name": "Fernando Carmona",
      "position": "RG",
      "group": "OL",
@@ -6272,10 +6386,12 @@
      "report_week": null,
      "next_up": {
       "name": "Atonio Mafi",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038586"
      }
     },
     {
+     "gsis_id": "00-0040190",
      "name": "Jackson Slater",
      "position": "RG",
      "group": "OL",
@@ -6291,12 +6407,14 @@
      "report_week": null,
      "next_up": {
       "name": "Atonio Mafi",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0038586"
      }
     }
    ],
    "WAS": [
     {
+     "gsis_id": "00-0039910",
      "name": "Jayden Daniels",
      "position": "QB",
      "group": "QB",
@@ -6312,10 +6430,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Marcus Mariota",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0032268"
      }
     },
     {
+     "gsis_id": "00-0036618",
      "name": "Sam Cosmi",
      "position": "RG",
      "group": "OL",
@@ -6331,10 +6451,12 @@
      "report_week": 4,
      "next_up": {
       "name": "Matt Gulbin",
-      "string": 1
+      "string": 1,
+      "gsis_id": "00-0041108"
      }
     },
     {
+     "gsis_id": "00-0037616",
      "name": "Nick Cross",
      "position": "SS",
      "group": "DB",
@@ -6350,10 +6472,635 @@
      "report_week": 4,
      "next_up": {
       "name": "Tyler Owens",
-      "string": 2
+      "string": 2,
+      "gsis_id": "00-0039681"
      }
     }
    ]
+  }
+ },
+ "qb": {
+  "other_qb_weight": 0.25,
+  "teams": {
+   "ARI": {
+    "starter": "Jacoby Brissett",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0108,
+    "by_qb": [
+     {
+      "name": "Jacoby Brissett",
+      "games": 4,
+      "epa_per_play": -0.0108
+     }
+    ],
+    "epa_per_play_rank": 18
+   },
+   "ATL": {
+    "starter": "Michael Penix Jr.",
+    "starter_games": 2,
+    "games": 4,
+    "changed": true,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1361,
+    "by_qb": [
+     {
+      "name": "Michael Penix Jr.",
+      "games": 2,
+      "epa_per_play": 0.2553
+     },
+     {
+      "name": "Cooper Rush",
+      "games": 1,
+      "epa_per_play": -0.321
+     },
+     {
+      "name": "Tua Tagovailoa",
+      "games": 1,
+      "epa_per_play": -0.3881
+     }
+    ],
+    "epa_per_play_rank": 8
+   },
+   "BAL": {
+    "starter": "Lamar Jackson",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.2434,
+    "by_qb": [
+     {
+      "name": "Lamar Jackson",
+      "games": 4,
+      "epa_per_play": 0.2434
+     }
+    ],
+    "epa_per_play_rank": 2
+   },
+   "BUF": {
+    "starter": "Josh Allen",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1857,
+    "by_qb": [
+     {
+      "name": "Josh Allen",
+      "games": 4,
+      "epa_per_play": 0.1857
+     }
+    ],
+    "epa_per_play_rank": 3
+   },
+   "CAR": {
+    "starter": "Bryce Young",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1387,
+    "by_qb": [
+     {
+      "name": "Bryce Young",
+      "games": 4,
+      "epa_per_play": 0.1387
+     }
+    ],
+    "epa_per_play_rank": 7
+   },
+   "CHI": {
+    "starter": "Tyson Bagent",
+    "starter_games": 0,
+    "games": 4,
+    "changed": true,
+    "replaced": null,
+    "switch": "backup_for_backup",
+    "switch_adj": -0.099,
+    "epa_per_play": -0.022,
+    "by_qb": [
+     {
+      "name": "Case Keenum",
+      "games": 2,
+      "epa_per_play": 0.065
+     },
+     {
+      "name": "Caleb Williams",
+      "games": 2,
+      "epa_per_play": 0.0877
+     }
+    ],
+    "epa_per_play_rank": 19
+   },
+   "CIN": {
+    "starter": "Joe Burrow",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0926,
+    "by_qb": [
+     {
+      "name": "Joe Burrow",
+      "games": 4,
+      "epa_per_play": 0.0926
+     }
+    ],
+    "epa_per_play_rank": 10
+   },
+   "CLE": {
+    "starter": "Deshaun Watson",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0269,
+    "by_qb": [
+     {
+      "name": "Deshaun Watson",
+      "games": 4,
+      "epa_per_play": -0.0269
+     }
+    ],
+    "epa_per_play_rank": 20
+   },
+   "DAL": {
+    "starter": "Dak Prescott",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1516,
+    "by_qb": [
+     {
+      "name": "Dak Prescott",
+      "games": 4,
+      "epa_per_play": 0.1516
+     }
+    ],
+    "epa_per_play_rank": 6
+   },
+   "DEN": {
+    "starter": "Bo Nix",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0142,
+    "by_qb": [
+     {
+      "name": "Bo Nix",
+      "games": 4,
+      "epa_per_play": 0.0142
+     }
+    ],
+    "epa_per_play_rank": 13
+   },
+   "DET": {
+    "starter": "Jared Goff",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1115,
+    "by_qb": [
+     {
+      "name": "Jared Goff",
+      "games": 4,
+      "epa_per_play": 0.1115
+     }
+    ],
+    "epa_per_play_rank": 9
+   },
+   "GB": {
+    "starter": "Jordan Love",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.1134,
+    "by_qb": [
+     {
+      "name": "Jordan Love",
+      "games": 4,
+      "epa_per_play": -0.1134
+     }
+    ],
+    "epa_per_play_rank": 30
+   },
+   "HOU": {
+    "starter": "C.J. Stroud",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0101,
+    "by_qb": [
+     {
+      "name": "C.J. Stroud",
+      "games": 4,
+      "epa_per_play": 0.0101
+     }
+    ],
+    "epa_per_play_rank": 15
+   },
+   "IND": {
+    "starter": "Daniel Jones",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0665,
+    "by_qb": [
+     {
+      "name": "Daniel Jones",
+      "games": 4,
+      "epa_per_play": -0.0665
+     }
+    ],
+    "epa_per_play_rank": 23
+   },
+   "JAX": {
+    "starter": "Trevor Lawrence",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1683,
+    "by_qb": [
+     {
+      "name": "Trevor Lawrence",
+      "games": 4,
+      "epa_per_play": 0.1683
+     }
+    ],
+    "epa_per_play_rank": 5
+   },
+   "KC": {
+    "starter": "Patrick Mahomes",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.1736,
+    "by_qb": [
+     {
+      "name": "Patrick Mahomes",
+      "games": 4,
+      "epa_per_play": 0.1736
+     }
+    ],
+    "epa_per_play_rank": 4
+   },
+   "LA": {
+    "starter": "Matthew Stafford",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0529,
+    "by_qb": [
+     {
+      "name": "Matthew Stafford",
+      "games": 4,
+      "epa_per_play": 0.0529
+     }
+    ],
+    "epa_per_play_rank": 12
+   },
+   "LAC": {
+    "starter": "Justin Herbert",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.2358,
+    "by_qb": [
+     {
+      "name": "Justin Herbert",
+      "games": 4,
+      "epa_per_play": -0.2358
+     }
+    ],
+    "epa_per_play_rank": 32
+   },
+   "LV": {
+    "starter": "Kirk Cousins",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0716,
+    "by_qb": [
+     {
+      "name": "Kirk Cousins",
+      "games": 4,
+      "epa_per_play": 0.0716
+     }
+    ],
+    "epa_per_play_rank": 11
+   },
+   "MIA": {
+    "starter": "Malik Willis",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0732,
+    "by_qb": [
+     {
+      "name": "Malik Willis",
+      "games": 4,
+      "epa_per_play": -0.0732
+     }
+    ],
+    "epa_per_play_rank": 24
+   },
+   "MIN": {
+    "starter": "Kyler Murray",
+    "starter_games": 3,
+    "games": 4,
+    "changed": true,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.1075,
+    "by_qb": [
+     {
+      "name": "Kyler Murray",
+      "games": 3,
+      "epa_per_play": -0.1097
+     },
+     {
+      "name": "Carson Wentz",
+      "games": 1,
+      "epa_per_play": -0.0779
+     }
+    ],
+    "epa_per_play_rank": 29
+   },
+   "NE": {
+    "starter": "Drake Maye",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0004,
+    "by_qb": [
+     {
+      "name": "Drake Maye",
+      "games": 4,
+      "epa_per_play": -0.0004
+     }
+    ],
+    "epa_per_play_rank": 17
+   },
+   "NO": {
+    "starter": "Tyler Shough",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0307,
+    "by_qb": [
+     {
+      "name": "Tyler Shough",
+      "games": 4,
+      "epa_per_play": -0.0307
+     }
+    ],
+    "epa_per_play_rank": 21
+   },
+   "NYG": {
+    "starter": "Jameis Winston",
+    "starter_games": 2,
+    "games": 4,
+    "changed": true,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0739,
+    "by_qb": [
+     {
+      "name": "Jameis Winston",
+      "games": 2,
+      "epa_per_play": -0.098
+     },
+     {
+      "name": "Jaxson Dart",
+      "games": 2,
+      "epa_per_play": 0.0421
+     }
+    ],
+    "epa_per_play_rank": 25
+   },
+   "NYJ": {
+    "starter": "Geno Smith",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0016,
+    "by_qb": [
+     {
+      "name": "Geno Smith",
+      "games": 4,
+      "epa_per_play": 0.0016
+     }
+    ],
+    "epa_per_play_rank": 16
+   },
+   "PHI": {
+    "starter": "Jalen Hurts",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0655,
+    "by_qb": [
+     {
+      "name": "Jalen Hurts",
+      "games": 4,
+      "epa_per_play": -0.0655
+     }
+    ],
+    "epa_per_play_rank": 22
+   },
+   "PIT": {
+    "starter": "Aaron Rodgers",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0906,
+    "by_qb": [
+     {
+      "name": "Aaron Rodgers",
+      "games": 4,
+      "epa_per_play": -0.0906
+     }
+    ],
+    "epa_per_play_rank": 27
+   },
+   "SEA": {
+    "starter": "Drew Lock",
+    "starter_games": 3,
+    "games": 4,
+    "changed": true,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.0139,
+    "by_qb": [
+     {
+      "name": "Drew Lock",
+      "games": 3,
+      "epa_per_play": 0.0099
+     },
+     {
+      "name": "Sam Darnold",
+      "games": 1,
+      "epa_per_play": 0.0656
+     }
+    ],
+    "epa_per_play_rank": 14
+   },
+   "SF": {
+    "starter": "Brock Purdy",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": 0.3121,
+    "by_qb": [
+     {
+      "name": "Brock Purdy",
+      "games": 4,
+      "epa_per_play": 0.3121
+     }
+    ],
+    "epa_per_play_rank": 1
+   },
+   "TB": {
+    "starter": "Jalon Daniels",
+    "starter_games": 1,
+    "games": 4,
+    "changed": true,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.1066,
+    "by_qb": [
+     {
+      "name": "Jalon Daniels",
+      "games": 1,
+      "epa_per_play": -0.0377
+     },
+     {
+      "name": "Baker Mayfield",
+      "games": 3,
+      "epa_per_play": -0.2042
+     }
+    ],
+    "epa_per_play_rank": 28
+   },
+   "TEN": {
+    "starter": "Cam Ward",
+    "starter_games": 4,
+    "games": 4,
+    "changed": false,
+    "replaced": null,
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.1158,
+    "by_qb": [
+     {
+      "name": "Cam Ward",
+      "games": 4,
+      "epa_per_play": -0.1158
+     }
+    ],
+    "epa_per_play_rank": 31
+   },
+   "WAS": {
+    "starter": "Marcus Mariota",
+    "starter_games": 1,
+    "games": 4,
+    "changed": true,
+    "replaced": {
+     "name": "Jayden Daniels",
+     "status": "Out last game"
+    },
+    "switch": null,
+    "switch_adj": 0.0,
+    "epa_per_play": -0.0904,
+    "by_qb": [
+     {
+      "name": "Marcus Mariota",
+      "games": 1,
+      "epa_per_play": -0.1792
+     },
+     {
+      "name": "Jayden Daniels",
+      "games": 3,
+      "epa_per_play": -0.0011
+     }
+    ],
+    "epa_per_play_rank": 26
+   }
   }
  },
  "games": [
