@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 5,
  "stats_through_week": 4,
- "generated_at": "2026-10-06T22:09:37-04:00",
+ "generated_at": "2026-10-06T22:20:19-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -5124,6 +5124,7 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 7,
+     "report_week": null,
      "next_up": {
       "name": "Garrett Williams",
       "string": 1
@@ -5144,6 +5145,7 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 7,
+     "report_week": null,
      "next_up": {
       "name": "C.J. Henderson",
       "string": 1
@@ -5164,13 +5166,53 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Olaivavega Ioane",
       "string": 1
      }
+    },
+    {
+     "name": "Trey Hendrickson",
+     "position": "SLB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Finger",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.63,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Mike Green",
+      "string": 2
+     }
     }
    ],
-   "BUF": [],
+   "BUF": [
+    {
+     "name": "T.J. Sanders",
+     "position": "LDE",
+     "group": "DL",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Illness",
+     "practice": null,
+     "string": 1,
+     "snap_pct": null,
+     "games_missed": 4,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Landon Jackson",
+      "string": 2
+     }
+    }
+   ],
    "CHI": [
     {
      "name": "Braxton Jones",
@@ -5185,9 +5227,48 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Ozzy Trapilo",
       "string": 1
+     }
+    },
+    {
+     "name": "Caleb Williams",
+     "position": "QB",
+     "group": "QB",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Hamstring",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.93,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Tyson Bagent",
+      "string": 2
+     }
+    },
+    {
+     "name": "Cam Lewis",
+     "position": "NB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Hip",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.84,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Malik Muhammad",
+      "string": 2
      }
     }
    ],
@@ -5205,10 +5286,8 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 8,
-     "next_up": {
-      "name": "Colbie Young",
-      "string": 1
-     }
+     "report_week": null,
+     "next_up": null
     },
     {
      "name": "Jalen Davis",
@@ -5223,13 +5302,69 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 9,
+     "report_week": null,
      "next_up": {
       "name": "Dax Hill",
       "string": 1
      }
+    },
+    {
+     "name": "Colbie Young",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Knee",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.11,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": null
+    },
+    {
+     "name": "Kyle Dugger",
+     "position": "SS",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Quadricep",
+     "practice": null,
+     "string": 2,
+     "snap_pct": 0.66,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Jordan Battle",
+      "string": 1
+     }
     }
    ],
-   "CLE": [],
+   "CLE": [
+    {
+     "name": "Elgton Jenkins",
+     "position": "C",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Concussion",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 1.0,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Luke Wypler",
+      "string": 1
+     }
+    }
+   ],
    "DAL": [
     {
      "name": "Jalen Thompson",
@@ -5244,8 +5379,47 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Caleb Downs",
+      "string": 1
+     }
+    },
+    {
+     "name": "DeMarvion Overshown",
+     "position": "LILB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Hamstring",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.74,
+     "games_missed": 3,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Jaishawn Barham",
+      "string": 2
+     }
+    },
+    {
+     "name": "Cobie Durant",
+     "position": "LCB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Hamstring",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.62,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Joey Porter Jr.",
       "string": 1
      }
     }
@@ -5265,6 +5439,7 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Christian Izien",
       "string": 1
@@ -5283,8 +5458,28 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Christian Izien",
+      "string": 1
+     }
+    },
+    {
+     "name": "Ben Bartch",
+     "position": "LG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Foot",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.93,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Christian Mahogany",
       "string": 1
      }
     }
@@ -5303,8 +5498,47 @@
      "games_missed": 2,
      "reserve_since": 4,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Anthony Belton",
+      "string": 1
+     }
+    },
+    {
+     "name": "Aaron Banks",
+     "position": "LG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Knee, Toe",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.37,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Laken Tomlinson",
+      "string": 2
+     }
+    },
+    {
+     "name": "Jacob Monk",
+     "position": "RG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Quadricep",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.96,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Kevin Zeitler",
       "string": 1
      }
     }
@@ -5323,10 +5557,27 @@
      "games_missed": 3,
      "reserve_since": 2,
      "return_week": 6,
+     "report_week": null,
      "next_up": {
       "name": "Aiden Fisher",
       "string": 1
      }
+    },
+    {
+     "name": "Azeez Al-Shaair",
+     "position": "MLB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Groin",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.92,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": null
     }
    ],
    "IND": [],
@@ -5345,14 +5596,112 @@
      "games_missed": 3,
      "reserve_since": 2,
      "return_week": 6,
+     "report_week": null,
      "next_up": {
       "name": "Desjuan Johnson",
       "string": 1
      }
+    },
+    {
+     "name": "Aaron Donald",
+     "position": "RDE",
+     "group": "DL",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Back",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.54,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Braden Fiske",
+      "string": 2
+     }
+    },
+    {
+     "name": "Jaylen Watson",
+     "position": "LCB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Shoulder",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.75,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Josh Wallace",
+      "string": 2
+     }
     }
    ],
-   "LAC": [],
-   "LV": [],
+   "LAC": [
+    {
+     "name": "Charlie Kolar",
+     "position": "TE",
+     "group": "TE",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Forearm",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.58,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Oronde Gadsden",
+      "string": 2
+     }
+    },
+    {
+     "name": "Kayode Awosika",
+     "position": "LG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Fibula",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.69,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Trevor Penning",
+      "string": 1
+     }
+    }
+   ],
+   "LV": [
+    {
+     "name": "Jackson Powers-Johnson",
+     "position": "RG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Groin",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.98,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Caleb Rogers",
+      "string": 2
+     }
+    }
+   ],
    "MIA": [
     {
      "name": "De'Von Achane",
@@ -5367,9 +5716,29 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 9,
+     "report_week": null,
      "next_up": {
       "name": "Ollie Gordon II",
       "string": 1
+     }
+    },
+    {
+     "name": "Caleb Douglas",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Ankle",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.89,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Jalen Tolbert",
+      "string": 2
      }
     }
    ],
@@ -5387,9 +5756,29 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 9,
+     "report_week": null,
      "next_up": {
       "name": "T.J. Hockenson",
       "string": 1
+     }
+    },
+    {
+     "name": "Justin Jefferson",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Ankle",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.68,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Tai Felton",
+      "string": 2
      }
     }
    ],
@@ -5407,9 +5796,48 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 7,
+     "report_week": null,
      "next_up": {
       "name": "Ben Brown",
       "string": 1
+     }
+    },
+    {
+     "name": "Christian Barmore",
+     "position": "LDE",
+     "group": "DL",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Shoulder",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.52,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Joshua Farmer",
+      "string": 2
+     }
+    },
+    {
+     "name": "Christian Gonzalez",
+     "position": "RCB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Shoulder",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.95,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Charles Woods",
+      "string": 2
      }
     }
    ],
@@ -5427,6 +5855,7 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 9,
+     "report_week": null,
      "next_up": {
       "name": "Alvin Kamara",
       "string": 1
@@ -5445,9 +5874,48 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 7,
+     "report_week": null,
      "next_up": {
       "name": "Asim Richards",
       "string": 1
+     }
+    },
+    {
+     "name": "Carl Granderson",
+     "position": "WLB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Ankle",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.65,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Chris Rumph II",
+      "string": 3
+     }
+    },
+    {
+     "name": "Kaden Elliss",
+     "position": "LILB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Calf",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 1.0,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Isaiah Stalbird",
+      "string": 2
      }
     }
    ],
@@ -5465,6 +5933,7 @@
      "games_missed": 2,
      "reserve_since": 3,
      "return_week": 7,
+     "report_week": null,
      "next_up": {
       "name": "Jameis Winston",
       "string": 1
@@ -5483,13 +5952,110 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 9,
+     "report_week": null,
      "next_up": {
       "name": "Kayvon Thibodeaux",
       "string": 1
      }
     }
    ],
-   "NYJ": [],
+   "NYJ": [
+    {
+     "name": "Breece Hall",
+     "position": "RB",
+     "group": "RB",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Quadricep",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.57,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Braelon Allen",
+      "string": 2
+     }
+    },
+    {
+     "name": "Adonai Mitchell",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Finger",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.75,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Jamaal Pritchett",
+      "string": 2
+     }
+    },
+    {
+     "name": "Mason Taylor",
+     "position": "TE",
+     "group": "TE",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Thumb",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.56,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Kenyon Sadiq",
+      "string": 1
+     }
+    },
+    {
+     "name": "Dylan Parham",
+     "position": "LG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Knee",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.86,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Jordan Meredith",
+      "string": 2
+     }
+    },
+    {
+     "name": "Francisco Mauigoa",
+     "position": "SLB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Quadricep",
+     "practice": null,
+     "string": 1,
+     "snap_pct": null,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Trevin Wallace",
+      "string": 2
+     }
+    }
+   ],
    "PHI": [
     {
      "name": "Landon Dickerson",
@@ -5504,9 +6070,86 @@
      "games_missed": 3,
      "reserve_since": 2,
      "return_week": 6,
+     "report_week": null,
      "next_up": {
       "name": "Cam Jurgens",
       "string": 1
+     }
+    },
+    {
+     "name": "DeVonta Smith",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Hamstring",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.94,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Britain Covey",
+      "string": 3
+     }
+    },
+    {
+     "name": "Dallas Goedert",
+     "position": "TE",
+     "group": "TE",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Knee",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.6,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Johnny Mundt",
+      "string": 2
+     }
+    },
+    {
+     "name": "Zack Baun",
+     "position": "LILB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Concussion",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.97,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Smael Mondon Jr.",
+      "string": 2
+     }
+    },
+    {
+     "name": "Marcus Epps",
+     "position": "SS",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Groin",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.63,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Michael Carter II",
+      "string": 2
      }
     }
    ],
@@ -5525,14 +6168,93 @@
      "games_missed": 3,
      "reserve_since": 3,
      "return_week": 7,
+     "report_week": null,
      "next_up": {
       "name": "Christian Haynes",
       "string": 1
      }
     }
    ],
-   "SF": [],
-   "TB": [],
+   "SF": [
+    {
+     "name": "Nick Bosa",
+     "position": "RDE",
+     "group": "DL",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Knee, Calf",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.64,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Ogbo Okoronkwo",
+      "string": 2
+     }
+    }
+   ],
+   "TB": [
+    {
+     "name": "Baker Mayfield",
+     "position": "QB",
+     "group": "QB",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Thumb",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.98,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Jalon Daniels",
+      "string": 2
+     }
+    },
+    {
+     "name": "Rueben Bain Jr.",
+     "position": "WLB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Groin, Shoulder",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.62,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Al-Quadin Muhammad",
+      "string": 2
+     }
+    },
+    {
+     "name": "Benjamin Morrison",
+     "position": "RCB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Quadricep",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.56,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Ayden Garnes",
+      "string": 2
+     }
+    }
+   ],
    "TEN": [
     {
      "name": "Fernando Carmona",
@@ -5547,6 +6269,7 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Atonio Mafi",
       "string": 1
@@ -5565,13 +6288,72 @@
      "games_missed": 1,
      "reserve_since": 4,
      "return_week": 8,
+     "report_week": null,
      "next_up": {
       "name": "Atonio Mafi",
       "string": 1
      }
     }
    ],
-   "WAS": []
+   "WAS": [
+    {
+     "name": "Jayden Daniels",
+     "position": "QB",
+     "group": "QB",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Elbow",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.78,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Marcus Mariota",
+      "string": 2
+     }
+    },
+    {
+     "name": "Sam Cosmi",
+     "position": "RG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out last game",
+     "injury": "Concussion, Throat",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.98,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Matt Gulbin",
+      "string": 1
+     }
+    },
+    {
+     "name": "Nick Cross",
+     "position": "SS",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out last game",
+     "injury": "Illness",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.99,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": 4,
+     "next_up": {
+      "name": "Tyler Owens",
+      "string": 2
+     }
+    }
+   ]
   }
  },
  "games": [

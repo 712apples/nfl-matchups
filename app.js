@@ -140,7 +140,8 @@ const OVERVIEW_SORTS = {
 
 const SOS_MIN_WEEKS = 3;   // Matches SOS_MIN_WEEKS in nfl_team_stats.py
 const SOS_NOTE_TIER = 6;   // Mention a unit's schedule in the context card if it's this close to either end
-const INJURY_OUT = ['IR', 'PUP', 'NFI', 'Out', 'Doubtful'];   // Statuses treated as "not playing"
+const INJURY_CARRIED = 'Out last game';   // Sat last game; team hasn't filed this week's report yet
+const INJURY_OUT = ['IR', 'PUP', 'NFI', 'Out', 'Doubtful', INJURY_CARRIED];   // Statuses treated as "not playing"
 const RESERVE_LONG = { IR: 'injured reserve', PUP: 'the PUP list', NFI: 'the non-football injury list' };
 
 const state = {
@@ -788,6 +789,7 @@ function injuryItemHtml(p) {
     if (p.return_week) text += `, earliest return week ${p.return_week}`;
     details.push(text);
   }
+  if (p.status === INJURY_CARRIED && p.report_week) details.push(`Out in week ${p.report_week}; this week's report isn't filed yet`);
   if (p.games_missed) details.push(`missed the last ${p.games_missed} game${p.games_missed === 1 ? '' : 's'}`);
 
   const next = p.next_up ? `Next up: ${esc(p.next_up.name)} (${ordinal(p.next_up.string)} string)` : 'Next up: not listed';
@@ -809,33 +811,35 @@ function injuryFantasyNotes(abbr, opp, players) {
   const oppNick = esc(team(opp).nick);
   const nextName = (p) => (p.next_up ? esc(p.next_up.name) : 'the backup');
   const names = (list) => list.map((p) => esc(p.name)).join(', ');
+  const endSentence = (text) => (text.endsWith('.') ? text : `${text}.`);
   const group = (g) => out.filter((p) => p.group === g);
+  const isOut = (p) => (p.status === INJURY_CARRIED ? `sat last game and may miss this one` : 'is out');
   const notes = [];
 
-  group('QB').forEach((p) => notes.push(`<strong>${nick} QB:</strong> ${esc(p.name)} is out, so ${nextName(p)} should start. ` +
+  group('QB').forEach((p) => notes.push(`<strong>${nick} QB:</strong> ${esc(p.name)} ${isOut(p)}, so ${nextName(p)} would start. ` +
     `Downgrade ${esc(abbr)} pass catchers and upgrade the ${oppNick} defense (DST).`));
-  group('RB').forEach((p) => notes.push(`<strong>${nick} RB:</strong> ${esc(p.name)} is out. Upgrade ${nextName(p)}, who should get more carries.`));
+  group('RB').forEach((p) => notes.push(`<strong>${nick} RB:</strong> ${esc(p.name)} ${isOut(p)}. Upgrade ${nextName(p)}, who should get more carries.`));
   const wrs = group('WR');
   if (wrs.length) {
     notes.push(`<strong>${nick} WR:</strong> ${names(wrs)} ${wrs.length === 1 ? 'is' : 'are'} out. ` +
       `More targets for the other ${esc(abbr)} receivers and TE${wrs.length === 1 ? `; ${nextName(wrs[0])} moves into the lineup` : ''}.`);
   }
-  group('TE').forEach((p) => notes.push(`<strong>${nick} TE:</strong> ${esc(p.name)} is out. ${nextName(p)} steps in; small target bump for the ${esc(abbr)} WRs.`));
+  group('TE').forEach((p) => notes.push(`<strong>${nick} TE:</strong> ${esc(p.name)} ${isOut(p)}. ${nextName(p)} steps in; small target bump for the ${esc(abbr)} WRs.`));
   const line = group('OL');
   if (line.length >= 2) {
     notes.push(`<strong>${nick} O-line:</strong> ${line.length} starters out (${names(line)}). Expect more pressure on the QB ` +
       `and a weaker run game; small upgrade for the ${oppNick} DST.`);
   } else if (line.length === 1) {
-    notes.push(`<strong>${nick} O-line:</strong> ${names(line)} is out. Small downgrade for the ${esc(abbr)} offense.`);
+    notes.push(`<strong>${nick} O-line:</strong> ${names(line)} ${isOut(line[0])}. Small downgrade for the ${esc(abbr)} offense.`);
   }
   const rush = [...group('DL'), ...group('LB')];
   if (rush.length) {
-    notes.push(`<strong>${nick} front seven:</strong> without ${names(rush)}. The ${oppNick} QB may get more time and ` +
+    notes.push(`<strong>${nick} front seven:</strong> without ${endSentence(names(rush))} The ${oppNick} QB may get more time and ` +
       `the run game more room; small upgrade for ${esc(opp)} skill players.`);
   }
   const dbs = group('DB');
   if (dbs.length) {
-    notes.push(`<strong>${nick} secondary:</strong> without ${names(dbs)}. Upgrade the ${oppNick} passing game, especially ` +
+    notes.push(`<strong>${nick} secondary:</strong> without ${endSentence(names(dbs))} Upgrade the ${oppNick} passing game, especially ` +
       `${dbs.length >= 2 ? 'with several starters missing' : 'the receiver facing that spot'}.`);
   }
   return notes;
@@ -877,7 +881,8 @@ function renderInjuries(away, home) {
   ];
   const status = inj.report_available
     ? 'From the official injury report (teams file Wednesday to Friday; final game statuses come out Friday).'
-    : 'This week\'s injury report isn\'t out yet (teams file Wednesday to Friday), so only players on IR or PUP are shown.';
+    : 'This week\'s injury report isn\'t out yet (teams file Wednesday to Friday), so this shows players on IR or PUP ' +
+      'and starters who sat last game ("Out last game"). Some of them may return this week.';
   const depth = inj.depth_chart_date ? ` Depth chart as of ${esc(timeText(inj.depth_chart_date))}.` : '';
 
   card.innerHTML = `
@@ -1552,7 +1557,8 @@ function renderOverview() {
       <p><strong>Dog:</strong> the composite's pick is the betting underdog. <strong>Won / Lost:</strong> whether the
         team with the better composite won. <strong>ATS:</strong> whether the side its estimated spread prefers
         covered the betting spread (e.g. estimated NO -0.6 vs betting NO -1.5 means ATL +1.5).</p>
-      <p><strong>Injury tags:</strong> key players (starters) who are out, doubtful, or on IR/PUP ("out") or
+      <p><strong>Injury tags:</strong> key players (starters) who are out, doubtful, on IR/PUP, or sat last game
+        before this week's report is filed ("out"), or
         questionable ("Q"). Open a game for names, injuries, and who's next up.</p>
       <p>For interest, not picks: in 2017–2025 testing, neither version beat the betting market, and against the
         spread they won about half the time.</p>
@@ -1613,7 +1619,8 @@ function renderGlossary() {
     <p><strong>Key injuries:</strong> starters (1st string on the depth chart, or at least half of the snaps) who are
       Out, Doubtful, Questionable, or on IR/PUP, with the injury, practice status, and the next healthy player at
       that spot. The stats don't adjust for injuries, so a missing starter is extra information on top of them.
-      Statuses settle on Friday; the data is refreshed Thursday and Saturday.</p>
+      Statuses settle on Friday; the data is refreshed Thursday and Saturday. Until a team files its report,
+      starters who were Out or Doubtful last game and didn't play are shown as "Out last game".</p>
     <dl>${STATS.map((s) => `<dt>${esc(s.label)}</dt><dd>${esc(s.help)}</dd>`).join('')}</dl>`;
 }
 
