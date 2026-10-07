@@ -1572,9 +1572,9 @@ function renderOverview() {
     if (!v.atsTeam || spread == null) return '';
     const points = v.atsTeam === game.home_team ? -spread : spread;
     const lineText = points === 0 ? 'PK' : points > 0 ? `+${points}` : String(points);
-    const value = Math.abs(v.margin - spread).toFixed(1);
+    const gap = Math.abs(v.margin - spread).toFixed(1);
     return `<span class="sub pick"><span class="name-full">Spread pick: </span><span class="name-short">Pick </span><strong>${esc(v.atsTeam)} ${lineText}</strong></span>
-      <span class="sub">${value} pts<span class="name-full"> of value</span></span>`;
+      <span class="sub"><span class="name-full">differs from line by </span><span class="name-short">off by </span>${gap}</span>`;
   };
 
   const versionCell = (v, game, line) => {
@@ -1651,9 +1651,11 @@ function renderOverview() {
       <p><strong>Two different picks:</strong> the bold team is the composite's pick to <em>win the game</em> (a
         moneyline pick). The <strong>Spread pick</strong> compares the estimated spread with the betting spread and
         names the side that looks better against the spread. Example: estimated BAL -3.1, betting ATL -3.5. The
-        estimate thinks Baltimore should be favored, so taking BAL +3.5 gets 6.6 points more than the estimate says
-        Baltimore needs ("6.6 pts of value"). The two picks can be different teams: e.g. estimated NO -0.6 vs betting
-        NO -1.5 picks NO to win, but the spread pick is ATL +1.5. Bigger value = the estimate disagrees more with the market.</p>
+        estimate thinks Baltimore should be favored, so the spread pick is BAL +3.5, and the estimate differs from the
+        line by 6.6 points. The two picks can be different teams: e.g. estimated NO -0.6 vs betting NO -1.5 picks NO to
+        win, but the spread pick is ATL +1.5. A bigger gap is <em>not</em> a stronger pick: in 2017–2025 testing, spread
+        picks won about 50% at every gap size, and 5+ point gaps won only about 48%, because when the estimate and the
+        market disagree a lot, the market is usually right.</p>
       <p><strong>Dog:</strong> the pick to win is the betting underdog. <strong>Won / Lost:</strong> whether the
         pick to win won. <strong>ATS W / L:</strong> whether the spread pick covered.</p>
       <p><strong>QB-adjusted / QB change:</strong> the composite with games started by a different QB than this
@@ -1664,8 +1666,9 @@ function renderOverview() {
         before this week's report is filed ("out"), or
         questionable ("Q"). Open a game for names, injuries, and who's next up.</p>
       <p>For interest, not betting advice: in 2017–2025 testing, picks to win were right about 62% of the time (just
-        taking the betting favorite won about 67%), and spread picks won about half the time, even when the value
-        was 3+ points. None of the versions beat the betting market. QB-adjusted tested slightly better than raw;
+        taking the betting favorite won about 67%), betting every Dog pick lost money, and spread picks won about half
+        the time. The betting spread was also closer to final scores than the estimated spread (average miss 9.9
+        vs 10.5 points). None of the versions beat the betting market. QB-adjusted tested slightly better than raw;
         opponent-adjusted tested slightly worse, mostly in weeks 5–8.</p>
     </div>`;
 
