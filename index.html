@@ -11,14 +11,15 @@
     with Lean/Strong confidence labels from a 2015-2025 backtest, plus pace,
     game flow, and fantasy angles. A "Key injuries" card lists each team's
     injured starters (status, injury, usual depth string, next man up) with
-    fantasy notes. A "League rankings" view lists every team's offense,
+    fantasy notes. A "Weather" card shows a live forecast for the stadium
+    (Open-Meteo) with wind and rain alerts. A "League rankings" view lists every team's offense,
     defense, and net EPA per play in a sortable table, with the selected
     matchup's teams highlighted. A Raw / Opponent-adjusted toggle switches the
     stat tables and rankings to versions adjusted for the opponents each team
     has faced; the composite box shows both, plus a QB-adjusted line that
     counts games started by a different QB for less. A "Weekly overview" view lists
     every game of the week with its lines, raw and opponent-adjusted composites,
-    estimated spreads, underdog flags, results, and injury tags, all sortable; tapping a game
+    estimated spreads, underdog flags, results, weather, and injury tags, all sortable; tapping a game
     opens it in the Matchup view. Data comes from weekly JSON snapshots made by
     nfl_team_stats.py. Each snapshot holds stats through the previous week,
     the week's games with betting lines, line movement, and final scores.
@@ -28,6 +29,7 @@
     app.js                - Loads the data and builds every section of the page.
     data\weeks.json       - List of available weekly snapshots.
     data\<season>_week_NN.json - One snapshot per week.
+    stadiums.json         - Stadium coordinates and roof types (for the weather forecast).
     manifest.webmanifest  - App name, colors, and icons (phone install).
     sw.js                 - Service worker for offline use.
     icons\*.png           - App icons (created by generate_icons.py).
@@ -124,6 +126,7 @@
     <section class="card" id="game-card"></section>
     <section class="card" id="script-card"></section>
     <section class="card" id="injury-card"></section>
+    <section class="card" id="weather-card"></section>
     <section class="card" id="lines-card"></section>
     <section class="card" id="composite-card"></section>
     <section class="card" id="context-card"></section>

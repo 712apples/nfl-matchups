@@ -290,6 +290,14 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
 .inj-detail { display: block; color: var(--muted); font-size: .82rem; margin-top: 2px; }
 .inj-notes-title { margin: 14px 0 4px; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 
+/* ---------- Weather ---------- */
+.tile.alert { box-shadow: inset 0 0 0 1px var(--bad); }
+.tile.alert .value { color: var(--bad); }
+.weather-alert { margin: 10px 0 0; padding: 8px 12px; border-radius: 8px; border-left: 3px solid var(--bad);
+  background: rgba(248, 113, 113, .1); font-size: .9rem; }
+.weather-alert strong { color: var(--bad); }
+.overview-table .sub.wx { color: var(--text); opacity: .85; }
+
 /* ---------- Line movement ---------- */
 .moves { margin: 0; padding-left: 18px; }
 .moves li { margin-bottom: 6px; }

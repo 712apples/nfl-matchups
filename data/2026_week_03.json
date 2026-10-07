@@ -2823,7 +2823,8 @@
      "home_moneyline": -230.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "GNB00"
   },
   {
    "game_id": "2026_03_CAR_CLE",
@@ -2851,7 +2852,8 @@
      "home_moneyline": 114.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "CLE00"
   },
   {
    "game_id": "2026_03_CIN_PIT",
@@ -2879,7 +2881,8 @@
      "home_moneyline": 150.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "PIT00"
   },
   {
    "game_id": "2026_03_HOU_IND",
@@ -2907,7 +2910,8 @@
      "home_moneyline": 105.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "IND00"
   },
   {
    "game_id": "2026_03_KC_MIA",
@@ -2935,7 +2939,8 @@
      "home_moneyline": 440.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "MIA00"
   },
   {
    "game_id": "2026_03_LAC_BUF",
@@ -2963,7 +2968,8 @@
      "home_moneyline": -325.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "BUF00"
   },
   {
    "game_id": "2026_03_NE_JAX",
@@ -2991,7 +2997,8 @@
      "home_moneyline": -162.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "JAX00"
   },
   {
    "game_id": "2026_03_NYJ_DET",
@@ -3019,7 +3026,8 @@
      "home_moneyline": -325.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "DET00"
   },
   {
    "game_id": "2026_03_SEA_WAS",
@@ -3047,7 +3055,8 @@
      "home_moneyline": 320.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "WAS00"
   },
   {
    "game_id": "2026_03_TEN_NYG",
@@ -3075,7 +3084,8 @@
      "home_moneyline": -130.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "NYC01"
   },
   {
    "game_id": "2026_03_ARI_SF",
@@ -3103,7 +3113,8 @@
      "home_moneyline": -395.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "SFO01"
   },
   {
    "game_id": "2026_03_MIN_TB",
@@ -3131,7 +3142,8 @@
      "home_moneyline": -108.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "TAM00"
   },
   {
    "game_id": "2026_03_BAL_DAL",
@@ -3159,7 +3171,8 @@
      "home_moneyline": 142.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "RIO00"
   },
   {
    "game_id": "2026_03_LV_NO",
@@ -3187,7 +3200,8 @@
      "home_moneyline": -192.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "NOR00"
   },
   {
    "game_id": "2026_03_LA_DEN",
@@ -3215,7 +3229,8 @@
      "home_moneyline": -112.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "DEN00"
   },
   {
    "game_id": "2026_03_PHI_CHI",
@@ -3243,7 +3258,8 @@
      "home_moneyline": 164.0,
      "note": "Closing line (rebuilt after the week)"
     }
-   ]
+   ],
+   "stadium_id": "CHI98"
   }
  ],
  "schedule": {},

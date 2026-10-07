@@ -5132,7 +5132,8 @@
      "away_moneyline": -148.0,
      "home_moneyline": 124.0
     }
-   ]
+   ],
+   "stadium_id": "CLE00"
   },
   {
    "game_id": "2026_04_IND_WAS",
@@ -5159,7 +5160,8 @@
      "away_moneyline": -230.0,
      "home_moneyline": 190.0
     }
-   ]
+   ],
+   "stadium_id": "LON02"
   },
   {
    "game_id": "2026_04_ARI_NYG",
@@ -5186,7 +5188,8 @@
      "away_moneyline": -135.0,
      "home_moneyline": 114.0
     }
-   ]
+   ],
+   "stadium_id": "NYC01"
   },
   {
    "game_id": "2026_04_DAL_HOU",
@@ -5213,7 +5216,8 @@
      "away_moneyline": 130.0,
      "home_moneyline": -155.0
     }
-   ]
+   ],
+   "stadium_id": "HOU00"
   },
   {
    "game_id": "2026_04_GB_TB",
@@ -5240,7 +5244,8 @@
      "away_moneyline": -155.0,
      "home_moneyline": 130.0
     }
-   ]
+   ],
+   "stadium_id": "TAM00"
   },
   {
    "game_id": "2026_04_JAX_CIN",
@@ -5267,7 +5272,8 @@
      "away_moneyline": 124.0,
      "home_moneyline": -148.0
     }
-   ]
+   ],
+   "stadium_id": "CIN00"
   },
   {
    "game_id": "2026_04_LA_PHI",
@@ -5294,7 +5300,8 @@
      "away_moneyline": -198.0,
      "home_moneyline": 164.0
     }
-   ]
+   ],
+   "stadium_id": "PHI00"
   },
   {
    "game_id": "2026_04_NE_BUF",
@@ -5321,7 +5328,8 @@
      "away_moneyline": 275.0,
      "home_moneyline": -345.0
     }
-   ]
+   ],
+   "stadium_id": "BUF00"
   },
   {
    "game_id": "2026_04_NYJ_CHI",
@@ -5348,7 +5356,8 @@
      "away_moneyline": 160.0,
      "home_moneyline": -192.0
     }
-   ]
+   ],
+   "stadium_id": "CHI98"
   },
   {
    "game_id": "2026_04_TEN_BAL",
@@ -5375,7 +5384,8 @@
      "away_moneyline": 550.0,
      "home_moneyline": -800.0
     }
-   ]
+   ],
+   "stadium_id": "BAL00"
   },
   {
    "game_id": "2026_04_MIA_MIN",
@@ -5402,7 +5412,8 @@
      "away_moneyline": 400.0,
      "home_moneyline": -535.0
     }
-   ]
+   ],
+   "stadium_id": "MIN01"
   },
   {
    "game_id": "2026_04_DEN_SF",
@@ -5429,7 +5440,8 @@
      "away_moneyline": 140.0,
      "home_moneyline": -166.0
     }
-   ]
+   ],
+   "stadium_id": "SFO01"
   },
   {
    "game_id": "2026_04_KC_LV",
@@ -5456,7 +5468,8 @@
      "away_moneyline": -225.0,
      "home_moneyline": 185.0
     }
-   ]
+   ],
+   "stadium_id": "VEG00"
   },
   {
    "game_id": "2026_04_LAC_SEA",
@@ -5483,7 +5496,8 @@
      "away_moneyline": 275.0,
      "home_moneyline": -345.0
     }
-   ]
+   ],
+   "stadium_id": "SEA00"
   },
   {
    "game_id": "2026_04_DET_CAR",
@@ -5510,7 +5524,8 @@
      "away_moneyline": -225.0,
      "home_moneyline": 185.0
     }
-   ]
+   ],
+   "stadium_id": "CAR00"
   },
   {
    "game_id": "2026_04_ATL_NO",
@@ -5558,7 +5573,8 @@
      "away_moneyline": 100.0,
      "home_moneyline": -120.0
     }
-   ]
+   ],
+   "stadium_id": "NOR00"
   }
  ],
  "injuries": {

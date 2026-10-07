@@ -6,9 +6,10 @@
  *   snapshot, and builds the page: game header and final result, a game
  *   script (where each offense should excel or struggle, with backtested
  *   confidence labels, fantasy angles, pace, and game flow), key injuries
- *   (injured starters, who's next up, and fantasy notes), betting
+ *   (injured starters, who's next up, and fantasy notes), weather (live
+ *   Open-Meteo forecast for the stadium, with wind and rain alerts), betting
  *   lines and line movement, a composite EPA projection for each offense,
- *   context (Pythagorean record, pace, rest, roof), and two stat-by-stat
+ *   context (Pythagorean record, pace, rest, stadium), and two stat-by-stat
  *   tables (away offense vs home defense, home offense vs away defense).
  *   A separate "League rankings" view lists every team's offense, defense,
  *   and net EPA per play (plus strength of schedule) in a sortable table.
@@ -18,7 +19,8 @@
  *   starting QB count less). The game script always uses raw stats.
  *   A "Weekly overview" view lists every game of the week with lines, raw and
  *   opponent-adjusted composites, estimated spreads, underdog flags, and
- *   results in a sortable table, plus injury tags per team; tapping a game
+ *   results in a sortable table, plus a weather line, weather alert tags, and
+ *   injury tags per team; tapping a game
  *   opens it in the Matchup view. Games can be starred (overview or Matchup
  *   page); stars are saved in the browser (localStorage) and can be sorted,
  *   filtered, and scored once final.
@@ -30,6 +32,9 @@
  * Input files (fetched from the same site):
  *   data/weeks.json           - Index of available weeks.
  *   data/<season>_week_NN.json - One snapshot per week (made by nfl_team_stats.py).
+ *   stadiums.json             - Stadium coordinates and roof types (for weather).
+ * Online services (fetched live, not saved):
+ *   Open-Meteo forecast and archive APIs - Hourly weather at each stadium.
  * Output files: None. Everything is rendered into index.html.
  *
  * Location: D:\OneDrive\Code\DFS_direct\NFL\nfl-matchups\app.js
@@ -151,6 +156,31 @@ const INJURY_OUT = ['IR', 'PUP', 'NFI', 'Out', 'Doubtful', INJURY_CARRIED];   //
 const RESERVE_LONG = { IR: 'injured reserve', PUP: 'the PUP list', NFI: 'the non-football injury list' };
 const STAR_KEY = 'nflMatchupStars';   // Browser storage key for starred game IDs (saved per device)
 
+// Weather (live from Open-Meteo, free, no account). The game window is the kickoff hour plus the next 3 hours.
+// Alert thresholds and history numbers must match the latest run of nfl_weather_backtest.py (2015-2025 open-air games).
+const WEATHER_FORECAST_URL = 'https://api.open-meteo.com/v1/forecast';
+const WEATHER_ARCHIVE_URL = 'https://archive-api.open-meteo.com/v1/archive';
+const WEATHER_GAME_HOURS = 4;
+const WEATHER_FORECAST_DAYS = 15;    // Open-Meteo forecasts reach about 16 days ahead
+const WEATHER_ARCHIVE_AFTER = 80;    // Games older than this many days use the historical archive
+const WEATHER_REFRESH_MIN = 30;      // Re-download the forecast after this many minutes
+const WEATHER_WIND_ALERT = 15;       // Average wind (mph) for a wind alert...
+const WEATHER_GUST_ALERT = 25;       // ...or strongest gust (mph)
+const WEATHER_RAIN_ALERT = 0.10;     // Inches of rain during the game for a rain alert...
+const WEATHER_RAIN_CHANCE = 50;      // ...when the forecast chance of rain is at least this (%)
+const WEATHER_SNOW_NOTE = 0.25;      // Inches of snow for a "Snow" tag (not an alert: not backed by the backtest)
+const WEATHER_HISTORY = {
+  wind: { games: 445, under: 61, points: 2.3 },
+  rain: { games: 125, under: 65, points: 4.2 },
+  snow: { games: 18, under: 50 },
+  openAirUnder: 52,
+};
+const WEATHER_CODES = [
+  [0, 'Clear'], [2, 'Partly cloudy'], [3, 'Cloudy'], [48, 'Fog'], [57, 'Drizzle'], [67, 'Rain'],
+  [77, 'Snow'], [82, 'Rain showers'], [86, 'Snow showers'], [99, 'Thunderstorms'],
+];
+const ROOF_TYPE_LABELS = { outdoor: 'Open-air', retractable: 'Retractable roof', dome: 'Dome (indoors)' };
+
 const state = {
   index: null,
   snapshot: null,
@@ -162,6 +192,8 @@ const state = {
   overviewSort: { key: 'kickoff', reversed: false },
   stars: loadStars(),
   starredOnly: false,
+  stadiums: null,   // stadiums.json (locations and roof types)
+  weather: {},      // week number -> { status, games: { game_id: summary }, fetchedAt }
 };
 
 const $ = (id) => document.getElementById(id);
@@ -535,6 +567,7 @@ async function loadWeek(week) {
   renderHeader();
   updateStatsToggle();
   render();
+  loadWeather(state.snapshot);
 }
 
 /**
@@ -670,6 +703,7 @@ function render() {
   renderGameCard(away, home, game);
   renderGameScript(away, home, game);
   renderInjuries(away, home);
+  renderWeather(game);
   renderLinesCard(away, home, game);
   renderComposite(away, home, game);
   renderContext(away, home, game);
@@ -1029,6 +1063,308 @@ function injuryTags(abbr) {
   return chips.join(' ');
 }
 
+// ----------------------------------------------------------------------
+// Weather
+// ----------------------------------------------------------------------
+
+/**
+ * Days from today to a game day (negative = in the past).
+ * @param {string} gameday - "YYYY-MM-DD".
+ * @returns {number} Whole days.
+ */
+function daysFromToday(gameday) {
+  const today = new Date();
+  today.setHours(12, 0, 0, 0);
+  return Math.round((new Date(`${gameday}T12:00:00`) - today) / 86400000);
+}
+
+/**
+ * The game's stadium and whether it will be played indoors.
+ * @param {object} game - Game from the snapshot (stadium_id, roof).
+ * @returns {object|null} Stadium {name, lat, lon, roof} plus setting: "indoor",
+ *   "open" (weather matters), or "retractable" (roof not decided yet); null if unknown.
+ */
+function gameVenue(game) {
+  const stadium = state.stadiums?.stadiums?.[game.stadium_id];
+  if (!stadium) return null;
+  let setting = 'open';
+  if (stadium.roof === 'dome' || (stadium.roof === 'retractable' && ['closed', 'dome'].includes(game.roof))) setting = 'indoor';
+  else if (stadium.roof === 'retractable' && game.roof !== 'open') setting = 'retractable';
+  return { ...stadium, setting };
+}
+
+/**
+ * Roof description for a venue, e.g. "Retractable roof (closed)".
+ * @param {object} venue - Output of gameVenue().
+ * @param {object} game - Game from the snapshot.
+ * @returns {string} Display text.
+ */
+function venueRoofText(venue, game) {
+  if (venue.roof !== 'retractable') return ROOF_TYPE_LABELS[venue.roof];
+  if (venue.setting === 'indoor') return 'Retractable roof (closed)';
+  if (game.roof === 'open') return 'Retractable roof (open)';
+  return 'Retractable roof (opened or closed on game day)';
+}
+
+/**
+ * Download hourly weather for a list of games in one request.
+ * @param {string} source - "forecast" (recent and upcoming games) or "archive" (older games).
+ * @param {Array<{game: object, venue: object}>} list - Games and their venues.
+ * @returns {Promise<Array<object>>} One Open-Meteo result per game, in the same order.
+ */
+async function fetchWeather(source, list) {
+  const dates = list.map(({ game }) => game.gameday).sort();
+  const end = new Date(`${dates[dates.length - 1]}T12:00:00Z`);
+  end.setUTCDate(end.getUTCDate() + 1);
+  const hourly = ['temperature_2m', 'precipitation', 'rain', 'snowfall', 'weather_code', 'wind_speed_10m', 'wind_gusts_10m'];
+  if (source === 'forecast') hourly.push('precipitation_probability', 'showers');
+  const params = new URLSearchParams({
+    latitude: list.map(({ venue }) => venue.lat).join(','),
+    longitude: list.map(({ venue }) => venue.lon).join(','),
+    start_date: dates[0],
+    end_date: end.toISOString().slice(0, 10),
+    hourly: hourly.join(','),
+    timezone: 'America/New_York',
+    wind_speed_unit: 'mph',
+    temperature_unit: 'fahrenheit',
+    precipitation_unit: 'inch',
+  });
+  const response = await fetch(`${source === 'forecast' ? WEATHER_FORECAST_URL : WEATHER_ARCHIVE_URL}?${params}`);
+  if (!response.ok) throw new Error(`weather service error, HTTP ${response.status}`);
+  const data = await response.json();
+  return Array.isArray(data) ? data : [data];
+}
+
+/**
+ * Summarize the weather from kickoff through the next few hours.
+ * @param {object} result - One Open-Meteo result (hourly arrays, Eastern time).
+ * @param {object} game - Game with gameday and gametime ("HH:MM" Eastern).
+ * @returns {object|null} { temp (°F at kickoff), code (worst weather code), wind (average mph),
+ *   gust (strongest mph), rain and snow (inches over the game), chance (max % chance of rain or snow, null for archive) }.
+ */
+function summarizeWeather(result, game) {
+  const h = result?.hourly;
+  if (!h) return null;
+  const start = h.time.indexOf(`${game.gameday}T${game.gametime.slice(0, 2)}:00`);
+  if (start < 0) return null;
+  const hours = [...Array(WEATHER_GAME_HOURS).keys()].map((i) => start + i).filter((i) => i < h.time.length);
+  const vals = (key) => hours.map((i) => h[key]?.[i]).filter((v) => v != null);
+  const sum = (list) => list.reduce((a, b) => a + b, 0);
+  const temps = vals('temperature_2m');
+  if (!temps.length) return null;
+  const winds = vals('wind_speed_10m');
+  const gusts = vals('wind_gusts_10m');
+  const codes = vals('weather_code');
+  const chances = vals('precipitation_probability');
+  const round2 = (x) => Math.round(x * 100) / 100;
+  const wind = winds.length ? sum(winds) / winds.length : 0;
+  return {
+    temp: temps[0],
+    code: codes.length ? Math.max(...codes) : null,
+    wind,
+    gust: Math.max(wind, ...gusts),   // the model's gust can come out below its average wind
+    rain: round2(sum(vals('rain')) + sum(vals('showers'))),
+    snow: round2(sum(vals('snowfall'))),
+    chance: chances.length ? Math.max(...chances) : null,
+  };
+}
+
+/**
+ * Load weather for every outdoor or retractable-roof game in a snapshot, then redraw.
+ * Results are kept for WEATHER_REFRESH_MIN minutes; calling again sooner does nothing.
+ * @param {object} snap - Weekly snapshot.
+ * @returns {Promise<void>}
+ */
+async function loadWeather(snap) {
+  if (!state.stadiums || !snap) return;
+  const week = snap.week;
+  const cached = state.weather[week];
+  if (cached && (cached.status === 'loading' || Date.now() - cached.fetchedAt < WEATHER_REFRESH_MIN * 60000)) return;
+
+  const entry = { status: 'loading', games: cached?.games || {}, fetchedAt: Date.now() };
+  state.weather[week] = entry;
+  const groups = { forecast: [], archive: [] };
+  snap.games.forEach((game) => {
+    const venue = gameVenue(game);
+    const days = daysFromToday(game.gameday);
+    if (!venue || venue.setting === 'indoor' || !game.gametime || days > WEATHER_FORECAST_DAYS) return;
+    groups[days < -WEATHER_ARCHIVE_AFTER ? 'archive' : 'forecast'].push({ game, venue });
+  });
+  try {
+    await Promise.all(Object.entries(groups).filter(([, list]) => list.length).map(async ([source, list]) => {
+      const results = await fetchWeather(source, list);
+      list.forEach(({ game }, i) => {
+        const w = summarizeWeather(results[i], game);
+        if (w && isFinal(game)) w.chance = null;   // finished games: what fell, not the chance
+        entry.games[game.game_id] = w;
+      });
+    }));
+    entry.status = 'done';
+  } catch (error) {
+    entry.status = 'error';
+    entry.error = error.message;
+  }
+  entry.fetchedAt = Date.now();
+  if (state.snapshot?.week === week && state.view !== 'rankings') render();
+}
+
+/**
+ * The loaded weather summary for a game (null while loading or if unavailable).
+ * @param {object} game - Game from the snapshot.
+ * @returns {object|null} Output of summarizeWeather().
+ */
+function gameWeather(game) {
+  return state.weather[state.snapshot.week]?.games?.[game.game_id] || null;
+}
+
+/**
+ * Which weather alerts apply (open-air games only).
+ * @param {object|null} w - Output of summarizeWeather().
+ * @param {object|null} venue - Output of gameVenue().
+ * @returns {{wind: boolean, rain: boolean, snow: boolean}} snow is a note, not an alert.
+ */
+function weatherFlags(w, venue) {
+  if (!w || venue?.setting !== 'open') return { wind: false, rain: false, snow: false };
+  const likely = w.chance == null || w.chance >= WEATHER_RAIN_CHANCE;
+  return {
+    wind: w.wind >= WEATHER_WIND_ALERT || w.gust >= WEATHER_GUST_ALERT,
+    rain: w.rain >= WEATHER_RAIN_ALERT && likely,
+    snow: w.snow >= WEATHER_SNOW_NOTE && likely,
+  };
+}
+
+/**
+ * Plain-English name for an Open-Meteo weather code.
+ * @param {number|null} code - WMO weather code.
+ * @returns {string} e.g. "Partly cloudy".
+ */
+function weatherDesc(code) {
+  if (code == null) return '—';
+  return (WEATHER_CODES.find(([max]) => code <= max) || [0, '—'])[1];
+}
+
+/**
+ * One-line weather summary for the weekly overview, e.g. "58°F · wind 12–24 mph · 40% rain".
+ * @param {object} game - Game from the snapshot.
+ * @returns {string} Plain text ('' when there's nothing to show).
+ */
+function weatherLine(game) {
+  const venue = gameVenue(game);
+  if (!venue) return '';
+  if (venue.setting === 'indoor') return 'Indoors';
+  if (venue.setting === 'retractable') return 'Retractable roof';
+  const w = gameWeather(game);
+  if (!w) {
+    if (daysFromToday(game.gameday) > WEATHER_FORECAST_DAYS) return 'Forecast not out yet';
+    return state.weather[state.snapshot.week]?.status === 'loading' ? 'Weather loading…' : '';
+  }
+  const wind = Math.round(w.wind);
+  const gust = Math.round(w.gust);
+  const parts = [`${Math.round(w.temp)}°F`, gust > wind ? `wind ${wind}–${gust} mph` : `wind ${wind} mph`];
+  if (w.snow >= 0.05) parts.push(`snow ${w.snow.toFixed(1)} in`);
+  else if (w.chance != null && w.chance >= 20) parts.push(`${w.chance}% rain`);
+  else if (w.chance == null && w.rain >= 0.01) parts.push(`rain ${w.rain.toFixed(2)} in`);
+  return parts.join(' · ');
+}
+
+/**
+ * Weather alert chips for the weekly overview.
+ * @param {object} game - Game from the snapshot.
+ * @returns {string} HTML chips (empty if no alert).
+ */
+function weatherTags(game) {
+  const flags = weatherFlags(gameWeather(game), gameVenue(game));
+  const chips = [];
+  if (flags.wind) chips.push('<span class="chip def big">Wind alert</span>');
+  if (flags.rain) chips.push('<span class="chip def big">Rain alert</span>');
+  if (flags.snow) chips.push('<span class="chip lean">Snow</span>');
+  return chips.join(' ');
+}
+
+/**
+ * Weather card: stadium, conditions during the game, alerts, and what similar weather did historically.
+ * @param {object|null} game - Scheduled game, or null for a custom matchup.
+ * @returns {void}
+ */
+function renderWeather(game) {
+  const card = $('weather-card');
+  if (!game) {
+    card.innerHTML = '<h2>Weather</h2><p class="meta">No weather: this matchup is not on the schedule this week.</p>';
+    return;
+  }
+  const venue = gameVenue(game);
+  if (!venue) {
+    card.innerHTML = '<h2>Weather</h2><p class="meta">Stadium not found, so no weather.</p>';
+    return;
+  }
+  const where = `<p class="meta"><strong>${esc(venue.name)}</strong> · ${esc(venueRoofText(venue, game))}</p>`;
+  if (venue.setting === 'indoor') {
+    card.innerHTML = `<h2>Weather</h2>${where}<p class="explain">Played indoors, so weather won't affect this game.</p>`;
+    return;
+  }
+
+  const final = isFinal(game);
+  const title = final ? 'Weather during the game' : 'Weather forecast';
+  const entry = state.weather[state.snapshot.week];
+  const w = gameWeather(game);
+  if (!w) {
+    let msg = 'Loading the weather…';
+    if (daysFromToday(game.gameday) > WEATHER_FORECAST_DAYS) msg = `Forecasts reach about ${WEATHER_FORECAST_DAYS + 1} days ahead, so check back closer to kickoff.`;
+    else if (entry?.status === 'error') msg = `Couldn't load the weather (${esc(entry.error)}). It will try again in a few minutes.`;
+    else if (entry?.status === 'done') msg = 'No weather data for this game.';
+    card.innerHTML = `<h2>${title}</h2>${where}<p class="meta">${msg}</p>`;
+    return;
+  }
+
+  const flags = weatherFlags(w, venue);
+  const rainTile = w.chance != null
+    ? `<div class="value">${w.chance}% chance</div><div class="detail">${w.rain.toFixed(2)} in expected during the game</div>`
+    : `<div class="value">${w.rain.toFixed(2)} in</div><div class="detail">during the game</div>`;
+  const tiles = `
+    <div class="tiles">
+      <div class="tile"><div class="label">Conditions</div><div class="value">${esc(weatherDesc(w.code))}, ${Math.round(w.temp)}°F</div>
+        <div class="detail">Temperature at kickoff</div></div>
+      <div class="tile${flags.wind ? ' alert' : ''}"><div class="label">Wind</div><div class="value">${Math.round(w.wind)} mph</div>
+        <div class="detail">Gusts up to ${Math.round(w.gust)} mph</div></div>
+      <div class="tile${flags.rain ? ' alert' : ''}"><div class="label">${w.chance != null ? 'Rain or snow' : 'Rain'}</div>${rainTile}</div>
+      ${w.snow > 0 ? `<div class="tile"><div class="label">Snow</div><div class="value">${w.snow.toFixed(1)} in</div><div class="detail">during the game</div></div>` : ''}
+    </div>`;
+
+  const h = WEATHER_HISTORY;
+  const alerts = [];
+  if (flags.wind) {
+    alerts.push(`<strong>Wind alert:</strong> ${final ? 'wind averaged' : 'forecast wind of'} ${Math.round(w.wind)} mph with gusts up to
+      ${Math.round(w.gust)} mph. In 2015–2025, open-air games with ${WEATHER_WIND_ALERT}+ mph wind or ${WEATHER_GUST_ALERT}+ mph gusts went
+      under the closing total ${h.wind.under}% of the time (${h.wind.games} games), scoring ${h.wind.points} points below it on average.`);
+  }
+  if (flags.rain) {
+    alerts.push(`<strong>Rain alert:</strong> about ${w.rain.toFixed(2)} inches of rain ${final ? 'fell' : 'expected'} during the game${w.chance != null ? ` (${w.chance}% chance)` : ''}.
+      In 2015–2025, games with ${WEATHER_RAIN_ALERT.toFixed(2)}+ inches of rain went under the closing total ${h.rain.under}% of the time
+      (${h.rain.games} games), scoring ${h.rain.points} points below it on average.`);
+  }
+  const notes = [];
+  if (flags.snow) {
+    notes.push(`<strong>Snow:</strong> about ${w.snow.toFixed(1)} inches ${final ? 'fell' : 'expected'} during the game. Snow games are rare
+      (${h.snow.games} with ${WEATHER_SNOW_NOTE}+ inches since 2015) and went under only ${h.snow.under}% of the time, so snow isn't an alert by itself.`);
+  }
+  if (venue.setting === 'retractable') {
+    notes.push('This stadium has a retractable roof, which is usually closed in bad or cold weather, so no alerts are shown. The forecast applies only if the roof is open.');
+  }
+
+  card.innerHTML = `
+    <h2>${title}</h2>
+    ${where}
+    ${tiles}
+    ${alerts.map((a) => `<div class="weather-alert">${a}</div>`).join('')}
+    ${notes.map((n) => `<p class="explain">${n}</p>`).join('')}
+    <p class="explain">${final ? 'Weather that happened' : 'Forecast'} for kickoff through the next ${WEATHER_GAME_HOURS - 1} hours, from
+      <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>${final ? '' : `, checked ${esc(timeText(new Date(entry.fetchedAt).toISOString()))}`}.
+      ${final ? '' : 'Forecasts more than 2–3 days out often change. '}Alerts: ${WEATHER_WIND_ALERT}+ mph wind or ${WEATHER_GUST_ALERT}+ mph
+      gusts, or ${WEATHER_RAIN_ALERT.toFixed(2)}+ inches of rain likely (${WEATHER_RAIN_CHANCE}%+ chance), open-air games only. All open-air games
+      went under about ${h.openAirUnder}% of the time. The history uses the weather that actually happened, and the betting total
+      usually moves with the forecast, so check Line movement to see if it already dropped.</p>`;
+}
+
 /**
  * Describe a final score against the last recorded spread and total.
  * @param {object} game - A game with final scores.
@@ -1320,7 +1656,8 @@ function renderContext(away, home, game) {
     );
   }
 
-  const roof = game ? (ROOF_LABELS[game.roof] || game.roof || 'Unknown') : null;
+  const venue = game ? gameVenue(game) : null;
+  const roof = game ? (venue ? `${venue.name}, ${venueRoofText(venue, game)}` : (ROOF_LABELS[game.roof] || game.roof || 'Unknown')) : null;
   let restNote = '';
   if (game && game.away_rest != null && game.home_rest != null && game.away_rest !== game.home_rest) {
     const days = Math.abs(game.away_rest - game.home_rest);
@@ -1334,7 +1671,7 @@ function renderContext(away, home, game) {
       <thead><tr><th></th><th class="num">${teamBadge(away, false)}</th><th class="num">${teamBadge(home, false)}</th></tr></thead>
       <tbody>${rows.map(([label, a, h]) => `<tr><td>${esc(label)}</td><td class="num">${a}</td><td class="num">${h}</td></tr>`).join('')}</tbody>
     </table></div>
-    ${roof ? `<p class="explain"><strong>Roof:</strong> ${esc(roof)}.${esc(restNote)}</p>` : ''}
+    ${roof ? `<p class="explain"><strong>Stadium:</strong> ${esc(roof)}.${esc(restNote)}</p>` : ''}
     <p class="explain">Pythagorean win % is the record a team "should" have from its points scored and allowed. A big positive luck gap means it has won more than its scoring suggests (often close games) and may cool off; a big negative gap suggests it's better than its record.</p>
     ${scheduleNotesHtml(away, home, schedule)}`;
 }
@@ -1681,11 +2018,13 @@ function renderOverview() {
       : '';
     const kickoff = kickoffText(game);
     const qbTags = [away, home].filter(qbChanged).map((t) => `<span class="chip svs">${esc(t)} QB change</span>`);
-    const tags = [...qbTags, injuryTags(away), injuryTags(home)].filter(Boolean).join(' ');
+    const tags = [weatherTags(game), ...qbTags, injuryTags(away), injuryTags(home)].filter(Boolean).join(' ');
+    const weather = weatherLine(game);
     return `<tr class="clickable${game.game_id === state.gameId ? ' selected' : ''}" data-game="${esc(game.game_id)}" tabindex="0">
       <td>${starButton(game.game_id)}<span class="name-full">${teamBadge(away, false)} @ ${teamBadge(home, false)}</span>
         <span class="name-short">${esc(away)}<br>@ ${esc(home)}</span>
         <span class="sub"><span class="name-full">${esc(kickoff)}</span><span class="name-short">${esc(kickoff.replace(/ \d+\/\d+ ·/, '').replace(' ET', ''))}</span></span>${final}
+        ${weather ? `<span class="sub wx">${esc(weather)}</span>` : ''}
         ${tags ? `<span class="sub result-chips">${tags}</span>` : ''}</td>
       <td class="num"><strong>${esc(spreadText(line.spread_line, away, home))}</strong>
         <span class="sub">O/U ${line.total_line ?? '—'}</span>
@@ -1756,6 +2095,13 @@ function renderOverview() {
         week's expected starter counting ${Math.round((snap.qb?.other_qb_weight ?? 0.25) * 100)}%, plus the typical change for a QB's first start.
         It's the same as raw for teams with one starter all season. "QB change" marks teams where it differs; open
         the game for details.</p>
+      <p><strong>Weather:</strong> temperature at kickoff, then wind during the game as average–strongest gust
+        (wind 12–24 mph = 12 mph wind with gusts up to 24), and the chance of rain. It's a live forecast from
+        Open-Meteo; finished games show the weather that happened. <strong>Wind alert:</strong> ${WEATHER_WIND_ALERT}+ mph
+        wind or ${WEATHER_GUST_ALERT}+ mph gusts. <strong>Rain alert:</strong> ${WEATHER_RAIN_ALERT.toFixed(2)}+ inches of rain
+        likely. In 2015–2025 open-air games, those went under the total ${WEATHER_HISTORY.wind.under}% and
+        ${WEATHER_HISTORY.rain.under}% of the time (all open-air games: about ${WEATHER_HISTORY.openAirUnder}%). Snow is tagged
+        but isn't an alert, since snow games split evenly in testing. Domes and retractable roofs get no alerts.</p>
       <p><strong>Injury tags:</strong> key players (starters) who are out, doubtful, on IR/PUP, or sat last game
         before this week's report is filed ("out"), or
         questionable ("Q"). Open a game for names, injuries, and who's next up.</p>
@@ -1840,6 +2186,11 @@ function renderGlossary() {
       that spot. The stats don't adjust for injuries, so a missing starter is extra information on top of them.
       Statuses settle on Friday; the data is refreshed Thursday and Saturday. Until a team files its report,
       starters who were Out or Doubtful last game and didn't play are shown as "Out last game".</p>
+    <p><strong>Weather:</strong> a live forecast from Open-Meteo for kickoff through the next ${WEATHER_GAME_HOURS - 1} hours
+      (finished games show what happened). Wind is the average over the game plus the strongest gust. Alerts flag
+      open-air games with ${WEATHER_WIND_ALERT}+ mph wind or ${WEATHER_GUST_ALERT}+ mph gusts, or ${WEATHER_RAIN_ALERT.toFixed(2)}+ inches of rain likely; in
+      2015–2025 those games went under the closing total ${WEATHER_HISTORY.wind.under}% and ${WEATHER_HISTORY.rain.under}% of the time. Snow had no clear
+      effect, so it's tagged but not an alert. The total often moves with the forecast, so some of that may already be priced in.</p>
     <dl>${STATS.map((s) => `<dt>${esc(s.label)}</dt><dd>${esc(s.help)}</dd>`).join('')}</dl>`;
 }
 
@@ -1887,6 +2238,7 @@ function setView(view) {
   $('rankings-view').classList.toggle('hidden', view !== 'rankings');
   $('overview-view').classList.toggle('hidden', view !== 'overview');
   render();
+  loadWeather(state.snapshot);
 }
 
 /**
@@ -1897,6 +2249,7 @@ async function init() {
   try {
     state.index = await fetchJson('data/weeks.json');
     if (!state.index.weeks.length) throw new Error('No weekly data yet. Run nfl_team_stats.py after week 1.');
+    state.stadiums = await fetchJson('stadiums.json').catch(() => null);   // weather is skipped if this fails
     const week = fillWeekSelect();
     await loadWeek(week);
   } catch (error) {
@@ -1922,6 +2275,9 @@ async function init() {
   document.querySelectorAll('#mode-toggle button').forEach((b) => b.addEventListener('click', () => setMode(b.dataset.mode)));
   document.querySelectorAll('#view-toggle button').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
   document.querySelectorAll('#stats-toggle button').forEach((b) => b.addEventListener('click', () => setStats(b.dataset.stats)));
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') loadWeather(state.snapshot);
+  });
 }
 
 init();
