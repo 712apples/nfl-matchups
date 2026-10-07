@@ -175,9 +175,9 @@ td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-sp
 .rank.top { color: var(--good); }
 .rank.bottom { color: var(--bad); }
 
-.matchups-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.matchups-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
 .matchups-grid .card { margin-bottom: 0; }
-@media (max-width: 900px) { .matchups-grid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .matchups-grid { grid-template-columns: minmax(0, 1fr); } }
 .matchups-grid { margin-bottom: 16px; }
 
 tr.big-edge td { background: rgba(56, 189, 248, .08); }
@@ -241,8 +241,8 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-size: .8rem; color: var(--muted); }
 
 /* ---------- Game script ---------- */
-.script-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media (max-width: 760px) { .script-grid { grid-template-columns: 1fr; } }
+.script-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+@media (max-width: 760px) { .script-grid { grid-template-columns: minmax(0, 1fr); } }
 .script-side { background: var(--panel2); border-radius: 10px; padding: 12px; }
 .script-side h3 { margin: 0 0 8px; font-size: 1rem; }
 .script-side h4 { margin: 10px 0 4px; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
@@ -253,6 +253,13 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
 .chip.lean { background: rgba(251, 191, 36, .16); color: var(--warn); }
 .script-notes { margin: 12px 0 0; padding-left: 18px; font-size: .9rem; }
 .script-notes li { margin-bottom: 6px; }
+
+/* ---------- Key injuries ---------- */
+.inj-list { list-style: none; padding-left: 0 !important; }
+.inj-list li { margin-bottom: 10px; }
+.inj-about { color: var(--muted); font-size: .82rem; }
+.inj-detail { display: block; color: var(--muted); font-size: .82rem; margin-top: 2px; }
+.inj-notes-title { margin: 14px 0 4px; font-size: .78rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
 
 /* ---------- Line movement ---------- */
 .moves { margin: 0; padding-left: 18px; }

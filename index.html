@@ -9,13 +9,15 @@
     teams you pick. A "Game script" card summarizes where each offense should
     excel or struggle (passing, pass protection, running, explosive plays),
     with Lean/Strong confidence labels from a 2015-2025 backtest, plus pace,
-    game flow, and fantasy angles. A "League rankings" view lists every team's offense,
+    game flow, and fantasy angles. A "Key injuries" card lists each team's
+    injured starters (status, injury, usual depth string, next man up) with
+    fantasy notes. A "League rankings" view lists every team's offense,
     defense, and net EPA per play in a sortable table, with the selected
     matchup's teams highlighted. A Raw / Opponent-adjusted toggle switches the
     stat tables and rankings to versions adjusted for the opponents each team
     has faced; the composite box shows both. A "Weekly overview" view lists
     every game of the week with its lines, raw and opponent-adjusted composites,
-    estimated spreads, underdog flags, and results, all sortable; tapping a game
+    estimated spreads, underdog flags, results, and injury tags, all sortable; tapping a game
     opens it in the Matchup view. Data comes from weekly JSON snapshots made by
     nfl_team_stats.py. Each snapshot holds stats through the previous week,
     the week's games with betting lines, line movement, and final scores.
@@ -120,6 +122,7 @@
   <main id="matchup" class="hidden">
     <section class="card" id="game-card"></section>
     <section class="card" id="script-card"></section>
+    <section class="card" id="injury-card"></section>
     <section class="card" id="lines-card"></section>
     <section class="card" id="composite-card"></section>
     <section class="card" id="context-card"></section>
