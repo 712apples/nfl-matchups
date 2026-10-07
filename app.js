@@ -14,6 +14,9 @@
  *   A Raw / Opponent-adjusted toggle switches the stat tables and rankings
  *   to stats adjusted for the opponents each team has faced; the composite
  *   box always shows both. The game script always uses raw stats.
+ *   A "Weekly overview" view lists every game of the week with lines, raw and
+ *   opponent-adjusted composites, estimated spreads, underdog flags, and
+ *   results in a sortable table; tapping a game opens it in the Matchup view.
  *
  *   Ranks in the data always mean "1 = best for that side": for a defense,
  *   best means allowed the least, except sacks, QB hits, and turnovers, where
@@ -113,6 +116,26 @@ const RANKING_COLUMNS = [
   { key: 'net', label: 'Net', bestHigh: true },
   { key: 'sos', label: 'Schedule', short: 'SOS', bestHigh: true, needsSchedule: true },
 ];
+// Estimated spread: home margin (points) = SPREAD_HOME_POINTS + slope x composite difference.
+// Slopes were fitted on 2017-2025 games (current-season stats only, nfl_sos_backtest.py output).
+// Early-season composites are noisy, so each EPA/play is worth fewer points until more weeks are played.
+const SPREAD_HOME_POINTS = 1.8;
+const SPREAD_SLOPES = [
+  { lastWeek: 4, raw: 12.5, adj: 5.8 },
+  { lastWeek: 8, raw: 43.0, adj: 34.1 },
+  { lastWeek: Infinity, raw: 59.6, adj: 56.9 },
+];
+
+// Weekly overview columns. firstHigh = true means the first click lists the biggest values first.
+const OVERVIEW_SORTS = {
+  kickoff: { label: 'Kickoff', firstHigh: false },
+  spread: { label: 'Spread', firstHigh: true },
+  total: { label: 'Total', firstHigh: true },
+  ml: { label: 'ML', firstHigh: true },
+  raw: { label: 'Raw composite', firstHigh: true },
+  adj: { label: 'Opponent-adjusted', firstHigh: true },
+};
+
 const SOS_MIN_WEEKS = 3;   // Matches SOS_MIN_WEEKS in nfl_team_stats.py
 const SOS_NOTE_TIER = 6;   // Mention a unit's schedule in the context card if it's this close to either end
 
@@ -124,6 +147,7 @@ const state = {
   gameId: null,
   stats: 'raw',
   sort: { key: 'off', bestFirst: true },
+  overviewSort: { key: 'kickoff', reversed: false },
 };
 
 const $ = (id) => document.getElementById(id);
@@ -508,6 +532,11 @@ function render() {
   if (state.view === 'rankings') {
     errorBox.classList.add('hidden');
     renderRankings();
+    return;
+  }
+  if (state.view === 'overview') {
+    errorBox.classList.add('hidden');
+    renderOverview();
     return;
   }
   const { away, home, game } = currentSelection();
@@ -1169,6 +1198,229 @@ function renderRankings() {
 }
 
 /**
+ * Estimated home margin in points from a composite difference (see SPREAD_SLOPES).
+ * @param {number} diff - Home composite minus away composite (EPA/play).
+ * @param {string} kind - "raw" or "adj".
+ * @returns {number} Projected home margin; positive = home team favored.
+ */
+function estimatedMargin(diff, kind) {
+  const band = SPREAD_SLOPES.find((b) => state.snapshot.week <= b.lastWeek);
+  return SPREAD_HOME_POINTS + band[kind] * diff;
+}
+
+/**
+ * Score one composite version (raw or adjusted) for one game.
+ * @param {object} game - Game from the snapshot.
+ * @param {object} line - Latest recorded betting lines for the game.
+ * @param {object} comp - Output of compositeSides().
+ * @param {string} kind - "raw" or "adj" (picks the spread slope).
+ * @returns {object|null} null when a team has no data; otherwise
+ *   { diff, sides, pickTeam, margin, atsTeam, isDog, won, ats } where pickTeam
+ *   has the better composite, margin is the estimated home margin, atsTeam is
+ *   the side the estimated spread prefers against the betting spread, isDog
+ *   means the pick is the betting underdog, and won / ats are "W", "L", "T"/"P"
+ *   once the game is final (null before).
+ */
+function overviewVersion(game, line, comp, kind) {
+  if (comp.diff == null) return null;
+  const { away_team: away, home_team: home } = game;
+  const pickTeam = comp.diff > 0 ? home : comp.diff < 0 ? away : null;
+  const margin = estimatedMargin(comp.diff, kind);
+  const spread = line.spread_line;
+  const edge = spread == null ? null : margin - spread;
+  const atsTeam = edge == null || edge === 0 ? null : edge > 0 ? home : away;
+
+  let dog = null;
+  if (line.home_moneyline != null && line.away_moneyline != null && line.home_moneyline !== line.away_moneyline) {
+    dog = line.home_moneyline > line.away_moneyline ? home : away;
+  } else if (spread) {
+    dog = spread > 0 ? away : home;
+  }
+
+  let won = null;
+  let ats = null;
+  if (isFinal(game)) {
+    const result = game.home_score - game.away_score;
+    if (pickTeam) won = result === 0 ? 'T' : (result > 0) === (pickTeam === home) ? 'W' : 'L';
+    if (atsTeam) {
+      const cover = result - spread;
+      ats = cover === 0 ? 'P' : (cover > 0) === (atsTeam === home) ? 'W' : 'L';
+    }
+  }
+  return { diff: comp.diff, sides: comp.sides, pickTeam, margin, atsTeam, isDog: pickTeam != null && pickTeam === dog, won, ats };
+}
+
+/**
+ * Count wins, losses, and ties/pushes for one result field across games.
+ * @param {Array<object|null>} versions - overviewVersion() results.
+ * @param {string} field - "won" or "ats".
+ * @returns {string|null} e.g. "9-6" or "7-7-1", or null if no game is final.
+ */
+function recordText(versions, field) {
+  const results = versions.map((v) => v?.[field]).filter(Boolean);
+  if (!results.length) return null;
+  const count = (r) => results.filter((x) => x === r).length;
+  const draws = count('T') + count('P');
+  return `${count('W')}-${count('L')}${draws ? `-${draws}` : ''}`;
+}
+
+/**
+ * Weekly overview: every game of the week with lines, raw and opponent-adjusted
+ * composites, estimated spreads, underdog flags, and results, in a sortable table.
+ * Tapping a game opens it in the Matchup view.
+ * @returns {void}
+ */
+function renderOverview() {
+  const snap = state.snapshot;
+  const adjAvailable = hasAdjusted();
+  if (state.overviewSort.key === 'adj' && !adjAvailable) state.overviewSort = { key: 'kickoff', reversed: false };
+
+  const rows = snap.games.map((game) => {
+    const { away_team: away, home_team: home } = game;
+    const line = latestLine(game);
+    const raw = overviewVersion(game, line, compositeSides(away, home, snap.offense, snap.defense), 'raw');
+    const adj = adjAvailable
+      ? overviewVersion(game, line, compositeSides(away, home, snap.offense_adj, snap.defense_adj), 'adj')
+      : null;
+    const homeChance = homeWinChance(line);
+    return {
+      game, line, raw, adj,
+      sort: {
+        kickoff: `${game.gameday} ${game.gametime || '99:99'} ${game.game_id}`,
+        spread: line.spread_line == null ? null : Math.abs(line.spread_line),
+        total: line.total_line ?? null,
+        ml: homeChance == null ? null : Math.max(homeChance, 1 - homeChance),
+        raw: raw ? Math.abs(raw.diff) : null,
+        adj: adj ? Math.abs(adj.diff) : null,
+      },
+    };
+  });
+
+  const { key, reversed } = state.overviewSort;
+  const highFirst = OVERVIEW_SORTS[key].firstHigh !== reversed;
+  rows.sort((a, b) => {
+    const x = a.sort[key];
+    const y = b.sort[key];
+    if (x == null) return 1;
+    if (y == null) return -1;
+    if (x === y) return 0;
+    return (x > y ? 1 : -1) * (highFirst ? -1 : 1);
+  });
+
+  const sortBtn = (k) => {
+    const active = k === key;
+    const arrow = active ? (highFirst ? ' ▼' : ' ▲') : '';
+    return `<button type="button" class="sort-btn${active ? ' active' : ''}" data-sort="${k}">${esc(OVERVIEW_SORTS[k].label)}${arrow}</button>`;
+  };
+
+  const resultChips = (v) => {
+    const chips = [];
+    if (v.isDog) chips.push('<span class="chip lean">Dog</span>');
+    if (v.won) chips.push({ W: '<span class="chip off">Won</span>', L: '<span class="chip def">Lost</span>', T: '<span class="chip even">Tie</span>' }[v.won]);
+    if (v.ats) chips.push({ W: '<span class="chip off">ATS W</span>', L: '<span class="chip def">ATS L</span>', P: '<span class="chip even">ATS push</span>' }[v.ats]);
+    return chips.length ? `<span class="sub result-chips">${chips.join(' ')}</span>` : '';
+  };
+
+  const versionCell = (v, game) => {
+    if (!v) return '<td class="num">—</td>';
+    const { away_team: away, home_team: home } = game;
+    const edge = v.pickTeam ? `${v.pickTeam} +${Math.abs(v.diff).toFixed(3)}` : 'Even';
+    return `<td class="num"><strong>${esc(edge)}</strong>
+      <span class="sub">≈ ${esc(spreadText(Number(v.margin.toFixed(1)), away, home))}</span>
+      <span class="sub">${esc(away)} ${signed(v.sides[0].value, 3)}</span>
+      <span class="sub">${esc(home)} ${signed(v.sides[1].value, 3)}</span>
+      ${resultChips(v)}</td>`;
+  };
+
+  const body = rows.map(({ game, line, raw, adj }) => {
+    const { away_team: away, home_team: home } = game;
+    const final = isFinal(game)
+      ? `<span class="sub"><span class="name-full">Final: ${esc(away)} ${game.away_score} – ${esc(home)} ${game.home_score}</span><span class="name-short">Final ${game.away_score}–${game.home_score}</span></span>`
+      : '';
+    const kickoff = kickoffText(game);
+    return `<tr class="clickable${game.game_id === state.gameId ? ' selected' : ''}" data-game="${esc(game.game_id)}" tabindex="0">
+      <td><span class="name-full">${teamBadge(away, false)} @ ${teamBadge(home, false)}</span>
+        <span class="name-short">${esc(away)}<br>@ ${esc(home)}</span>
+        <span class="sub"><span class="name-full">${esc(kickoff)}</span><span class="name-short">${esc(kickoff.replace(/ \d+\/\d+ ·/, '').replace(' ET', ''))}</span></span>${final}</td>
+      <td class="num"><strong>${esc(spreadText(line.spread_line, away, home))}</strong>
+        <span class="sub">O/U ${line.total_line ?? '—'}</span>
+        <span class="sub">${esc(away)} ${fmtMoneyline(line.away_moneyline)}</span>
+        <span class="sub">${esc(home)} ${fmtMoneyline(line.home_moneyline)}</span></td>
+      ${versionCell(raw, game)}
+      ${adjAvailable ? versionCell(adj, game) : ''}
+    </tr>`;
+  }).join('');
+
+  const rawSu = recordText(rows.map((r) => r.raw), 'won');
+  const rawAts = recordText(rows.map((r) => r.raw), 'ats');
+  const adjSu = recordText(rows.map((r) => r.adj), 'won');
+  const adjAts = recordText(rows.map((r) => r.adj), 'ats');
+  let record = '';
+  if (rawSu || rawAts) {
+    record = `<p class="meta"><strong>Finished games:</strong> raw composite picks went ${rawSu ?? '—'} straight up and ${rawAts ?? '—'} against the spread`;
+    record += adjAvailable ? `; opponent-adjusted went ${adjSu ?? '—'} and ${adjAts ?? '—'}.</p>` : '.</p>';
+  }
+  const dogs = rows.filter((r) => r.raw?.isDog).length;
+
+  const view = $('overview-view');
+  view.innerHTML = `
+    <h2>Week ${snap.week} overview (stats through week ${snap.stats_through_week})</h2>
+    <p class="meta">Every game this week. Tap a column name to sort (tap again to reverse), or tap a game to open it.
+      The raw composite favors the betting underdog in ${dogs} game${dogs === 1 ? '' : 's'} (tagged Dog).</p>
+    ${record}
+    <div class="table-scroll"><table class="overview-table">
+      <thead><tr>
+        <th>${sortBtn('kickoff')}</th>
+        <th class="num">${sortBtn('spread')}<br>${sortBtn('total')}<br>${sortBtn('ml')}</th>
+        <th class="num">${sortBtn('raw')}</th>
+        ${adjAvailable ? `<th class="num">${sortBtn('adj')}</th>` : ''}
+      </tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>
+    <div class="footnote">
+      <p><strong>Lines:</strong> the latest recorded spread, over/under, and moneylines (for past weeks, the last line
+        before kickoff). ML sorts by how big a favorite the favorite is.</p>
+      <p><strong>Composite:</strong> for each offense, the average of its EPA per play and what the opposing defense
+        allows. The bold number is the team with the better composite and by how much; the two small numbers are each
+        team's composite. Opponent-adjusted uses stats adjusted for the opponents each team has faced${adjAvailable ? '' : ` (it appears once teams have ${SOS_MIN_WEEKS} weeks of games)`}.</p>
+      <p><strong>≈ spread:</strong> the composite turned into an estimated point spread, including about
+        ${SPREAD_HOME_POINTS} points for home field, using how composites translated into final margins in 2017–2025.
+        Early in the season composites are noisy, so the same gap is worth fewer points.</p>
+      <p><strong>Dog:</strong> the composite's pick is the betting underdog. <strong>Won / Lost:</strong> whether the
+        team with the better composite won. <strong>ATS:</strong> whether the side its estimated spread prefers
+        covered the betting spread (e.g. estimated NO -0.6 vs betting NO -1.5 means ATL +1.5).</p>
+      <p>For interest, not picks: in 2017–2025 testing, neither version beat the betting market, and against the
+        spread they won about half the time.</p>
+    </div>`;
+
+  view.querySelectorAll('.sort-btn').forEach((btn) => btn.addEventListener('click', () => {
+    const clicked = btn.dataset.sort;
+    state.overviewSort = clicked === state.overviewSort.key
+      ? { key: clicked, reversed: !state.overviewSort.reversed }
+      : { key: clicked, reversed: false };
+    renderOverview();
+  }));
+  view.querySelectorAll('tr.clickable').forEach((tr) => {
+    tr.addEventListener('click', () => openGame(tr.dataset.game));
+    tr.addEventListener('keydown', (e) => { if (e.key === 'Enter') openGame(tr.dataset.game); });
+  });
+}
+
+/**
+ * Open one of this week's games in the Matchup view (used by the weekly overview).
+ * @param {string} gameId - nflverse game_id.
+ * @returns {void}
+ */
+function openGame(gameId) {
+  state.mode = 'game';
+  state.gameId = gameId;
+  $('game-select').value = gameId;
+  document.querySelectorAll('#mode-toggle button').forEach((b) => b.classList.toggle('active', b.dataset.mode === 'game'));
+  setView('matchup');
+  window.scrollTo(0, 0);
+}
+
+/**
  * Fill the "How to read this page" section (only needs to run once).
  * @returns {void}
  */
@@ -1221,21 +1473,24 @@ function setMode(mode) {
 }
 
 /**
- * Switch between the matchup view and the league rankings view.
- * The week picker stays visible in both; the game/team pickers are hidden
- * in rankings view, but the selection is kept for highlighting.
- * @param {string} view - "matchup" or "rankings".
+ * Switch between the matchup, league rankings, and weekly overview views.
+ * The week picker stays visible in all of them; the game/team pickers only
+ * show in the matchup view, but the selection is kept for highlighting. The
+ * Raw / Opponent-adjusted toggle is hidden in the overview, which shows both.
+ * @param {string} view - "matchup", "rankings", or "overview".
  * @returns {void}
  */
 function setView(view) {
   state.view = view;
-  const rankings = view === 'rankings';
+  const matchup = view === 'matchup';
   document.querySelectorAll('#view-toggle button').forEach((b) => b.classList.toggle('active', b.dataset.view === view));
-  $('mode-field').classList.toggle('hidden', rankings);
-  $('game-picker').classList.toggle('hidden', rankings || state.mode !== 'game');
-  $('team-picker').classList.toggle('hidden', rankings || state.mode !== 'manual');
-  $('matchup').classList.toggle('hidden', rankings);
-  $('rankings-view').classList.toggle('hidden', !rankings);
+  $('mode-field').classList.toggle('hidden', !matchup);
+  $('stats-field').classList.toggle('hidden', view === 'overview');
+  $('game-picker').classList.toggle('hidden', !matchup || state.mode !== 'game');
+  $('team-picker').classList.toggle('hidden', !matchup || state.mode !== 'manual');
+  $('matchup').classList.toggle('hidden', !matchup);
+  $('rankings-view').classList.toggle('hidden', view !== 'rankings');
+  $('overview-view').classList.toggle('hidden', view !== 'overview');
   render();
 }
 
