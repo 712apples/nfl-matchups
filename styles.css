@@ -208,6 +208,29 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
   .rankings-table td.sched-col .rank { display: block; }
 }
 
+/* ---------- Starred games ---------- */
+.star-btn {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0 4px 0 0;
+  cursor: pointer;
+  vertical-align: baseline;
+}
+.star-btn.on { color: var(--warn); }
+.star-btn.labeled {
+  font-size: .85rem;
+  margin-left: 10px;
+  padding: 3px 9px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  vertical-align: middle;
+}
+.star-btn.labeled.on { border-color: var(--warn); }
+.star-filter { display: inline-flex; align-items: center; gap: 6px; margin: 4px 0 10px; font-size: .88rem; color: var(--muted); cursor: pointer; }
+
 /* ---------- Weekly overview ---------- */
 .overview-table td { vertical-align: top; }
 .overview-table .sub { display: block; color: var(--muted); font-size: .74rem; margin-top: 1px; }

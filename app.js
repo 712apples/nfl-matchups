@@ -19,7 +19,9 @@
  *   A "Weekly overview" view lists every game of the week with lines, raw and
  *   opponent-adjusted composites, estimated spreads, underdog flags, and
  *   results in a sortable table, plus injury tags per team; tapping a game
- *   opens it in the Matchup view.
+ *   opens it in the Matchup view. Games can be starred (overview or Matchup
+ *   page); stars are saved in the browser (localStorage) and can be sorted,
+ *   filtered, and scored once final.
  *
  *   Ranks in the data always mean "1 = best for that side": for a defense,
  *   best means allowed the least, except sacks, QB hits, and turnovers, where
@@ -137,6 +139,7 @@ const OVERVIEW_SORTS = {
   total: { label: 'Total', firstHigh: true },
   ml: { label: 'ML', firstHigh: true },
   raw: { label: 'Raw composite', short: 'Raw', firstHigh: true },
+  starred: { label: '★ Starred', short: '★', firstHigh: true },
   qb: { label: 'QB-adjusted', short: 'QB-adj', firstHigh: true },
   adj: { label: 'Opponent-adjusted', short: 'Opp-adj', firstHigh: true },
 };
@@ -146,6 +149,7 @@ const SOS_NOTE_TIER = 6;   // Mention a unit's schedule in the context card if i
 const INJURY_CARRIED = 'Out last game';   // Sat last game; team hasn't filed this week's report yet
 const INJURY_OUT = ['IR', 'PUP', 'NFI', 'Out', 'Doubtful', INJURY_CARRIED];   // Statuses treated as "not playing"
 const RESERVE_LONG = { IR: 'injured reserve', PUP: 'the PUP list', NFI: 'the non-football injury list' };
+const STAR_KEY = 'nflMatchupStars';   // Browser storage key for starred game IDs (saved per device)
 
 const state = {
   index: null,
@@ -156,6 +160,8 @@ const state = {
   stats: 'raw',
   sort: { key: 'off', bestFirst: true },
   overviewSort: { key: 'kickoff', reversed: false },
+  stars: loadStars(),
+  starredOnly: false,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -412,19 +418,91 @@ function fillWeekSelect() {
   return defaultWeek;
 }
 
+// ----------------------------------------------------------------------
+// Starred games (saved in this browser only)
+// ----------------------------------------------------------------------
+
+/**
+ * Read the starred game IDs from browser storage.
+ * @returns {Set<string>} Starred nflverse game_ids (empty if storage is unavailable).
+ */
+function loadStars() {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(STAR_KEY) || '[]'));
+  } catch {
+    return new Set();
+  }
+}
+
+/**
+ * Whether a game is starred.
+ * @param {string} gameId - nflverse game_id.
+ * @returns {boolean}
+ */
+function isStarred(gameId) {
+  return state.stars.has(gameId);
+}
+
+/**
+ * Star or unstar a game, save the change, and refresh the game dropdown labels.
+ * @param {string} gameId - nflverse game_id.
+ * @returns {void}
+ */
+function toggleStar(gameId) {
+  if (state.stars.has(gameId)) state.stars.delete(gameId);
+  else state.stars.add(gameId);
+  try {
+    localStorage.setItem(STAR_KEY, JSON.stringify([...state.stars]));
+  } catch {
+    // Storage blocked (e.g. private browsing): the star lasts until the page is closed.
+  }
+  refreshGameOptions();
+}
+
+/**
+ * Star toggle button HTML.
+ * @param {string} gameId - nflverse game_id.
+ * @param {boolean} labeled - True to add "Star" / "Starred" text after the icon.
+ * @returns {string} HTML button with data-star set to the game ID.
+ */
+function starButton(gameId, labeled = false) {
+  const on = isStarred(gameId);
+  const text = labeled ? (on ? ' Starred' : ' Star') : '';
+  return `<button type="button" class="star-btn${on ? ' on' : ''}${labeled ? ' labeled' : ''}" data-star="${esc(gameId)}"
+    aria-pressed="${on}" title="${on ? 'Unstar' : 'Star'} this game">${on ? '★' : '☆'}${text}</button>`;
+}
+
+/**
+ * Dropdown label for one game, e.g. "★ Sun 10/11 · 1:00 PM ET · CHI @ GB (CHI -3)".
+ * @param {object} g - Game from the snapshot.
+ * @returns {string} Plain-text label.
+ */
+function gameOptionLabel(g) {
+  const extra = isFinal(g)
+    ? `Final ${g.away_score}-${g.home_score}`
+    : spreadText(latestLine(g).spread_line, g.away_team, g.home_team);
+  return `${isStarred(g.game_id) ? '★ ' : ''}${kickoffText(g)} · ${g.away_team} @ ${g.home_team} (${extra})`;
+}
+
+/**
+ * Update the game dropdown labels (stars) without changing the selection.
+ * @returns {void}
+ */
+function refreshGameOptions() {
+  if (!state.snapshot) return;
+  const byId = Object.fromEntries(state.snapshot.games.map((g) => [g.game_id, g]));
+  [...$('game-select').options].forEach((opt) => {
+    if (byId[opt.value]) opt.textContent = gameOptionLabel(byId[opt.value]);
+  });
+}
+
 /**
  * Fill the game dropdown and the two team dropdowns for the loaded week.
  * @returns {void}
  */
 function fillGameAndTeamSelects() {
   const { games, teams } = state.snapshot;
-  $('game-select').innerHTML = games.map((g) => {
-    const line = latestLine(g);
-    const extra = isFinal(g)
-      ? `Final ${g.away_score}-${g.home_score}`
-      : spreadText(line.spread_line, g.away_team, g.home_team);
-    return `<option value="${esc(g.game_id)}">${esc(kickoffText(g))} · ${esc(g.away_team)} @ ${esc(g.home_team)} (${esc(extra)})</option>`;
-  }).join('');
+  $('game-select').innerHTML = games.map((g) => `<option value="${esc(g.game_id)}">${esc(gameOptionLabel(g))}</option>`).join('');
 
   if (!games.some((g) => g.game_id === state.gameId)) {
     const next = games.find((g) => !isFinal(g)) || games[0];
@@ -618,8 +696,12 @@ function renderGameCard(away, home, game) {
     meta += ' · This week was rebuilt after it was played, using stats from before the games.';
   }
   $('game-card').innerHTML = `
-    <div class="game-title">${teamBadge(away)} <span class="at">@</span> ${teamBadge(home)}</div>
+    <div class="game-title">${teamBadge(away)} <span class="at">@</span> ${teamBadge(home)}${game ? starButton(game.game_id, true) : ''}</div>
     <div class="meta">${esc(meta)}</div>${final}`;
+  $('game-card').querySelector('.star-btn')?.addEventListener('click', () => {
+    toggleStar(game.game_id);
+    renderGameCard(away, home, game);
+  });
 }
 
 /**
@@ -1532,11 +1614,13 @@ function renderOverview() {
         total: line.total_line ?? null,
         ml: homeChance == null ? null : Math.max(homeChance, 1 - homeChance),
         raw: raw ? Math.abs(raw.diff) : null,
+        starred: isStarred(game.game_id) ? 1 : 0,
         qb: qb ? Math.abs(qb.diff) : null,
         adj: adj ? Math.abs(adj.diff) : null,
       },
     };
   });
+  const starredCount = rows.filter((r) => r.sort.starred).length;
 
   const { key, reversed } = state.overviewSort;
   const highFirst = OVERVIEW_SORTS[key].firstHigh !== reversed;
@@ -1589,7 +1673,8 @@ function renderOverview() {
       ${resultChips(v)}</td>`;
   };
 
-  const body = rows.map(({ game, line, raw, qb, adj }) => {
+  const shown = state.starredOnly ? rows.filter((r) => r.sort.starred) : rows;
+  const body = shown.map(({ game, line, raw, qb, adj }) => {
     const { away_team: away, home_team: home } = game;
     const final = isFinal(game)
       ? `<span class="sub"><span class="name-full">Final: ${esc(away)} ${game.away_score} – ${esc(home)} ${game.home_score}</span><span class="name-short">Final ${game.away_score}–${game.home_score}</span></span>`
@@ -1598,7 +1683,7 @@ function renderOverview() {
     const qbTags = [away, home].filter(qbChanged).map((t) => `<span class="chip svs">${esc(t)} QB change</span>`);
     const tags = [...qbTags, injuryTags(away), injuryTags(home)].filter(Boolean).join(' ');
     return `<tr class="clickable${game.game_id === state.gameId ? ' selected' : ''}" data-game="${esc(game.game_id)}" tabindex="0">
-      <td><span class="name-full">${teamBadge(away, false)} @ ${teamBadge(home, false)}</span>
+      <td>${starButton(game.game_id)}<span class="name-full">${teamBadge(away, false)} @ ${teamBadge(home, false)}</span>
         <span class="name-short">${esc(away)}<br>@ ${esc(home)}</span>
         <span class="sub"><span class="name-full">${esc(kickoff)}</span><span class="name-short">${esc(kickoff.replace(/ \d+\/\d+ ·/, '').replace(' ET', ''))}</span></span>${final}
         ${tags ? `<span class="sub result-chips">${tags}</span>` : ''}</td>
@@ -1612,15 +1697,21 @@ function renderOverview() {
     </tr>`;
   }).join('');
 
-  const records = (field) => (version) => recordText(rows.map((r) => r[version]), field);
-  const [su, ats] = [records('won'), records('ats')];
-  let record = '';
-  if (su('raw') || ats('raw')) {
+  const recordLine = (rowSet, title) => {
+    const su = (version) => recordText(rowSet.map((r) => r[version]), 'won');
+    const ats = (version) => recordText(rowSet.map((r) => r[version]), 'ats');
+    if (!su('raw') && !ats('raw')) return '';
     const parts = [`raw composite picks went ${su('raw') ?? '—'} straight up and ${ats('raw') ?? '—'} against the spread`];
     if (qbTable) parts.push(`QB-adjusted went ${su('qb') ?? '—'} and ${ats('qb') ?? '—'}`);
     if (adjAvailable) parts.push(`opponent-adjusted went ${su('adj') ?? '—'} and ${ats('adj') ?? '—'}`);
-    record = `<p class="meta"><strong>Finished games:</strong> ${parts.join('; ')}.</p>`;
-  }
+    return `<p class="meta"><strong>${title}:</strong> ${parts.join('; ')}.</p>`;
+  };
+  const record = recordLine(rows, 'Finished games') + recordLine(rows.filter((r) => r.sort.starred), '★ Starred games');
+  const starFilter = `<label class="star-filter"><input type="checkbox" id="starred-only"${state.starredOnly ? ' checked' : ''}>
+    Show starred only (${starredCount})</label>`;
+  const emptyRow = state.starredOnly && !shown.length
+    ? `<tr><td colspan="5" class="meta">No starred games this week. Tap ☆ next to a game to star it.</td></tr>`
+    : '';
   const dogs = rows.filter((r) => r.raw?.isDog).length;
 
   const view = $('overview-view');
@@ -1629,17 +1720,20 @@ function renderOverview() {
     <p class="meta">Every game this week. Tap a column name to sort (tap again to reverse), or tap a game to open it.
       The raw composite favors the betting underdog in ${dogs} game${dogs === 1 ? '' : 's'} (tagged Dog).</p>
     ${record}
+    ${starFilter}
     <div class="table-scroll"><table class="overview-table">
       <thead><tr>
-        <th>${sortBtn('kickoff')}</th>
+        <th>${sortBtn('kickoff')}<br>${sortBtn('starred')}</th>
         <th class="num">${sortBtn('spread')}<br>${sortBtn('total')}<br>${sortBtn('ml')}</th>
         <th class="num">${sortBtn('raw')}</th>
         ${qbTable ? `<th class="num">${sortBtn('qb')}</th>` : ''}
         ${adjAvailable ? `<th class="num">${sortBtn('adj')}</th>` : ''}
       </tr></thead>
-      <tbody>${body}</tbody>
+      <tbody>${body}${emptyRow}</tbody>
     </table></div>
     <div class="footnote">
+      <p><strong>★ Stars:</strong> tap ☆ next to a game (here or on the Matchup page) to star games you're
+        interested in. Stars are saved in this browser only, so your phone and computer keep separate lists.</p>
       <p><strong>Lines:</strong> the latest recorded spread, over/under, and moneylines (for past weeks, the last line
         before kickoff). ML sorts by how big a favorite the favorite is.</p>
       <p><strong>Composite:</strong> for each offense, the average of its EPA per play and what the opposing defense
@@ -1682,6 +1776,18 @@ function renderOverview() {
   view.querySelectorAll('tr.clickable').forEach((tr) => {
     tr.addEventListener('click', () => openGame(tr.dataset.game));
     tr.addEventListener('keydown', (e) => { if (e.key === 'Enter') openGame(tr.dataset.game); });
+  });
+  view.querySelectorAll('.star-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleStar(btn.dataset.star);
+      renderOverview();
+    });
+    btn.addEventListener('keydown', (e) => e.stopPropagation());
+  });
+  $('starred-only').addEventListener('change', (e) => {
+    state.starredOnly = e.target.checked;
+    renderOverview();
   });
 }
 
