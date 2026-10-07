@@ -129,14 +129,16 @@ const SPREAD_SLOPES = [
   { lastWeek: Infinity, raw: 59.6, adj: 56.9 },
 ];
 
-// Weekly overview columns. firstHigh = true means the first click lists the biggest values first.
+// Weekly overview columns. firstHigh = true means the first click lists the biggest values first;
+// short is the label used on phones.
 const OVERVIEW_SORTS = {
   kickoff: { label: 'Kickoff', firstHigh: false },
   spread: { label: 'Spread', firstHigh: true },
   total: { label: 'Total', firstHigh: true },
   ml: { label: 'ML', firstHigh: true },
-  raw: { label: 'Raw composite', firstHigh: true },
-  adj: { label: 'Opponent-adjusted', firstHigh: true },
+  raw: { label: 'Raw composite', short: 'Raw', firstHigh: true },
+  qb: { label: 'QB-adjusted', short: 'QB-adj', firstHigh: true },
+  adj: { label: 'Opponent-adjusted', short: 'Opp-adj', firstHigh: true },
 };
 
 const SOS_MIN_WEEKS = 3;   // Matches SOS_MIN_WEEKS in nfl_team_stats.py
@@ -1508,24 +1510,29 @@ function recordText(versions, field) {
 function renderOverview() {
   const snap = state.snapshot;
   const adjAvailable = hasAdjusted();
-  if (state.overviewSort.key === 'adj' && !adjAvailable) state.overviewSort = { key: 'kickoff', reversed: false };
+  const qbTable = qbOffenseTable();
+  if ((state.overviewSort.key === 'adj' && !adjAvailable) || (state.overviewSort.key === 'qb' && !qbTable)) {
+    state.overviewSort = { key: 'kickoff', reversed: false };
+  }
 
   const rows = snap.games.map((game) => {
     const { away_team: away, home_team: home } = game;
     const line = latestLine(game);
     const raw = overviewVersion(game, line, compositeSides(away, home, snap.offense, snap.defense), 'raw');
+    const qb = qbTable ? overviewVersion(game, line, compositeSides(away, home, qbTable, snap.defense), 'raw') : null;
     const adj = adjAvailable
       ? overviewVersion(game, line, compositeSides(away, home, snap.offense_adj, snap.defense_adj), 'adj')
       : null;
     const homeChance = homeWinChance(line);
     return {
-      game, line, raw, adj,
+      game, line, raw, qb, adj,
       sort: {
         kickoff: `${game.gameday} ${game.gametime || '99:99'} ${game.game_id}`,
         spread: line.spread_line == null ? null : Math.abs(line.spread_line),
         total: line.total_line ?? null,
         ml: homeChance == null ? null : Math.max(homeChance, 1 - homeChance),
         raw: raw ? Math.abs(raw.diff) : null,
+        qb: qb ? Math.abs(qb.diff) : null,
         adj: adj ? Math.abs(adj.diff) : null,
       },
     };
@@ -1545,7 +1552,11 @@ function renderOverview() {
   const sortBtn = (k) => {
     const active = k === key;
     const arrow = active ? (highFirst ? ' ▼' : ' ▲') : '';
-    return `<button type="button" class="sort-btn${active ? ' active' : ''}" data-sort="${k}">${esc(OVERVIEW_SORTS[k].label)}${arrow}</button>`;
+    const { label, short } = OVERVIEW_SORTS[k];
+    const text = short
+      ? `<span class="name-full">${esc(label)}</span><span class="name-short">${esc(short)}</span>`
+      : esc(label);
+    return `<button type="button" class="sort-btn${active ? ' active' : ''}" data-sort="${k}">${text}${arrow}</button>`;
   };
 
   const resultChips = (v) => {
@@ -1556,29 +1567,29 @@ function renderOverview() {
     return chips.length ? `<span class="sub result-chips">${chips.join(' ')}</span>` : '';
   };
 
-  const qbTable = qbOffenseTable();
-  const qbSpreadHtml = (game, rawVersion) => {
-    const { away_team: away, home_team: home } = game;
-    if (!qbTable || !rawVersion || !(qbChanged(away) || qbChanged(home))) return '';
-    const comp = compositeSides(away, home, qbTable, snap.defense);
-    if (comp.diff == null) return '';
-    const qbText = spreadText(Number(estimatedMargin(comp.diff, 'raw').toFixed(1)), away, home);
-    const rawText = spreadText(Number(rawVersion.margin.toFixed(1)), away, home);
-    return qbText === rawText ? '' : `<span class="sub qb-spread">QB-adj ≈ ${esc(qbText)}</span>`;
+  const spreadPickHtml = (v, game, line) => {
+    const spread = line.spread_line;
+    if (!v.atsTeam || spread == null) return '';
+    const points = v.atsTeam === game.home_team ? -spread : spread;
+    const lineText = points === 0 ? 'PK' : points > 0 ? `+${points}` : String(points);
+    const value = Math.abs(v.margin - spread).toFixed(1);
+    return `<span class="sub pick"><span class="name-full">Spread pick: </span><span class="name-short">Pick </span><strong>${esc(v.atsTeam)} ${lineText}</strong></span>
+      <span class="sub">${value} pts<span class="name-full"> of value</span></span>`;
   };
 
-  const versionCell = (v, game, extra = '') => {
+  const versionCell = (v, game, line) => {
     if (!v) return '<td class="num">—</td>';
     const { away_team: away, home_team: home } = game;
     const edge = v.pickTeam ? `${v.pickTeam} +${Math.abs(v.diff).toFixed(3)}` : 'Even';
     return `<td class="num"><strong>${esc(edge)}</strong>
-      <span class="sub">≈ ${esc(spreadText(Number(v.margin.toFixed(1)), away, home))}</span>${extra}
-      <span class="sub">${esc(away)} ${signed(v.sides[0].value, 3)}</span>
-      <span class="sub">${esc(home)} ${signed(v.sides[1].value, 3)}</span>
+      <span class="sub nowrap">≈ ${esc(spreadText(Number(v.margin.toFixed(1)), away, home))}</span>
+      ${spreadPickHtml(v, game, line)}
+      <span class="sub nowrap">${esc(away)} ${signed(v.sides[0].value, 3)}</span>
+      <span class="sub nowrap">${esc(home)} ${signed(v.sides[1].value, 3)}</span>
       ${resultChips(v)}</td>`;
   };
 
-  const body = rows.map(({ game, line, raw, adj }) => {
+  const body = rows.map(({ game, line, raw, qb, adj }) => {
     const { away_team: away, home_team: home } = game;
     const final = isFinal(game)
       ? `<span class="sub"><span class="name-full">Final: ${esc(away)} ${game.away_score} – ${esc(home)} ${game.home_score}</span><span class="name-short">Final ${game.away_score}–${game.home_score}</span></span>`
@@ -1595,19 +1606,20 @@ function renderOverview() {
         <span class="sub">O/U ${line.total_line ?? '—'}</span>
         <span class="sub">${esc(away)} ${fmtMoneyline(line.away_moneyline)}</span>
         <span class="sub">${esc(home)} ${fmtMoneyline(line.home_moneyline)}</span></td>
-      ${versionCell(raw, game, qbSpreadHtml(game, raw))}
-      ${adjAvailable ? versionCell(adj, game) : ''}
+      ${versionCell(raw, game, line)}
+      ${qbTable ? versionCell(qb, game, line) : ''}
+      ${adjAvailable ? versionCell(adj, game, line) : ''}
     </tr>`;
   }).join('');
 
-  const rawSu = recordText(rows.map((r) => r.raw), 'won');
-  const rawAts = recordText(rows.map((r) => r.raw), 'ats');
-  const adjSu = recordText(rows.map((r) => r.adj), 'won');
-  const adjAts = recordText(rows.map((r) => r.adj), 'ats');
+  const records = (field) => (version) => recordText(rows.map((r) => r[version]), field);
+  const [su, ats] = [records('won'), records('ats')];
   let record = '';
-  if (rawSu || rawAts) {
-    record = `<p class="meta"><strong>Finished games:</strong> raw composite picks went ${rawSu ?? '—'} straight up and ${rawAts ?? '—'} against the spread`;
-    record += adjAvailable ? `; opponent-adjusted went ${adjSu ?? '—'} and ${adjAts ?? '—'}.</p>` : '.</p>';
+  if (su('raw') || ats('raw')) {
+    const parts = [`raw composite picks went ${su('raw') ?? '—'} straight up and ${ats('raw') ?? '—'} against the spread`];
+    if (qbTable) parts.push(`QB-adjusted went ${su('qb') ?? '—'} and ${ats('qb') ?? '—'}`);
+    if (adjAvailable) parts.push(`opponent-adjusted went ${su('adj') ?? '—'} and ${ats('adj') ?? '—'}`);
+    record = `<p class="meta"><strong>Finished games:</strong> ${parts.join('; ')}.</p>`;
   }
   const dogs = rows.filter((r) => r.raw?.isDog).length;
 
@@ -1622,6 +1634,7 @@ function renderOverview() {
         <th>${sortBtn('kickoff')}</th>
         <th class="num">${sortBtn('spread')}<br>${sortBtn('total')}<br>${sortBtn('ml')}</th>
         <th class="num">${sortBtn('raw')}</th>
+        ${qbTable ? `<th class="num">${sortBtn('qb')}</th>` : ''}
         ${adjAvailable ? `<th class="num">${sortBtn('adj')}</th>` : ''}
       </tr></thead>
       <tbody>${body}</tbody>
@@ -1635,17 +1648,25 @@ function renderOverview() {
       <p><strong>≈ spread:</strong> the composite turned into an estimated point spread, including about
         ${SPREAD_HOME_POINTS} points for home field, using how composites translated into final margins in 2017–2025.
         Early in the season composites are noisy, so the same gap is worth fewer points.</p>
-      <p><strong>Dog:</strong> the composite's pick is the betting underdog. <strong>Won / Lost:</strong> whether the
-        team with the better composite won. <strong>ATS:</strong> whether the side its estimated spread prefers
-        covered the betting spread (e.g. estimated NO -0.6 vs betting NO -1.5 means ATL +1.5).</p>
-      <p><strong>QB change / QB-adj:</strong> the team's expected starter didn't start every game (or is making his
-        first start). "QB-adj ≈" is the estimated spread with games by other QBs counting ${Math.round((snap.qb?.other_qb_weight ?? 0.25) * 100)}%
-        (shown only when it differs from the raw estimate); open the game for details.</p>
+      <p><strong>Two different picks:</strong> the bold team is the composite's pick to <em>win the game</em> (a
+        moneyline pick). The <strong>Spread pick</strong> compares the estimated spread with the betting spread and
+        names the side that looks better against the spread. Example: estimated BAL -3.1, betting ATL -3.5. The
+        estimate thinks Baltimore should be favored, so taking BAL +3.5 gets 6.6 points more than the estimate says
+        Baltimore needs ("6.6 pts of value"). The two picks can be different teams: e.g. estimated NO -0.6 vs betting
+        NO -1.5 picks NO to win, but the spread pick is ATL +1.5. Bigger value = the estimate disagrees more with the market.</p>
+      <p><strong>Dog:</strong> the pick to win is the betting underdog. <strong>Won / Lost:</strong> whether the
+        pick to win won. <strong>ATS W / L:</strong> whether the spread pick covered.</p>
+      <p><strong>QB-adjusted / QB change:</strong> the composite with games started by a different QB than this
+        week's expected starter counting ${Math.round((snap.qb?.other_qb_weight ?? 0.25) * 100)}%, plus the typical change for a QB's first start.
+        It's the same as raw for teams with one starter all season. "QB change" marks teams where it differs; open
+        the game for details.</p>
       <p><strong>Injury tags:</strong> key players (starters) who are out, doubtful, on IR/PUP, or sat last game
         before this week's report is filed ("out"), or
         questionable ("Q"). Open a game for names, injuries, and who's next up.</p>
-      <p>For interest, not picks: in 2017–2025 testing, neither version beat the betting market, and against the
-        spread they won about half the time.</p>
+      <p>For interest, not betting advice: in 2017–2025 testing, picks to win were right about 62% of the time (just
+        taking the betting favorite won about 67%), and spread picks won about half the time, even when the value
+        was 3+ points. None of the versions beat the betting market. QB-adjusted tested slightly better than raw;
+        opponent-adjusted tested slightly worse, mostly in weeks 5–8.</p>
     </div>`;
 
   view.querySelectorAll('.sort-btn').forEach((btn) => btn.addEventListener('click', () => {

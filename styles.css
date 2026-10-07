@@ -212,18 +212,22 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
 .overview-table td { vertical-align: top; }
 .overview-table .sub { display: block; color: var(--muted); font-size: .74rem; margin-top: 1px; }
 .overview-table .result-chips { margin-top: 4px; }
-.overview-table .sub.qb-spread { color: var(--purple); }
+.overview-table .sub.pick { color: var(--accent); }
 .overview-table .result-chips .chip { margin: 2px 0 0 2px; }
 .overview-table tr.clickable { cursor: pointer; }
 .overview-table tr.clickable:hover td { background: rgba(56, 189, 248, .06); }
 .overview-table tr.selected td { background: rgba(56, 189, 248, .14); }
 .overview-table tr.selected td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
 @media (max-width: 600px) {
-  .overview-table { font-size: .78rem; }
-  .overview-table th, .overview-table td { padding: 6px 3px; }
+  .overview-table { font-size: .72rem; }
+  .overview-table th, .overview-table td { padding: 5px 2px; }
   .overview-table th { white-space: normal; }
+  .overview-table .sub { font-size: .66rem; }
+  .overview-table .chip { font-size: .64rem; padding: 1px 4px; white-space: normal; }
   .overview-table .result-chips { white-space: normal; }
-  .overview-table .sub.qb-spread { white-space: normal; }
+  .overview-table td.num { white-space: normal; }
+  .overview-table td.num strong, .overview-table td.num .nowrap { white-space: nowrap; }
+  .overview-table td:first-child { max-width: 64px; }
 }
 
 .chip {
