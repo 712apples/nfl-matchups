@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 5,
  "stats_through_week": 4,
- "generated_at": "2026-10-06T10:41:07-04:00",
+ "generated_at": "2026-10-06T21:36:36-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -5115,10 +5115,10 @@
    "gametime": "20:15",
    "away_team": "TB",
    "home_team": "DAL",
-   "spread_line": 9.5,
+   "spread_line": 8.5,
    "total_line": 47.5,
-   "away_moneyline": 370.0,
-   "home_moneyline": -485.0,
+   "away_moneyline": 350.0,
+   "home_moneyline": -455.0,
    "roof": null,
    "away_rest": 4,
    "home_rest": 4,
@@ -5131,6 +5131,13 @@
      "total_line": 47.5,
      "away_moneyline": 370.0,
      "home_moneyline": -485.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": 8.5,
+     "total_line": 47.5,
+     "away_moneyline": 350.0,
+     "home_moneyline": -455.0
     }
    ]
   },
@@ -5142,10 +5149,10 @@
    "gametime": "09:30",
    "away_team": "PHI",
    "home_team": "JAX",
-   "spread_line": 6.5,
+   "spread_line": 7.0,
    "total_line": 42.5,
-   "away_moneyline": 230.0,
-   "home_moneyline": -285.0,
+   "away_moneyline": 260.0,
+   "home_moneyline": -325.0,
    "roof": "outdoors",
    "away_rest": 7,
    "home_rest": 7,
@@ -5158,6 +5165,13 @@
      "total_line": 42.5,
      "away_moneyline": 230.0,
      "home_moneyline": -285.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": 7.0,
+     "total_line": 42.5,
+     "away_moneyline": 260.0,
+     "home_moneyline": -325.0
     }
    ]
   },
@@ -5250,10 +5264,10 @@
    "gametime": "13:00",
    "away_team": "HOU",
    "home_team": "TEN",
-   "spread_line": -6.5,
-   "total_line": 39.5,
-   "away_moneyline": -310.0,
-   "home_moneyline": 250.0,
+   "spread_line": -7.5,
+   "total_line": 38.5,
+   "away_moneyline": -375.0,
+   "home_moneyline": 295.0,
    "roof": "outdoors",
    "away_rest": 7,
    "home_rest": 7,
@@ -5266,6 +5280,13 @@
      "total_line": 39.5,
      "away_moneyline": -310.0,
      "home_moneyline": 250.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": -7.5,
+     "total_line": 38.5,
+     "away_moneyline": -375.0,
+     "home_moneyline": 295.0
     }
    ]
   },
@@ -5279,8 +5300,8 @@
    "home_team": "PIT",
    "spread_line": 2.5,
    "total_line": 44.5,
-   "away_moneyline": 114.0,
-   "home_moneyline": -135.0,
+   "away_moneyline": 120.0,
+   "home_moneyline": -142.0,
    "roof": "outdoors",
    "away_rest": 7,
    "home_rest": 10,
@@ -5293,6 +5314,13 @@
      "total_line": 44.5,
      "away_moneyline": 114.0,
      "home_moneyline": -135.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": 2.5,
+     "total_line": 44.5,
+     "away_moneyline": 120.0,
+     "home_moneyline": -142.0
     }
    ]
   },
@@ -5358,10 +5386,10 @@
    "gametime": "13:00",
    "away_team": "NYG",
    "home_team": "WAS",
-   "spread_line": 3.0,
+   "spread_line": 3.5,
    "total_line": 43.5,
-   "away_moneyline": 140.0,
-   "home_moneyline": -166.0,
+   "away_moneyline": 145.0,
+   "home_moneyline": -175.0,
    "roof": "outdoors",
    "away_rest": 7,
    "home_rest": 7,
@@ -5374,6 +5402,13 @@
      "total_line": 43.5,
      "away_moneyline": 140.0,
      "home_moneyline": -166.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": 3.5,
+     "total_line": 43.5,
+     "away_moneyline": 145.0,
+     "home_moneyline": -175.0
     }
    ]
   },
@@ -5439,10 +5474,10 @@
    "gametime": "16:25",
    "away_team": "SF",
    "home_team": "SEA",
-   "spread_line": 3.0,
-   "total_line": 47.5,
-   "away_moneyline": 138.0,
-   "home_moneyline": -164.0,
+   "spread_line": 2.5,
+   "total_line": 46.5,
+   "away_moneyline": 130.0,
+   "home_moneyline": -155.0,
    "roof": "outdoors",
    "away_rest": 7,
    "home_rest": 7,
@@ -5455,6 +5490,13 @@
      "total_line": 47.5,
      "away_moneyline": 138.0,
      "home_moneyline": -164.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": 2.5,
+     "total_line": 46.5,
+     "away_moneyline": 130.0,
+     "home_moneyline": -155.0
     }
    ]
   },
@@ -5466,10 +5508,10 @@
    "gametime": "20:20",
    "away_team": "BAL",
    "home_team": "ATL",
-   "spread_line": 2.5,
-   "total_line": 44.5,
-   "away_moneyline": 124.0,
-   "home_moneyline": -148.0,
+   "spread_line": 3.5,
+   "total_line": 43.5,
+   "away_moneyline": 154.0,
+   "home_moneyline": -185.0,
    "roof": null,
    "away_rest": 7,
    "home_rest": 6,
@@ -5482,6 +5524,13 @@
      "total_line": 44.5,
      "away_moneyline": 124.0,
      "home_moneyline": -148.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": 3.5,
+     "total_line": 43.5,
+     "away_moneyline": 154.0,
+     "home_moneyline": -185.0
     }
    ]
   },
@@ -5495,8 +5544,8 @@
    "home_team": "LA",
    "spread_line": 2.5,
    "total_line": 54.5,
-   "away_moneyline": 124.0,
-   "home_moneyline": -148.0,
+   "away_moneyline": 130.0,
+   "home_moneyline": -155.0,
    "roof": "dome",
    "away_rest": 8,
    "home_rest": 8,
@@ -5509,6 +5558,13 @@
      "total_line": 54.5,
      "away_moneyline": 124.0,
      "home_moneyline": -148.0
+    },
+    {
+     "time": "2026-10-06T21:36:36-04:00",
+     "spread_line": 2.5,
+     "total_line": 54.5,
+     "away_moneyline": 130.0,
+     "home_moneyline": -155.0
     }
    ]
   }
