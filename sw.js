@@ -20,7 +20,7 @@
  * Location: D:\OneDrive\Code\DFS_direct\NFL\nfl-matchups\sw.js
  */
 
-const CACHE_VERSION = 'nfl-matchups-v2';
+const CACHE_VERSION = 'nfl-matchups-v3';
 
 const APP_SHELL = [
   './',

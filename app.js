@@ -17,13 +17,18 @@
  *   to stats adjusted for the opponents each team has faced; the composite
  *   box always shows both, plus a QB-adjusted line (games by a different
  *   starting QB count less). The game script always uses raw stats.
- *   A "Weekly overview" view lists every game of the week with lines, raw and
+ *   A "Weekly overview" view lists every game of the week with the spread and
+ *   moneyline, the O/U with each team's implied points, raw and
  *   opponent-adjusted composites, estimated spreads, underdog flags, and
  *   results in a sortable table, plus a weather line, weather alert tags, and
  *   injury tags per team; tapping a game
  *   opens it in the Matchup view. Games can be starred (overview or Matchup
  *   page); stars are saved in the browser (localStorage) and can be sorted,
  *   filtered, and scored once final.
+ *   A "Fantasy" view projects DraftKings points for each team's offense,
+ *   passing game, running backs, and defense/special teams (model weights from
+ *   NFL\nfl_fantasy_backtest.py, 2015-2025), and lists shootouts, sleepers,
+ *   and teams to avoid.
  *
  *   Ranks in the data always mean "1 = best for that side": for a defense,
  *   best means allowed the least, except sacks, QB hits, and turnovers, where
@@ -141,7 +146,7 @@ const SPREAD_SLOPES = [
 const OVERVIEW_SORTS = {
   kickoff: { label: 'Kickoff', firstHigh: false },
   spread: { label: 'Spread', firstHigh: true },
-  total: { label: 'Total', firstHigh: true },
+  total: { label: 'O/U', firstHigh: true },
   ml: { label: 'ML', firstHigh: true },
   raw: { label: 'Raw composite', short: 'Raw', firstHigh: true },
   starred: { label: '★ Starred', short: '★', firstHigh: true },
@@ -181,6 +186,29 @@ const WEATHER_CODES = [
   [77, 'Snow'], [82, 'Rain showers'], [86, 'Snow showers'], [99, 'Thunderstorms'],
 ];
 const ROOF_TYPE_LABELS = { outdoor: 'Open-air', retractable: 'Retractable roof', dome: 'Dome (indoors)' };
+
+// Fantasy view (DraftKings). Projected DK points = intercept + sum of weight x input, fitted on 2015-2025
+// team-games (weeks 2+). Must match backtest\fantasy_backtest_model.csv and _page.csv from nfl_fantasy_backtest.py.
+// Inputs: implied = team implied points, oppImplied = opponent's, total = game O/U, weather = wind/rain alert (1/0),
+// qbOut / oppQbOut = starting QB out (1/0), oppProtect = opponent's pass-protection matchup score (+ = well protected).
+const FANTASY_MODEL = {
+  off: { intercept: 11.894, implied: 2.270, total: 0.611, weather: -4.689, qbOut: -3.144, oppQbOut: -0.324 },
+  pass: { intercept: 1.380, implied: 1.577, total: 0.659, weather: -4.551, qbOut: -3.845, oppQbOut: -0.381 },
+  rb: { intercept: 10.515, implied: 0.694, total: -0.053, weather: -0.122, qbOut: 0.623, oppQbOut: 0.146 },
+  dst: { intercept: 12.562, oppImplied: -0.439, total: 0.080, oppProtect: -0.471, weather: 0.626, oppQbOut: 0.186 },
+};
+// How the model's weekly top 5 finished in 2015-2025: % in that week's top 10 (DST: % scoring 10+ DK points).
+const FANTASY_HITS = {
+  off: { top: 59, rest: 28, bottom: 12 },
+  pass: { top: 52, rest: 30, bottom: 13 },
+  rb: { top: 49, rest: 30, bottom: 22 },
+  dst: { top: 37, rest: 22, bottom: 12 },
+};
+const FANTASY_LIST = 6;              // Teams shown in each target list
+const FANTASY_SHOOTOUT_TOTAL = 48;   // Game total for the shootout list
+const FANTASY_SLEEPER_TOTAL_PCT = 0.25;   // Sleeper: game total in the week's top 25%...
+const FANTASY_SHOOTOUT = { residual: 2.2 };   // Teams in 48+ totals beat their implied-points expectation by this (DK)
+const FANTASY_SLEEPER = { games: 359, residual: 2.7, passResidual: 2.4, residual50: 4.9 };   // ...and below-median implied
 
 const state = {
   index: null,
@@ -334,6 +362,31 @@ function spreadText(spread, away, home) {
   if (spread == null) return '—';
   if (spread === 0) return "Pick'em";
   return spread > 0 ? `${home} -${spread}` : `${away} -${-spread}`;
+}
+
+/**
+ * Implied points for each team: half the total, plus half the spread for the favorite (minus for the underdog).
+ * @param {object} line - Lines with spread_line (home margin) and total_line.
+ * @returns {{away: number, home: number}|null} Implied points, or null without both lines.
+ */
+function impliedPoints(line) {
+  if (line.total_line == null || line.spread_line == null) return null;
+  const home = line.total_line / 2 + line.spread_line / 2;
+  return { away: line.total_line - home, home };
+}
+
+/**
+ * Small lines with each team's implied points, e.g. "NYG 19.5" / "WAS 23".
+ * @param {object} line - Lines with spread_line and total_line.
+ * @param {string} away - Away team abbreviation.
+ * @param {string} home - Home team abbreviation.
+ * @returns {string} HTML ('' without lines).
+ */
+function impliedHtml(line, away, home) {
+  const pts = impliedPoints(line);
+  if (!pts) return '';
+  const fmt = (x) => String(Math.round(x * 4) / 4);
+  return `<span class="sub nowrap">${esc(away)} ${fmt(pts.away)}</span><span class="sub nowrap">${esc(home)} ${fmt(pts.home)}</span>`;
 }
 
 /**
@@ -689,6 +742,11 @@ function render() {
   if (state.view === 'overview') {
     errorBox.classList.add('hidden');
     renderOverview();
+    return;
+  }
+  if (state.view === 'fantasy') {
+    errorBox.classList.add('hidden');
+    renderFantasy();
     return;
   }
   const { away, home, game } = currentSelection();
@@ -2037,15 +2095,17 @@ function renderOverview() {
       <span class="sub"><span class="name-full">differs from line by </span><span class="name-short">off by </span>${gap}</span>`;
   };
 
+  // Phones drop the leading zero (+.031) so six columns fit.
+  const epa = (text) => `<span class="name-full">${text}</span><span class="name-short">${text.replace(/^([+-−]?)0\./, '$1.')}</span>`;
   const versionCell = (v, game, line) => {
     if (!v) return '<td class="num">—</td>';
     const { away_team: away, home_team: home } = game;
-    const edge = v.pickTeam ? `${v.pickTeam} +${Math.abs(v.diff).toFixed(3)}` : 'Even';
-    return `<td class="num"><strong>${esc(edge)}</strong>
+    const edge = v.pickTeam ? `${esc(v.pickTeam)} ${epa(`+${Math.abs(v.diff).toFixed(3)}`)}` : 'Even';
+    return `<td class="num"><strong>${edge}</strong>
       <span class="sub nowrap">≈ ${esc(spreadText(Number(v.margin.toFixed(1)), away, home))}</span>
       ${spreadPickHtml(v, game, line)}
-      <span class="sub nowrap">${esc(away)} ${signed(v.sides[0].value, 3)}</span>
-      <span class="sub nowrap">${esc(home)} ${signed(v.sides[1].value, 3)}</span>
+      <span class="sub nowrap">${esc(away)} ${epa(signed(v.sides[0].value, 3))}</span>
+      <span class="sub nowrap">${esc(home)} ${epa(signed(v.sides[1].value, 3))}</span>
       ${resultChips(v)}</td>`;
   };
 
@@ -2066,10 +2126,11 @@ function renderOverview() {
         ${weather ? `<span class="sub wx">${esc(weather)}</span>` : ''}
         ${tags ? `<span class="sub result-chips">${tags}</span>` : ''}</td>
       <td class="num"><strong>${esc(spreadText(line.spread_line, away, home))}</strong>
-        <span class="sub">O/U ${line.total_line ?? '—'}</span>
-        ${underChip(game)}
         <span class="sub">${esc(away)} ${fmtMoneyline(line.away_moneyline)}</span>
         <span class="sub">${esc(home)} ${fmtMoneyline(line.home_moneyline)}</span></td>
+      <td class="num"><strong>${line.total_line ?? '—'}</strong>
+        ${impliedHtml(line, away, home)}
+        ${underChip(game)}</td>
       ${versionCell(raw, game, line)}
       ${qbTable ? versionCell(qb, game, line) : ''}
       ${adjAvailable ? versionCell(adj, game, line) : ''}
@@ -2089,7 +2150,7 @@ function renderOverview() {
   const starFilter = `<label class="star-filter"><input type="checkbox" id="starred-only"${state.starredOnly ? ' checked' : ''}>
     Show starred only (${starredCount})</label>`;
   const emptyRow = state.starredOnly && !shown.length
-    ? `<tr><td colspan="5" class="meta">No starred games this week. Tap ☆ next to a game to star it.</td></tr>`
+    ? `<tr><td colspan="6" class="meta">No starred games this week. Tap ☆ next to a game to star it.</td></tr>`
     : '';
   const dogs = rows.filter((r) => r.raw?.isDog).length;
 
@@ -2103,7 +2164,8 @@ function renderOverview() {
     <div class="table-scroll"><table class="overview-table">
       <thead><tr>
         <th>${sortBtn('kickoff')}<br>${sortBtn('starred')}</th>
-        <th class="num">${sortBtn('spread')}<br>${sortBtn('total')}<br>${sortBtn('ml')}</th>
+        <th class="num">${sortBtn('spread')}<br>${sortBtn('ml')}</th>
+        <th class="num">${sortBtn('total')}</th>
         <th class="num">${sortBtn('raw')}</th>
         ${qbTable ? `<th class="num">${sortBtn('qb')}</th>` : ''}
         ${adjAvailable ? `<th class="num">${sortBtn('adj')}</th>` : ''}
@@ -2113,8 +2175,11 @@ function renderOverview() {
     <div class="footnote">
       <p><strong>★ Stars:</strong> tap ☆ next to a game (here or on the Matchup page) to star games you're
         interested in. Stars are saved in this browser only, so your phone and computer keep separate lists.</p>
-      <p><strong>Lines:</strong> the latest recorded spread, over/under, and moneylines (for past weeks, the last line
+      <p><strong>Lines:</strong> the latest recorded spread, moneylines, and over/under (for past weeks, the last line
         before kickoff). ML sorts by how big a favorite the favorite is.</p>
+      <p><strong>O/U and implied points:</strong> the small numbers under the over/under are each team's implied points,
+        the score the betting lines expect (half the total, plus or minus half the spread). For fantasy, implied points
+        are the best single guide to which offenses will score; see the Fantasy view.</p>
       <p><strong>Composite:</strong> for each offense, the average of its EPA per play and what the opposing defense
         allows. The bold number is the team with the better composite and by how much; the two small numbers are each
         team's composite. Opponent-adjusted uses stats adjusted for the opponents each team has faced${adjAvailable ? '' : ` (it appears once teams have ${SOS_MIN_WEEKS} weeks of games)`}.</p>
@@ -2179,8 +2244,224 @@ function renderOverview() {
   });
 }
 
+// ----------------------------------------------------------------------
+// Fantasy view
+// ----------------------------------------------------------------------
+
 /**
- * Open one of this week's games in the Matchup view (used by the weekly overview).
+ * Whether a team's starting QB is listed as not playing in key injuries.
+ * @param {string} abbr - Team abbreviation.
+ * @returns {boolean}
+ */
+function qbOut(abbr) {
+  return (teamInjuries(abbr) || []).some((p) => p.group === 'QB' && INJURY_OUT.includes(p.status));
+}
+
+/**
+ * One row per team playing this week: model inputs, projected DK points, and sleeper flag.
+ * Games without both a spread and a total are skipped.
+ * @returns {Array<object>} Rows with game, team, opp, home, implied, oppImplied, total,
+ *   weather, qbOut, oppQbOut, oppProtect, flags, proj {off, pass, rb, dst}, sleeper.
+ */
+function fantasyRows() {
+  const protect = SCRIPT_AREAS.find((a) => a.label === 'Pass protection');
+  const rows = [];
+  state.snapshot.games.forEach((game) => {
+    const line = latestLine(game);
+    const pts = impliedPoints(line);
+    if (!pts) return;
+    const flags = weatherFlags(gameWeather(game), gameVenue(game));
+    const sides = [[game.away_team, game.home_team, false], [game.home_team, game.away_team, true]];
+    sides.forEach(([team, opp, home]) => {
+      const inputs = {
+        implied: home ? pts.home : pts.away,
+        oppImplied: home ? pts.away : pts.home,
+        total: line.total_line,
+        weather: flags.wind || flags.rain ? 1 : 0,
+        qbOut: qbOut(team) ? 1 : 0,
+        oppQbOut: qbOut(opp) ? 1 : 0,
+        oppProtect: areaScore(protect, opp, team) ?? 0,
+      };
+      const project = (model) => Object.entries(model)
+        .reduce((sum, [key, weight]) => sum + (key === 'intercept' ? weight : weight * inputs[key]), 0);
+      rows.push({
+        game, team, opp, home, flags, ...inputs,
+        proj: { off: project(FANTASY_MODEL.off), pass: project(FANTASY_MODEL.pass), rb: project(FANTASY_MODEL.rb), dst: project(FANTASY_MODEL.dst) },
+      });
+    });
+  });
+
+  const implieds = rows.map((r) => r.implied).sort((a, b) => a - b);
+  const n = implieds.length;
+  const median = n ? (implieds[Math.floor((n - 1) / 2)] + implieds[Math.ceil((n - 1) / 2)]) / 2 : null;
+  const gameTotals = rows.filter((r) => r.home).map((r) => r.total);
+  const highTotal = (t) => (1 + gameTotals.filter((x) => x > t).length) / gameTotals.length <= FANTASY_SLEEPER_TOTAL_PCT;
+  rows.forEach((r) => { r.sleeper = r.implied < median && highTotal(r.total) && !r.weather && !r.qbOut; });
+  return rows;
+}
+
+/**
+ * Note chips for a fantasy row.
+ * @param {object} r - Row from fantasyRows().
+ * @param {string} kind - "off", "pass", "rb", or "dst".
+ * @returns {string} HTML chips.
+ */
+function fantasyTags(r, kind) {
+  const chips = [];
+  if (kind === 'dst') {
+    if (r.oppQbOut) chips.push(`<span class="chip off">${esc(r.opp)} QB out</span>`);
+    if (r.oppProtect <= -0.5) chips.push('<span class="chip off">Leaky O-line</span>');
+    if (r.weather) chips.push('<span class="chip under">Weather</span>');
+    return chips.join(' ');
+  }
+  if (r.qbOut && kind !== 'rb') chips.push('<span class="chip def">QB out</span>');
+  if (r.weather && kind !== 'rb') chips.push('<span class="chip def">Weather alert</span>');
+  if (r.sleeper) chips.push('<span class="chip svs">Sleeper</span>');
+  if (r.total >= FANTASY_SHOOTOUT_TOTAL) chips.push('<span class="chip under">High total</span>');
+  return chips.join(' ');
+}
+
+/**
+ * Compact table of fantasy rows: team and opponent, projection, and notes. Rows open the game.
+ * @param {Array<object>} rows - Rows from fantasyRows().
+ * @param {string} kind - Which projection to show ("off", "pass", "rb", "dst").
+ * @param {function} detail - Returns the small line under the projection for a row.
+ * @returns {string} HTML table.
+ */
+function fantasyTable(rows, kind, detail) {
+  if (!rows.length) return '<p class="meta">None this week.</p>';
+  return `<table class="fantasy-table"><tbody>${rows.map((r) => `
+    <tr class="clickable" data-game="${esc(r.game.game_id)}" tabindex="0">
+      <td>${teamBadge(r.team, false)} <span class="at">${r.home ? 'vs' : '@'} ${esc(r.opp)}</span>
+        <span class="sub">${esc(kickoffText(r.game).replace(/ \d+\/\d+ ·/, ''))}</span></td>
+      <td class="num"><strong>${r.proj[kind].toFixed(1)}</strong><span class="sub">${detail(r)}</span></td>
+      <td class="tags">${fantasyTags(r, kind)}</td>
+    </tr>`).join('')}</tbody></table>`;
+}
+
+/**
+ * Fantasy view: projected DraftKings points for offenses, passing games, running games, and
+ * defenses, plus shootouts, sleepers, and teams to avoid.
+ * @returns {void}
+ */
+function renderFantasy() {
+  const snap = state.snapshot;
+  const view = $('fantasy-view');
+  const rows = fantasyRows();
+  if (!rows.length) {
+    view.innerHTML = `<h2>Week ${snap.week} fantasy outlook</h2><p class="meta">No betting lines yet, so no projections.</p>`;
+    return;
+  }
+  const top = (kind) => [...rows].sort((a, b) => b.proj[kind] - a.proj[kind]).slice(0, FANTASY_LIST);
+  const fmt = (x) => String(Math.round(x * 4) / 4);
+  const impliedLine = (r) => `${fmt(r.implied)} implied`;
+  const h = FANTASY_HITS;
+  const weatherStatus = state.weather[snap.week]?.status;
+
+  const games = rows.filter((r) => r.home);
+  let shootouts = games.filter((r) => r.total >= FANTASY_SHOOTOUT_TOTAL).sort((a, b) => b.total - a.total);
+  const noShootouts = !shootouts.length;
+  if (noShootouts) shootouts = [...games].sort((a, b) => b.total - a.total).slice(0, 3);
+  const shootoutHtml = shootouts.map((r) => {
+    const g = r.game;
+    const away = rows.find((x) => x.game === g && !x.home);
+    const alert = r.weather ? ' <span class="chip def">Weather alert</span>' : '';
+    return `<li class="clickable" data-game="${esc(g.game_id)}" tabindex="0"><strong>${esc(g.away_team)} @ ${esc(g.home_team)}</strong>
+      · O/U ${r.total} · ${esc(g.away_team)} ${fmt(away.implied)}, ${esc(g.home_team)} ${fmt(r.implied)}${alert}</li>`;
+  }).join('');
+
+  const sleepers = rows.filter((r) => r.sleeper).sort((a, b) => b.total - a.total);
+
+  const avoid = new Map();   // "TEAM" or "TEAM DST" -> {r, label, reasons}
+  const addAvoid = (r, why, dst = false) => {
+    const label = dst ? `${r.team} DST` : r.team;
+    if (!avoid.has(label)) avoid.set(label, { r, label, reasons: [] });
+    avoid.get(label).reasons.push(why);
+  };
+  rows.filter((r) => r.qbOut).forEach((r) => addAvoid(r, 'starting QB out'));
+  rows.filter((r) => r.weather).forEach((r) => addAvoid(r, 'weather alert (downgrade the passing game)'));
+  [...rows].sort((a, b) => a.proj.off - b.proj.off).slice(0, 3)
+    .forEach((r) => addAvoid(r, `low projection (${r.proj.off.toFixed(1)} DK points, ${fmt(r.implied)} implied)`));
+  [...rows].sort((a, b) => a.proj.dst - b.proj.dst).slice(0, 3)
+    .forEach((r) => addAvoid(r, `low projection (${r.proj.dst.toFixed(1)} DK points; ${esc(r.opp)} implied for ${fmt(r.oppImplied)})`, true));
+  const avoidHtml = [...avoid.values()].map(({ r, label, reasons }) => `<li class="clickable" data-game="${esc(r.game.game_id)}" tabindex="0">
+    <strong>${esc(label)}</strong> ${r.home ? 'vs' : '@'} ${esc(r.opp)}: ${reasons.join('; ')}.</li>`).join('');
+
+  const all = [...rows].sort((a, b) => b.proj.off - a.proj.off);
+  const allHtml = `<div class="table-scroll"><table class="fantasy-all">
+    <thead><tr><th>Team</th><th class="num">Implied</th><th class="num">O/U</th><th class="num">Offense</th>
+      <th class="num">QB+WR/TE</th><th class="num">RB</th><th class="num">DST</th><th>Notes</th></tr></thead>
+    <tbody>${all.map((r) => `<tr class="clickable" data-game="${esc(r.game.game_id)}" tabindex="0">
+      <td>${esc(r.team)} ${r.home ? 'vs' : '@'} ${esc(r.opp)}</td><td class="num">${fmt(r.implied)}</td><td class="num">${r.total}</td>
+      <td class="num">${r.proj.off.toFixed(1)}</td><td class="num">${r.proj.pass.toFixed(1)}</td><td class="num">${r.proj.rb.toFixed(1)}</td>
+      <td class="num">${r.proj.dst.toFixed(1)}</td><td class="tags">${[fantasyTags(r, 'off'), fantasyTags(r, 'dst')].filter(Boolean).join(' ')}</td></tr>`).join('')}
+    </tbody></table></div>`;
+
+  view.innerHTML = `
+    <h2>Week ${snap.week} fantasy outlook (DraftKings)</h2>
+    <p class="meta">Projected DraftKings points for each team, built from the betting lines (implied points and the game
+      total), weather alerts, and starting QBs who are out. Tap a team to open its game.
+      ${weatherStatus === 'loading' ? 'Weather is still loading, so weather alerts may be added in a moment.' : ''}</p>
+    <div class="fantasy-grid">
+      <div class="fantasy-box"><h3>Offenses to target</h3>
+        <p class="explain">Whole-offense DK points. In 2015–2025 the model's weekly top 5 finished in that week's top 10 offenses
+          ${h.off.top}% of the time (everyone else: ${h.off.rest}%).</p>
+        ${fantasyTable(top('off'), 'off', impliedLine)}</div>
+      <div class="fantasy-box"><h3>Passing games (QB, WR, TE)</h3>
+        <p class="explain">QB plus pass catchers. Top 5 finished top 10 ${h.pass.top}% of the time (everyone else: ${h.pass.rest}%).</p>
+        ${fantasyTable(top('pass'), 'pass', impliedLine)}</div>
+      <div class="fantasy-box"><h3>Running backs</h3>
+        <p class="explain">RB room. Top 5 finished top 10 ${h.rb.top}% of the time (everyone else: ${h.rb.rest}%). Mostly follows
+          implied points: big favorites run more.</p>
+        ${fantasyTable(top('rb'), 'rb', impliedLine)}</div>
+      <div class="fantasy-box"><h3>Defense / special teams</h3>
+        <p class="explain">Top 5 scored 10+ DK points ${h.dst.top}% of the time (everyone else: ${h.dst.rest}%). The opponent's
+          implied points matter most; a leaky offensive line on the other side helps a little.</p>
+        ${fantasyTable(top('dst'), 'dst', (r) => `opp ${fmt(r.oppImplied)} implied`)}</div>
+      <div class="fantasy-box"><h3>Shootouts and stacks</h3>
+        <p class="explain">${noShootouts ? `No game has a ${FANTASY_SHOOTOUT_TOTAL}+ total this week; these are the highest.` : `Games with a ${FANTASY_SHOOTOUT_TOTAL}+ total.`}
+          Teams in ${FANTASY_SHOOTOUT_TOTAL}+ totals beat their implied points by about ${FANTASY_SHOOTOUT.residual} DK points, a good spot to
+          stack a QB with his receivers and a player from the other side. A close spread didn't add anything extra.</p>
+        <ul class="fantasy-games">${shootoutHtml}</ul></div>
+      <div class="fantasy-box"><h3>Sleepers</h3>
+        <p class="explain">Teams expected to score less than most (below-median implied points) in one of the week's highest-total
+          games (top 25%). Since 2015 (${FANTASY_SLEEPER.games} teams) they beat their implied points by about ${FANTASY_SLEEPER.residual} DK
+          points, mostly through the passing game, and by about ${FANTASY_SLEEPER.residual50} in 50+ totals. They're likely lower-owned
+          because ownership tends to follow implied points. Teams with a weather alert or QB out are left off.</p>
+        ${fantasyTable(sleepers, 'pass', (r) => `${fmt(r.implied)} implied · O/U ${r.total}`)}</div>
+    </div>
+    <div class="fantasy-box avoid"><h3>Avoid or downgrade</h3>
+      <p class="explain">Since 2015, offenses with their starting QB out scored about ${Math.abs(FANTASY_MODEL.off.qbOut).toFixed(1)} DK points
+        less than their implied points suggested, and passing games in weather-alert games about
+        ${Math.abs(FANTASY_MODEL.pass.weather).toFixed(1)} less (running games weren't affected). Also listed: the
+        3 lowest projected offenses and defenses.</p>
+      <ul class="fantasy-games">${avoidHtml || '<li>Nothing stands out this week.</li>'}</ul></div>
+    <details class="fantasy-details"><summary>All teams</summary>${allHtml}</details>
+    <div class="footnote">
+      <p><strong>How it works:</strong> projected DK points = a weighted mix of the team's implied points (from the spread and
+        total), the game total, a weather alert, and whether either starting QB is out, with weights fitted on every game from
+        2015 to 2025 (week 2 on). Checked season by season using only earlier seasons, it predicted fantasy points a bit
+        better than implied points alone. Projections are for the whole team (or position group), not individual players.</p>
+      <p><strong>What didn't help:</strong> the game script matchup stats (passing and running matchups) added nothing beyond
+        the betting lines for fantasy points, so they aren't used here. A team's implied points already include the matchup.
+        A close spread didn't make shootouts better, and a strong matchup on a low-scoring team didn't make it a sleeper.</p>
+      <p><strong>Ownership:</strong> free data doesn't include DraftKings ownership or salaries, so sleepers are teams the
+        market doesn't expect much from, which usually means lower ownership.</p>
+      <p><strong>Weather and QB news:</strong> weather alerts come from the live forecast (the backtest used the weather that
+        happened, so forecast-based alerts are less certain), and "QB out" comes from the key injuries list (Out, Doubtful,
+        IR, or sat last game). Check again closer to kickoff.</p>
+      <p>For entertainment, not advice. Fantasy points vary a lot from week to week: even the model's top 5 offenses
+        missed the top 10 about ${100 - h.off.top}% of the time.</p>
+    </div>`;
+
+  view.querySelectorAll('.clickable').forEach((el) => {
+    el.addEventListener('click', () => openGame(el.dataset.game));
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter') openGame(el.dataset.game); });
+  });
+}
+
+/**
+ * Open one of this week's games in the Matchup view (used by the weekly overview and fantasy view).
  * @param {string} gameId - nflverse game_id.
  * @returns {void}
  */
@@ -2233,6 +2514,12 @@ function renderGlossary() {
       open-air games with ${WEATHER_WIND_ALERT}+ mph wind or ${WEATHER_GUST_ALERT}+ mph gusts, or ${WEATHER_RAIN_ALERT.toFixed(2)}+ inches of rain likely; in
       2015–2025 those games went under the closing total ${WEATHER_HISTORY.wind.under}% and ${WEATHER_HISTORY.rain.under}% of the time. Snow had no clear
       effect, so it's tagged but not an alert. The total often moves with the forecast, so some of that may already be priced in.</p>
+    <p><strong>Implied points:</strong> how many points the betting market expects a team to score, from the O/U and
+      spread: half the total, plus half the spread for the favorite (minus for the underdog).</p>
+    <p><strong>Fantasy:</strong> projected DraftKings points (full PPR, DraftKings defense scoring) for each team's whole
+      offense, passing game (QB, WR, TE), running backs, and defense/special teams. Built from implied points, the game total,
+      weather alerts, and starting QBs who are out, fitted on 2015–2025 games. Sleepers are below-median implied teams in
+      one of the week's highest-total games.</p>
     <dl>${STATS.map((s) => `<dt>${esc(s.label)}</dt><dd>${esc(s.help)}</dd>`).join('')}</dl>`;
 }
 
@@ -2261,11 +2548,12 @@ function setMode(mode) {
 }
 
 /**
- * Switch between the matchup, league rankings, and weekly overview views.
+ * Switch between the matchup, league rankings, weekly overview, and fantasy views.
  * The week picker stays visible in all of them; the game/team pickers only
  * show in the matchup view, but the selection is kept for highlighting. The
- * Raw / Opponent-adjusted toggle is hidden in the overview, which shows both.
- * @param {string} view - "matchup", "rankings", or "overview".
+ * Raw / Opponent-adjusted toggle is hidden in the overview (which shows both)
+ * and the fantasy view (which doesn't use it).
+ * @param {string} view - "matchup", "rankings", "overview", or "fantasy".
  * @returns {void}
  */
 function setView(view) {
@@ -2273,12 +2561,13 @@ function setView(view) {
   const matchup = view === 'matchup';
   document.querySelectorAll('#view-toggle button').forEach((b) => b.classList.toggle('active', b.dataset.view === view));
   $('mode-field').classList.toggle('hidden', !matchup);
-  $('stats-field').classList.toggle('hidden', view === 'overview');
+  $('stats-field').classList.toggle('hidden', view === 'overview' || view === 'fantasy');
   $('game-picker').classList.toggle('hidden', !matchup || state.mode !== 'game');
   $('team-picker').classList.toggle('hidden', !matchup || state.mode !== 'manual');
   $('matchup').classList.toggle('hidden', !matchup);
   $('rankings-view').classList.toggle('hidden', view !== 'rankings');
   $('overview-view').classList.toggle('hidden', view !== 'overview');
+  $('fantasy-view').classList.toggle('hidden', view !== 'fantasy');
   render();
   loadWeather(state.snapshot);
 }

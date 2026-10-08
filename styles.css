@@ -242,14 +242,14 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
 .overview-table tr.selected td { background: rgba(56, 189, 248, .14); }
 .overview-table tr.selected td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
 @media (max-width: 600px) {
-  .overview-table { font-size: .72rem; }
-  .overview-table th, .overview-table td { padding: 5px 2px; }
+  .overview-table { font-size: .70rem; }
+  .overview-table th, .overview-table td { padding: 5px 1px; }
   .overview-table th { white-space: normal; }
   .overview-table .sub { font-size: .66rem; }
   .overview-table .chip { font-size: .64rem; padding: 1px 4px; white-space: normal; }
   .overview-table .result-chips { white-space: normal; }
   .overview-table td.num { white-space: normal; }
-  .overview-table td.num strong, .overview-table td.num .nowrap { white-space: nowrap; }
+  .overview-table td.num strong { white-space: nowrap; }
   .overview-table td:first-child { max-width: 64px; }
 }
 
@@ -301,6 +301,30 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
   background: rgba(56, 189, 248, .1); font-size: .9rem; }
 .under-note strong { color: var(--accent); }
 .chip.under { background: rgba(56, 189, 248, .15); color: var(--accent); }
+
+/* ---------- Fantasy ---------- */
+.fantasy-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-top: 12px; }
+@media (max-width: 760px) { .fantasy-grid { grid-template-columns: minmax(0, 1fr); } }
+.fantasy-box { background: var(--panel2); border-radius: 10px; padding: 12px; }
+.fantasy-box.avoid { margin-top: 14px; border-left: 3px solid var(--bad); }
+.fantasy-box h3 { margin: 0; font-size: 1rem; }
+.fantasy-box .explain { margin: 4px 0 8px; font-size: .8rem; }
+.fantasy-table td { vertical-align: top; padding: 6px 4px; }
+.fantasy-table .sub, .fantasy-all .sub { display: block; color: var(--muted); font-size: .72rem; margin-top: 1px; }
+.fantasy-table .at { color: var(--muted); font-size: .82rem; white-space: nowrap; }
+.fantasy-table td.tags { text-align: right; }
+.fantasy-table .chip, .fantasy-all .chip { margin: 0 0 2px 2px; }
+.fantasy-games { margin: 0; padding-left: 18px; font-size: .88rem; }
+.fantasy-games li { margin-bottom: 6px; }
+.fantasy-details { margin: 14px 0; }
+.fantasy-all { font-size: .82rem; }
+#fantasy-view .clickable { cursor: pointer; }
+#fantasy-view tr.clickable:hover td, #fantasy-view li.clickable:hover { background: rgba(56, 189, 248, .06); }
+@media (max-width: 600px) {
+  .fantasy-table { font-size: .8rem; }
+  .fantasy-table .chip { font-size: .64rem; padding: 1px 4px; }
+  .fantasy-table td.tags { max-width: 90px; }
+}
 
 /* ---------- Line movement ---------- */
 .moves { margin: 0; padding-left: 18px; }

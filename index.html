@@ -20,7 +20,10 @@
     counts games started by a different QB for less. A "Weekly overview" view lists
     every game of the week with its lines, raw and opponent-adjusted composites,
     estimated spreads, underdog flags, results, weather, and injury tags, all sortable; tapping a game
-    opens it in the Matchup view. Data comes from weekly JSON snapshots made by
+    opens it in the Matchup view. A "Fantasy" view ranks this week's offenses,
+    passing games, running games, and defenses for DraftKings using a model
+    backtested on 2015-2025 (implied points, game total, weather alerts, QB
+    out), plus shootouts, sleepers, and teams to avoid. Data comes from weekly JSON snapshots made by
     nfl_team_stats.py. Each snapshot holds stats through the previous week,
     the week's games with betting lines, line movement, and final scores.
 
@@ -70,6 +73,7 @@
     <button type="button" data-view="matchup" class="active">Matchup</button>
     <button type="button" data-view="rankings">League rankings</button>
     <button type="button" data-view="overview">Weekly overview</button>
+    <button type="button" data-view="fantasy">Fantasy</button>
   </div>
 
   <section class="card controls">
@@ -121,6 +125,8 @@
   <section class="card hidden" id="rankings-view"></section>
 
   <section class="card hidden" id="overview-view"></section>
+
+  <section class="card hidden" id="fantasy-view"></section>
 
   <main id="matchup" class="hidden">
     <section class="card" id="game-card"></section>
