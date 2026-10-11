@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 5,
  "stats_through_week": 4,
- "generated_at": "2026-10-10T17:48:30-04:00",
+ "generated_at": "2026-10-11T17:48:06-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -5112,6 +5112,27 @@
   "teams": {
    "ARI": [
     {
+     "gsis_id": "00-0039808",
+     "name": "Isaiah Adams",
+     "position": "RG",
+     "group": "OL",
+     "side": "offense",
+     "status": "IR",
+     "injury": "Ankle",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.81,
+     "games_missed": 0,
+     "reserve_since": 5,
+     "return_week": 9,
+     "report_week": null,
+     "next_up": {
+      "name": "Jon Gaines II",
+      "string": 2,
+      "gsis_id": "00-0038571"
+     }
+    },
+    {
      "gsis_id": "00-0038540",
      "name": "Paris Johnson Jr.",
      "position": "LT",
@@ -5151,27 +5172,6 @@
       "name": "Garrett Williams",
       "string": 1,
       "gsis_id": "00-0039007"
-     }
-    },
-    {
-     "gsis_id": "00-0039808",
-     "name": "Isaiah Adams",
-     "position": "RG",
-     "group": "OL",
-     "side": "offense",
-     "status": "Out",
-     "injury": "Ankle",
-     "practice": "Did not practice",
-     "string": 1,
-     "snap_pct": 0.81,
-     "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": null,
-     "next_up": {
-      "name": "Jon Gaines II",
-      "string": 2,
-      "gsis_id": "00-0038571"
      }
     },
     {
@@ -5448,7 +5448,63 @@
      "next_up": null
     }
    ],
-   "BUF": [],
+   "BUF": [
+    {
+     "gsis_id": "00-0035230",
+     "name": "Ed Oliver",
+     "position": "RDE",
+     "group": "DL",
+     "side": "defense",
+     "status": "Out",
+     "injury": "Knee",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.52,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "DeWayne Carter",
+      "string": 2,
+      "gsis_id": "00-0039873"
+     }
+    },
+    {
+     "gsis_id": "00-0034827",
+     "name": "DJ Moore",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Questionable",
+     "injury": "Shoulder",
+     "practice": "Limited in practice",
+     "string": 1,
+     "snap_pct": 0.53,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": null
+    },
+    {
+     "gsis_id": "00-0037034",
+     "name": "Dee Alford",
+     "position": "NB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Questionable",
+     "injury": "Ankle",
+     "practice": "Limited in practice",
+     "string": 1,
+     "snap_pct": 0.51,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": null
+    }
+   ],
    "CHI": [
     {
      "gsis_id": "00-0037081",
@@ -6094,14 +6150,14 @@
      "position": "LDE",
      "group": "DL",
      "side": "defense",
-     "status": "Out",
+     "status": "IR",
      "injury": "Hamstring",
      "practice": "Did not practice",
      "string": 1,
      "snap_pct": 0.65,
      "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
+     "reserve_since": 5,
+     "return_week": 9,
      "report_week": null,
      "next_up": {
       "name": "Jaylahn Tuimoloau",
@@ -6217,6 +6273,23 @@
       "string": 1,
       "gsis_id": "00-0039061"
      }
+    },
+    {
+     "gsis_id": "00-0037841",
+     "name": "Quentin Lake",
+     "position": "NB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Questionable",
+     "injury": "Hip",
+     "practice": "Limited in practice",
+     "string": 1,
+     "snap_pct": 1.0,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": null
     }
    ],
    "LAC": [
@@ -6239,6 +6312,27 @@
       "name": "Logan Taylor",
       "string": 2,
       "gsis_id": "00-0041105"
+     }
+    },
+    {
+     "gsis_id": "00-0037241",
+     "name": "Trevor Penning",
+     "position": "RG",
+     "group": "OL",
+     "side": "offense",
+     "status": "IR",
+     "injury": "Concussion",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.68,
+     "games_missed": 0,
+     "reserve_since": 5,
+     "return_week": 10,
+     "report_week": null,
+     "next_up": {
+      "name": "Cole Strange",
+      "string": 1,
+      "gsis_id": "00-0038103"
      }
     },
     {
@@ -6302,27 +6396,6 @@
       "name": "Logan Taylor",
       "string": 3,
       "gsis_id": "00-0041105"
-     }
-    },
-    {
-     "gsis_id": "00-0037241",
-     "name": "Trevor Penning",
-     "position": "RG",
-     "group": "OL",
-     "side": "offense",
-     "status": "Out",
-     "injury": "Concussion",
-     "practice": "Did not practice",
-     "string": 1,
-     "snap_pct": 0.68,
-     "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": null,
-     "next_up": {
-      "name": "Cole Strange",
-      "string": 1,
-      "gsis_id": "00-0038103"
      }
     },
     {
@@ -6624,6 +6697,40 @@
    ],
    "NE": [
     {
+     "gsis_id": "00-0036187",
+     "name": "Reggie Gilliam",
+     "position": "FB",
+     "group": "RB",
+     "side": "offense",
+     "status": "IR",
+     "injury": "Ankle, Knee",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.22,
+     "games_missed": 0,
+     "reserve_since": 5,
+     "return_week": 9,
+     "report_week": null,
+     "next_up": null
+    },
+    {
+     "gsis_id": "00-0033555",
+     "name": "Mack Hollins",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "IR",
+     "injury": "Calf",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.65,
+     "games_missed": 0,
+     "reserve_since": 5,
+     "return_week": 9,
+     "report_week": null,
+     "next_up": null
+    },
+    {
      "gsis_id": "00-0036198",
      "name": "Mike Onwenu",
      "position": "RG",
@@ -6643,40 +6750,6 @@
       "string": 1,
       "gsis_id": "00-0037413"
      }
-    },
-    {
-     "gsis_id": "00-0036187",
-     "name": "Reggie Gilliam",
-     "position": "FB",
-     "group": "RB",
-     "side": "offense",
-     "status": "Out",
-     "injury": "Ankle, Knee",
-     "practice": "Did not practice",
-     "string": 1,
-     "snap_pct": 0.22,
-     "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": null,
-     "next_up": null
-    },
-    {
-     "gsis_id": "00-0033555",
-     "name": "Mack Hollins",
-     "position": "WR",
-     "group": "WR",
-     "side": "offense",
-     "status": "Out",
-     "injury": "Calf",
-     "practice": "Did not practice",
-     "string": 1,
-     "snap_pct": 0.65,
-     "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": null,
-     "next_up": null
     },
     {
      "gsis_id": "00-0034778",
@@ -6973,6 +7046,27 @@
      }
     },
     {
+     "gsis_id": "00-0036982",
+     "name": "Chauncey Golston",
+     "position": "RDE",
+     "group": "DL",
+     "side": "defense",
+     "status": "IR",
+     "injury": "Neck",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.52,
+     "games_missed": 0,
+     "reserve_since": 5,
+     "return_week": 10,
+     "report_week": null,
+     "next_up": {
+      "name": "Darius Alexander",
+      "string": 2,
+      "gsis_id": "00-0040694"
+     }
+    },
+    {
      "gsis_id": "00-0035713",
      "name": "Brian Burns",
      "position": "WLB",
@@ -6991,27 +7085,6 @@
       "name": "Kayvon Thibodeaux",
       "string": 1,
       "gsis_id": "00-0037611"
-     }
-    },
-    {
-     "gsis_id": "00-0036982",
-     "name": "Chauncey Golston",
-     "position": "RDE",
-     "group": "DL",
-     "side": "defense",
-     "status": "Out",
-     "injury": "Neck",
-     "practice": "Did not practice",
-     "string": 1,
-     "snap_pct": 0.52,
-     "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": null,
-     "next_up": {
-      "name": "Darius Alexander",
-      "string": 2,
-      "gsis_id": "00-0040694"
      }
     },
     {
@@ -7274,14 +7347,14 @@
      "position": "WR",
      "group": "WR",
      "side": "offense",
-     "status": "Out",
+     "status": "IR",
      "injury": "Foot",
      "practice": "Did not practice",
      "string": 1,
      "snap_pct": 0.78,
      "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
+     "reserve_since": 5,
+     "return_week": 10,
      "report_week": null,
      "next_up": {
       "name": "Ben Skowronek",
@@ -8356,14 +8429,14 @@
    "home_team": "JAX",
    "spread_line": 7.5,
    "total_line": 41.5,
-   "away_moneyline": 320.0,
-   "home_moneyline": -410.0,
+   "away_moneyline": 300.0,
+   "home_moneyline": -380.0,
    "roof": "outdoors",
    "stadium_id": "LON02",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 17.0,
+   "home_score": 19.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8399,6 +8472,13 @@
      "total_line": 41.5,
      "away_moneyline": 320.0,
      "home_moneyline": -410.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": 7.5,
+     "total_line": 41.5,
+     "away_moneyline": 300.0,
+     "home_moneyline": -380.0
     }
    ]
   },
@@ -8412,14 +8492,14 @@
    "home_team": "GB",
    "spread_line": -1.5,
    "total_line": 46.5,
-   "away_moneyline": -130.0,
-   "home_moneyline": 110.0,
+   "away_moneyline": -125.0,
+   "home_moneyline": 105.0,
    "roof": "outdoors",
    "stadium_id": "GNB00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 7.0,
+   "home_score": 31.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8448,6 +8528,13 @@
      "total_line": 46.5,
      "away_moneyline": -130.0,
      "home_moneyline": 110.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": -1.5,
+     "total_line": 46.5,
+     "away_moneyline": -125.0,
+     "home_moneyline": 105.0
     }
    ]
   },
@@ -8460,15 +8547,15 @@
    "away_team": "CIN",
    "home_team": "MIA",
    "spread_line": -7.0,
-   "total_line": 43.5,
-   "away_moneyline": -345.0,
-   "home_moneyline": 275.0,
+   "total_line": 44.5,
+   "away_moneyline": -355.0,
+   "home_moneyline": 280.0,
    "roof": "outdoors",
    "stadium_id": "MIA00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 31.0,
+   "home_score": 24.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8490,6 +8577,13 @@
      "total_line": 43.5,
      "away_moneyline": -345.0,
      "home_moneyline": 275.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": -7.0,
+     "total_line": 44.5,
+     "away_moneyline": -355.0,
+     "home_moneyline": 280.0
     }
    ]
   },
@@ -8502,15 +8596,15 @@
    "away_team": "CLE",
    "home_team": "NYJ",
    "spread_line": 2.5,
-   "total_line": 39.5,
-   "away_moneyline": 114.0,
-   "home_moneyline": -135.0,
+   "total_line": 38.5,
+   "away_moneyline": 120.0,
+   "home_moneyline": -142.0,
    "roof": "outdoors",
    "stadium_id": "NYC01",
    "away_rest": 10,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 12.0,
+   "home_score": 17.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8532,6 +8626,13 @@
      "total_line": 39.5,
      "away_moneyline": 114.0,
      "home_moneyline": -135.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": 2.5,
+     "total_line": 38.5,
+     "away_moneyline": 120.0,
+     "home_moneyline": -142.0
     }
    ]
   },
@@ -8543,16 +8644,16 @@
    "gametime": "13:00",
    "away_team": "HOU",
    "home_team": "TEN",
-   "spread_line": -7.0,
-   "total_line": 38.5,
-   "away_moneyline": -355.0,
-   "home_moneyline": 280.0,
+   "spread_line": -6.5,
+   "total_line": 37.5,
+   "away_moneyline": -310.0,
+   "home_moneyline": 250.0,
    "roof": "outdoors",
    "stadium_id": "NAS00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 26.0,
+   "home_score": 3.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8588,6 +8689,13 @@
      "total_line": 38.5,
      "away_moneyline": -355.0,
      "home_moneyline": 280.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": -6.5,
+     "total_line": 37.5,
+     "away_moneyline": -310.0,
+     "home_moneyline": 250.0
     }
    ]
   },
@@ -8600,15 +8708,15 @@
    "away_team": "IND",
    "home_team": "PIT",
    "spread_line": 3.0,
-   "total_line": 43.5,
-   "away_moneyline": 124.0,
-   "home_moneyline": -148.0,
+   "total_line": 41.5,
+   "away_moneyline": 136.0,
+   "home_moneyline": -162.0,
    "roof": "outdoors",
    "stadium_id": "PIT00",
    "away_rest": 7,
    "home_rest": 10,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 22.0,
+   "home_score": 34.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8637,6 +8745,13 @@
      "total_line": 43.5,
      "away_moneyline": 124.0,
      "home_moneyline": -148.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": 3.0,
+     "total_line": 41.5,
+     "away_moneyline": 136.0,
+     "home_moneyline": -162.0
     }
    ]
   },
@@ -8650,14 +8765,14 @@
    "home_team": "NE",
    "spread_line": 3.5,
    "total_line": 45.5,
-   "away_moneyline": 160.0,
-   "home_moneyline": -192.0,
+   "away_moneyline": 150.0,
+   "home_moneyline": -180.0,
    "roof": "outdoors",
    "stadium_id": "BOS00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 17.0,
+   "home_score": 45.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8679,6 +8794,13 @@
      "total_line": 45.5,
      "away_moneyline": 160.0,
      "home_moneyline": -192.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": 3.5,
+     "total_line": 45.5,
+     "away_moneyline": 150.0,
+     "home_moneyline": -180.0
     }
    ]
   },
@@ -8692,14 +8814,14 @@
    "home_team": "NO",
    "spread_line": -2.5,
    "total_line": 41.5,
-   "away_moneyline": -135.0,
-   "home_moneyline": 114.0,
+   "away_moneyline": -142.0,
+   "home_moneyline": 120.0,
    "roof": "dome",
    "stadium_id": "NOR00",
    "away_rest": 7,
    "home_rest": 6,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 23.0,
+   "home_score": 13.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
@@ -8721,6 +8843,13 @@
      "total_line": 41.5,
      "away_moneyline": -135.0,
      "home_moneyline": 114.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": -2.5,
+     "total_line": 41.5,
+     "away_moneyline": -142.0,
+     "home_moneyline": 120.0
     }
    ]
   },
@@ -8789,7 +8918,7 @@
    "away_team": "DEN",
    "home_team": "LAC",
    "spread_line": -3.5,
-   "total_line": 41.5,
+   "total_line": 42.5,
    "away_moneyline": -192.0,
    "home_moneyline": 160.0,
    "roof": "dome",
@@ -8819,6 +8948,13 @@
      "total_line": 41.5,
      "away_moneyline": -192.0,
      "home_moneyline": 160.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": -3.5,
+     "total_line": 42.5,
+     "away_moneyline": -192.0,
+     "home_moneyline": 160.0
     }
    ]
   },
@@ -8831,9 +8967,9 @@
    "away_team": "DET",
    "home_team": "ARI",
    "spread_line": -5.5,
-   "total_line": 54.5,
-   "away_moneyline": -258.0,
-   "home_moneyline": 210.0,
+   "total_line": 55.5,
+   "away_moneyline": -265.0,
+   "home_moneyline": 215.0,
    "roof": null,
    "stadium_id": "PHO00",
    "away_rest": 7,
@@ -8861,6 +8997,13 @@
      "total_line": 54.5,
      "away_moneyline": -258.0,
      "home_moneyline": 210.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": -5.5,
+     "total_line": 55.5,
+     "away_moneyline": -265.0,
+     "home_moneyline": 215.0
     }
    ]
   },
@@ -8873,9 +9016,9 @@
    "away_team": "SF",
    "home_team": "SEA",
    "spread_line": 3.0,
-   "total_line": 45.5,
-   "away_moneyline": 136.0,
-   "home_moneyline": -162.0,
+   "total_line": 46.5,
+   "away_moneyline": 140.0,
+   "home_moneyline": -166.0,
    "roof": "outdoors",
    "stadium_id": "SEA00",
    "away_rest": 7,
@@ -8910,6 +9053,13 @@
      "total_line": 45.5,
      "away_moneyline": 136.0,
      "home_moneyline": -162.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": 3.0,
+     "total_line": 46.5,
+     "away_moneyline": 140.0,
+     "home_moneyline": -166.0
     }
    ]
   },
@@ -8923,8 +9073,8 @@
    "home_team": "ATL",
    "spread_line": 3.0,
    "total_line": 43.5,
-   "away_moneyline": 150.0,
-   "home_moneyline": -180.0,
+   "away_moneyline": 145.0,
+   "home_moneyline": -175.0,
    "roof": null,
    "stadium_id": "ATL97",
    "away_rest": 7,
@@ -8973,6 +9123,13 @@
      "total_line": 43.5,
      "away_moneyline": 150.0,
      "home_moneyline": -180.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": 3.0,
+     "total_line": 43.5,
+     "away_moneyline": 145.0,
+     "home_moneyline": -175.0
     }
    ]
   },
@@ -8984,10 +9141,10 @@
    "gametime": "20:15",
    "away_team": "BUF",
    "home_team": "LA",
-   "spread_line": 3.5,
+   "spread_line": 3.0,
    "total_line": 54.5,
-   "away_moneyline": 150.0,
-   "home_moneyline": -180.0,
+   "away_moneyline": 145.0,
+   "home_moneyline": -175.0,
    "roof": "dome",
    "stadium_id": "LAX01",
    "away_rest": 8,
@@ -9029,6 +9186,13 @@
      "total_line": 54.5,
      "away_moneyline": 150.0,
      "home_moneyline": -180.0
+    },
+    {
+     "time": "2026-10-11T17:48:06-04:00",
+     "spread_line": 3.0,
+     "total_line": 54.5,
+     "away_moneyline": 145.0,
+     "home_moneyline": -175.0
     }
    ]
   }
