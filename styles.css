@@ -326,6 +326,11 @@ tr.big-edge td { background: rgba(56, 189, 248, .08); }
   .fantasy-table td.tags { max-width: 90px; }
 }
 
+.dfs-link { margin: 10px 0 0; padding: 8px 12px; border-radius: 8px; border-left: 3px solid var(--good);
+  background: rgba(74, 222, 128, .08); font-size: .9rem; }
+.dfs-link a { font-weight: 600; }
+.dfs-link .sub { display: block; color: var(--muted); font-size: .72rem; margin-top: 3px; }
+
 /* ---------- Line movement ---------- */
 .moves { margin: 0; padding-left: 18px; }
 .moves li { margin-bottom: 6px; }

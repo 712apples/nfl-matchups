@@ -29,6 +29,7 @@
 
   Input files (same folder):
     styles.css            - Page styling.
+    config.js             - Site settings: support link, visitor counter code, DFS link.
     app.js                - Loads the data and builds every section of the page.
     data\weeks.json       - List of available weekly snapshots.
     data\<season>_week_NN.json - One snapshot per week.
@@ -155,9 +156,11 @@
       don't account for injuries, weather, or coaching changes. Please bet responsibly.</p>
     <p>Data: <a href="https://github.com/nflverse" target="_blank" rel="noopener">nflverse</a> play-by-play
       (regular season, pass and run plays, garbage time removed when win probability is under 5% or over 95%).</p>
+    <p id="support-line" class="hidden"></p>
   </footer>
 </div>
 
+<script src="config.js"></script>
 <script src="app.js"></script>
 <script>
   if ('serviceWorker' in navigator && location.protocol === 'https:') {

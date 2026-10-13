@@ -38,8 +38,11 @@
  *   data/weeks.json           - Index of available weeks.
  *   data/<season>_week_NN.json - One snapshot per week (made by nfl_team_stats.py).
  *   stadiums.json             - Stadium coordinates and roof types (for weather).
+ *   config.js                 - Site settings: support link, GoatCounter code, DFS link
+ *                               (loaded by index.html before this file).
  * Online services (fetched live, not saved):
  *   Open-Meteo forecast and archive APIs - Hourly weather at each stadium.
+ *   GoatCounter (only if a code is set in config.js) - Counts visits and view switches.
  * Output files: None. Everything is rendered into index.html.
  *
  * Location: D:\OneDrive\Code\DFS_direct\NFL\nfl-matchups\app.js
@@ -2402,6 +2405,7 @@ function renderFantasy() {
     <p class="meta">Projected DraftKings points for each team, built from the betting lines (implied points and the game
       total), weather alerts, and starting QBs who are out. Tap a team to open its game.
       ${weatherStatus === 'loading' ? 'Weather is still loading, so weather alerts may be added in a moment.' : ''}</p>
+    ${dfsLinkHtml()}
     <div class="fantasy-grid">
       <div class="fantasy-box"><h3>Offenses to target</h3>
         <p class="explain">Whole-offense DK points. In 2015–2025 the model's weekly top 5 finished in that week's top 10 offenses
@@ -2570,6 +2574,65 @@ function setView(view) {
   $('fantasy-view').classList.toggle('hidden', view !== 'fantasy');
   render();
   loadWeather(state.snapshot);
+  trackView(view);
+}
+
+// ----------------------------------------------------------------------
+// Site settings (config.js): support link, visitor counter, DFS link
+// ----------------------------------------------------------------------
+
+/**
+ * Site settings from config.js, or empty settings if that file didn't load.
+ * @returns {object} SITE_CONFIG.
+ */
+function siteConfig() {
+  return typeof SITE_CONFIG === 'object' ? SITE_CONFIG : {};
+}
+
+/**
+ * Show the support link and start the GoatCounter visitor counter, if set in config.js.
+ * @returns {void}
+ */
+function applySiteConfig() {
+  const config = siteConfig();
+  if (config.tipUrl) {
+    const line = $('support-line');
+    line.innerHTML = `Find this useful? <a href="${esc(config.tipUrl)}" target="_blank" rel="noopener">${esc(config.tipLabel || 'Support this site')}</a>`;
+    line.classList.remove('hidden');
+  }
+  if (config.goatcounterCode) {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://gc.zgo.at/count.js';
+    script.dataset.goatcounter = `https://${encodeURIComponent(config.goatcounterCode)}.goatcounter.com/count`;
+    document.body.appendChild(script);
+  }
+}
+
+/**
+ * Count a switch to another view (e.g. Fantasy) as an event in GoatCounter.
+ * Does nothing if the counter is off or hasn't loaded yet.
+ * @param {string} view - "matchup", "rankings", "overview", or "fantasy".
+ * @returns {void}
+ */
+function trackView(view) {
+  if (!window.goatcounter?.count) return;
+  window.goatcounter.count({ path: `view-${view}`, title: `View: ${view}`, event: true });
+}
+
+/**
+ * DraftKings (or other DFS site) link box for the Fantasy view, with the disclosure
+ * affiliate programs require. Empty if no link is set in config.js.
+ * @returns {string} HTML.
+ */
+function dfsLinkHtml() {
+  const config = siteConfig();
+  if (!config.dfsUrl) return '';
+  return `<div class="dfs-link">
+    <a href="${esc(config.dfsUrl)}" target="_blank" rel="noopener sponsored">${esc(config.dfsLabel || 'Play on DraftKings')}</a>
+    <span class="sub">Affiliate link: this site may earn a commission if you sign up. Must be 18+ (19+ or 21+ in some
+      states) and in an eligible state. Gambling problem? Call 1-800-GAMBLER.</span>
+  </div>`;
 }
 
 /**
@@ -2577,6 +2640,7 @@ function setView(view) {
  * @returns {Promise<void>}
  */
 async function init() {
+  applySiteConfig();
   try {
     state.index = await fetchJson('data/weeks.json');
     if (!state.index.weeks.length) throw new Error('No weekly data yet. Run nfl_team_stats.py after week 1.');

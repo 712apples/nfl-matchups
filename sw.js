@@ -9,23 +9,25 @@
  *   - Data files (data/*.json) always try the network first so you see the
  *     latest stats and lines, and fall back to the saved copy when offline.
  *   Bump CACHE_VERSION whenever the APP_SHELL list changes to drop old caches.
- *   Weather from Open-Meteo (another site) is never cached here, so it is
- *   always live (and missing when offline).
+ *   Weather from Open-Meteo and the GoatCounter visitor counter (other
+ *   sites) are never cached here, so they are always live (and missing
+ *   when offline).
  *
  * Input files (cached from this folder):
- *   index.html, styles.css, app.js, stadiums.json, manifest.webmanifest, icons/*.png, data/*.json
+ *   index.html, styles.css, config.js, app.js, stadiums.json, manifest.webmanifest, icons/*.png, data/*.json
  * Output files:
  *   None. Responses are stored in the browser's Cache Storage only.
  *
  * Location: D:\OneDrive\Code\DFS_direct\NFL\nfl-matchups\sw.js
  */
 
-const CACHE_VERSION = 'nfl-matchups-v3';
+const CACHE_VERSION = 'nfl-matchups-v4';
 
 const APP_SHELL = [
   './',
   './index.html',
   './styles.css',
+  './config.js',
   './app.js',
   './stadiums.json',
   './manifest.webmanifest',
