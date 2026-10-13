@@ -9156,8 +9156,8 @@
    "stadium_id": "LAX01",
    "away_rest": 8,
    "home_rest": 8,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 37.0,
+   "home_score": 34.0,
    "line_history": [
     {
      "time": "2026-10-06T10:41:07-04:00",
