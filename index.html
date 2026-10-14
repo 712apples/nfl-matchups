@@ -36,7 +36,8 @@
     stadiums.json         - Stadium coordinates and roof types (for the weather forecast).
     manifest.webmanifest  - App name, colors, and icons (phone install).
     sw.js                 - Service worker for offline use.
-    icons\*.png           - App icons (created by generate_icons.py).
+    icons\*.png           - App icons and preview.png, the link-preview card shown when
+                            the site is shared (all created by generate_icons.py).
   Output files: None. Results are shown on the page only.
 
   Location: D:\OneDrive\Code\DFS_direct\NFL\nfl-matchups\index.html
@@ -49,7 +50,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Compare NFL offenses against opposing defenses, stat by stat, for any matchup.">
+<meta name="description" content="Free weekly NFL matchup and DFS tool: lines, O/U and implied points, injuries, weather alerts, and DraftKings fantasy targets, shootouts, and sleepers, backtested on 2015-2025 games.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="NFL Matchup Analyzer">
+<meta property="og:title" content="NFL Matchup Analyzer: weekly matchups, weather, and DFS targets">
+<meta property="og:description" content="Every game's lines, implied points, injuries, and weather alerts, plus DraftKings fantasy targets, shootouts, and sleepers. Free, backtested on 2015-2025 games.">
+<meta property="og:url" content="https://712apples.github.io/nfl-matchups/">
+<meta property="og:image" content="https://712apples.github.io/nfl-matchups/icons/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NFL Matchup Analyzer: free weekly NFL matchup and DFS tool">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NFL Matchup Analyzer: weekly matchups, weather, and DFS targets">
+<meta name="twitter:description" content="Every game's lines, implied points, injuries, and weather alerts, plus DraftKings fantasy targets, shootouts, and sleepers. Free, backtested on 2015-2025 games.">
+<meta name="twitter:image" content="https://712apples.github.io/nfl-matchups/icons/preview.png">
 <meta name="theme-color" content="#0f172a">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
