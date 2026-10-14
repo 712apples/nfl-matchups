@@ -26,7 +26,7 @@
 const SITE_CONFIG = {
   tipUrl: 'https://ko-fi.com/jumangibutter',
   tipLabel: 'Buy me a coffee',
-  goatcounterCode: '',
+  goatcounterCode: 'datacruncher',
   dfsUrl: '',
   dfsLabel: 'Play this week on DraftKings',
 };
