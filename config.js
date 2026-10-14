@@ -24,7 +24,7 @@
  */
 
 const SITE_CONFIG = {
-  tipUrl: '',
+  tipUrl: 'https://ko-fi.com/jumangibutter',
   tipLabel: 'Buy me a coffee',
   goatcounterCode: '',
   dfsUrl: '',
