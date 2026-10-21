@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 7,
  "stats_through_week": 6,
- "generated_at": "2026-10-21T15:11:59-04:00",
+ "generated_at": "2026-10-21T15:17:33-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -7494,8 +7494,8 @@
    "home_team": "BAL",
    "spread_line": -1.5,
    "total_line": 48.5,
-   "away_moneyline": -118.0,
-   "home_moneyline": -102.0,
+   "away_moneyline": -120.0,
+   "home_moneyline": 100.0,
    "roof": "outdoors",
    "stadium_id": "BAL00",
    "away_rest": 14,
@@ -7523,6 +7523,13 @@
      "total_line": 48.5,
      "away_moneyline": -118.0,
      "home_moneyline": -102.0
+    },
+    {
+     "time": "2026-10-21T15:17:33-04:00",
+     "spread_line": -1.5,
+     "total_line": 48.5,
+     "away_moneyline": -120.0,
+     "home_moneyline": 100.0
     }
    ]
   },
@@ -7592,8 +7599,8 @@
    "home_team": "NYJ",
    "spread_line": 4.5,
    "total_line": 39.5,
-   "away_moneyline": 185.0,
-   "home_moneyline": -225.0,
+   "away_moneyline": 190.0,
+   "home_moneyline": -230.0,
    "roof": "outdoors",
    "stadium_id": "NYC01",
    "away_rest": 14,
@@ -7614,6 +7621,13 @@
      "total_line": 39.5,
      "away_moneyline": 185.0,
      "home_moneyline": -225.0
+    },
+    {
+     "time": "2026-10-21T15:17:33-04:00",
+     "spread_line": 4.5,
+     "total_line": 39.5,
+     "away_moneyline": 190.0,
+     "home_moneyline": -230.0
     }
    ]
   },
