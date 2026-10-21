@@ -14,9 +14,11 @@
  *   A separate "League rankings" view lists every team's offense, defense,
  *   and net EPA per play (plus strength of schedule) in a sortable table.
  *   A Raw / Opponent-adjusted toggle switches the stat tables and rankings
- *   to stats adjusted for the opponents each team has faced; the composite
- *   box always shows both, plus a QB-adjusted line (games by a different
- *   starting QB count less). The game script always uses raw stats.
+ *   to stats adjusted for the opponents each team has faced. League rankings
+ *   also has QB-adjusted: offense EPA uses this week's expected starter
+ *   (other QBs count less) and net is rebuilt from that; defense stays raw.
+ *   The composite box always shows raw, opponent-adjusted, and QB-adjusted.
+ *   The game script always uses raw stats.
  *   A "Weekly overview" view lists every game of the week with the spread and
  *   moneyline, the O/U with each team's implied points, raw and
  *   opponent-adjusted composites, estimated spreads, underdog flags, and
@@ -219,7 +221,8 @@ const state = {
   view: 'matchup',
   mode: 'game',
   gameId: null,
-  stats: 'raw',
+  stats: 'raw',       // "raw", "adj", or "qb" (qb is the league-rankings offense)
+  tableStats: 'raw',   // Last raw/adj choice, used by the matchup tables when rankings are on QB-adjusted
   sort: { key: 'off', bestFirst: true },
   overviewSort: { key: 'kickoff', reversed: false },
   stars: loadStars(),
@@ -636,6 +639,14 @@ function hasAdjusted() {
 }
 
 /**
+ * Whether this week's snapshot has QB-adjusted offense ratings.
+ * @returns {boolean}
+ */
+function hasQb() {
+  return Object.keys(state.snapshot.qb?.teams || {}).length > 0;
+}
+
+/**
  * A team's starting-QB info from the snapshot (made by nfl_qb.py).
  * @param {string} abbr - Team abbreviation.
  * @returns {object|null} QB entry, or null if missing.
@@ -668,43 +679,67 @@ function qbOffenseTable() {
 }
 
 /**
- * The offense and defense tables the stat tables and rankings should use,
- * based on the Raw / Opponent-adjusted toggle.
+ * The raw or opponent-adjusted tables. QB-adjusted is a rankings-only choice,
+ * so the matchup tables keep the last raw or opponent-adjusted selection.
+ * @returns {string} "raw" or "adj".
+ */
+function tableStatsMode() {
+  return state.stats === 'qb' ? state.tableStats : state.stats;
+}
+
+/**
+ * The offense and defense tables the stat tables and raw/opponent rankings use.
  * @returns {{offense: object, defense: object, adjusted: boolean}}
  */
 function statTables() {
   const snap = state.snapshot;
-  return state.stats === 'adj' && hasAdjusted()
+  return tableStatsMode() === 'adj' && hasAdjusted()
     ? { offense: snap.offense_adj, defense: snap.defense_adj, adjusted: true }
     : { offense: snap.offense, defense: snap.defense, adjusted: false };
 }
 
 /**
- * Sync the Raw / Opponent-adjusted buttons and hint with the current week.
- * The adjusted button is disabled for weeks that don't have adjusted stats yet;
- * the user's choice is kept so it comes back on later weeks.
+ * Sync the stats buttons and hint with the current week and view.
+ * Opponent-adjusted is disabled until enough weeks are played, and QB-adjusted
+ * is only offered on league rankings (it changes offense EPA, not the other stats).
+ * A choice the current week can't show is kept for later weeks.
  * @returns {void}
  */
 function updateStatsToggle() {
   const available = hasAdjusted();
-  const shown = available ? state.stats : 'raw';
+  const qbOk = hasQb();
+  const onRankings = state.view === 'rankings';
+  document.querySelectorAll('#stats-toggle button[data-stats="qb"]').forEach((b) => {
+    b.classList.toggle('hidden', !onRankings);
+    b.disabled = !qbOk;
+  });
+
+  let shown = state.stats;
+  if (shown === 'qb' && (!onRankings || !qbOk)) shown = state.tableStats;
+  if (shown === 'adj' && !available) shown = 'raw';
   document.querySelectorAll('#stats-toggle button').forEach((b) => {
     b.classList.toggle('active', b.dataset.stats === shown);
     if (b.dataset.stats === 'adj') b.disabled = !available;
   });
+  const weightPct = Math.round((state.snapshot.qb?.other_qb_weight ?? 0.25) * 100);
   let hint = '';
-  if (!available) hint = `Opponent-adjusted stats appear once teams have ${SOS_MIN_WEEKS} weeks of games.`;
+  if (onRankings && shown === 'qb') {
+    hint = `Offense counts this week's expected starter fully and other QBs at ${weightPct}%. Defense is unchanged. Net is that offense minus defense.`;
+  } else if (!available) hint = `Opponent-adjusted stats appear once teams have ${SOS_MIN_WEEKS} weeks of games.`;
   else if (shown === 'adj') hint = 'Each stat is adjusted for the opponents faced. Shown for context: in testing, adjusted numbers predicted games slightly worse than raw. The game script and pace stay raw.';
   $('stats-hint').textContent = hint;
   $('stats-hint').classList.toggle('hidden', !hint);
 }
 
 /**
- * Switch the stat tables and rankings between raw and opponent-adjusted stats.
- * @param {string} stats - "raw" or "adj".
+ * Switch raw, opponent-adjusted, or (on league rankings) QB-adjusted stats.
+ * @param {string} stats - "raw", "adj", or "qb".
  * @returns {void}
  */
 function setStats(stats) {
+  if (stats === 'adj' && !hasAdjusted()) return;
+  if (stats === 'qb' && (!hasQb() || state.view !== 'rankings')) return;
+  if (stats === 'raw' || stats === 'adj') state.tableStats = stats;
   state.stats = stats;
   updateStatsToggle();
   render();
@@ -1863,12 +1898,16 @@ function matchupTableHtml(off, def) {
 /**
  * League rankings: every team's offense, defense, and net EPA per play (plus
  * strength of schedule once available) in a sortable table, with the selected
- * matchup's two teams highlighted.
+ * matchup's two teams highlighted. QB-adjusted mode swaps in this week's
+ * starter-weighted offense and rebuilds net; defense stays raw.
  * @returns {void}
  */
 function renderRankings() {
   const { teams } = state.snapshot;
-  const { offense, defense, adjusted } = statTables();
+  const qbMode = state.stats === 'qb' && hasQb();
+  const { offense, defense, adjusted } = qbMode
+    ? { offense: qbOffenseTable(), defense: state.snapshot.defense, adjusted: false }
+    : statTables();
   const schedule = state.snapshot.schedule || {};
   const hasSchedule = Object.keys(schedule).length > 0;
   const columns = RANKING_COLUMNS.filter((c) => hasSchedule || !c.needsSchedule);
@@ -1913,18 +1952,24 @@ function renderRankings() {
     return `<th class="num"><button type="button" class="sort-btn${active ? ' active' : ''}" data-sort="${c.key}">${label}${arrow}</button></th>`;
   }).join('');
 
-  const body = rows.map((r, i) => `
+  const body = rows.map((r, i) => {
+    const q = qbMode ? teamQb(r.abbr) : null;
+    const starter = q && (q.changed || q.switch)
+      ? `<br><span class="rank">${esc(q.starter)}</span>`
+      : '';
+    return `
     <tr class="${r.abbr === away || r.abbr === home ? 'selected' : ''}">
       <td class="pos-col">${i + 1}</td>
       <td><span class="team-badge"><span class="team-swatch" style="background:${esc(team(r.abbr).color)}"></span>
         <span class="name-full">${esc(team(r.abbr).name)}</span><span class="name-short">${esc(team(r.abbr).nick)}</span></span></td>
-      <td class="num">${fmtStat(r.off, 'epa')}<br>${rankHtml(r.offRank)}</td>
+      <td class="num">${fmtStat(r.off, 'epa')}<br>${rankHtml(r.offRank)}${starter}</td>
       <td class="num">${fmtStat(r.def, 'epa')}<br>${rankHtml(r.defRank)}</td>
       <td class="num">${fmtStat(r.net, 'epa')}<br>${rankHtml(r.netRank ?? null)}</td>
       ${hasSchedule ? `<td class="num sched-col">
         <span class="name-full">${esc(scheduleText(r.sosRank))}</span><span class="name-short">${r.sosRank == null ? '—' : ordinal(r.sosRank)}</span><br>
         <span class="rank">O&nbsp;${r.offSosRank ?? '—'}</span> <span class="rank">D&nbsp;${r.defSosRank ?? '—'}</span></td>` : ''}
-    </tr>`).join('');
+    </tr>`;
+  }).join('');
 
   const scheduleMeta = hasSchedule
     ? `<p class="meta">Schedule (SOS, strength of schedule): how tough each team's opponents have been (1st = toughest), adjusted for who those
@@ -1932,11 +1977,18 @@ function renderRankings() {
       has faced (D), also 1 = toughest. Switch Stats to Opponent-adjusted above to see EPA adjusted for it.</p>`
     : `<p class="meta">Strength of schedule appears once teams have ${SOS_MIN_WEEKS} weeks of games.</p>`;
 
+  const moved = qbMode ? rows.filter((r) => qbChanged(r.abbr)).length : 0;
+  const weightPct = Math.round((state.snapshot.qb?.other_qb_weight ?? 0.25) * 100);
+  const title = qbMode ? 'QB-adjusted offense EPA' : adjusted ? 'Opponent-adjusted EPA' : 'EPA';
+  const lead = qbMode
+    ? `Offense counts this week's expected starter fully and other QBs at ${weightPct}%. A new starter's first start also gets the typical change. Defense is the raw number. Net is QB-adjusted offense minus defense allowed. ${moved} ${moved === 1 ? 'team has' : 'teams have'} a different offense number than raw; those rows name the expected starter.`
+    : `Offense: higher is better. Defense: lower allowed is better. Net (offense minus defense allowed)
+      is a quick overall strength measure.`;
+
   const view = $('rankings-view');
   view.innerHTML = `
-    <h2>${adjusted ? 'Opponent-adjusted EPA' : 'EPA'} per play, week ${state.snapshot.week} snapshot (stats through week ${state.snapshot.stats_through_week})</h2>
-    <p class="meta">Offense: higher is better. Defense: lower allowed is better. Net (offense minus defense allowed)
-      is a quick overall strength measure. Tap a column header to re-sort; tap it again to reverse.
+    <h2>${title} per play, week ${state.snapshot.week} snapshot (stats through week ${state.snapshot.stats_through_week})</h2>
+    <p class="meta">${lead} Tap a column header to re-sort; tap it again to reverse.
       Highlighted rows are the teams in your selected matchup.</p>
     ${scheduleMeta}
     <div class="table-scroll"><table class="rankings-table">
@@ -2507,7 +2559,8 @@ function renderGlossary() {
       composite counts games started by a different QB than this week's expected starter at 25% (dropping them
       entirely tested worse, since a few games are too noisy). If the starter hasn't started yet this season, it adds the
       typical first-start change (about −0.10 EPA/play when a backup replaces a starter). Defenses aren't adjusted:
-      testing showed a defense doesn't change with its own QB, partly because EPA already accounts for field position.</p>
+      testing showed a defense doesn't change with its own QB, partly because EPA already accounts for field position.
+      League rankings has the same choice: offense and net use that rating, and defense stays raw.</p>
     <p><strong>Key injuries:</strong> starters (1st string on the depth chart, or at least half of the snaps) who are
       Out, Doubtful, Questionable, or on IR/PUP, with the injury, practice status, and the next healthy player at
       that spot. The stats don't adjust for injuries, so a missing starter is extra information on top of them.
@@ -2556,7 +2609,8 @@ function setMode(mode) {
  * The week picker stays visible in all of them; the game/team pickers only
  * show in the matchup view, but the selection is kept for highlighting. The
  * Raw / Opponent-adjusted toggle is hidden in the overview (which shows both)
- * and the fantasy view (which doesn't use it).
+ * and the fantasy view (which doesn't use it). QB-adjusted is shown only on
+ * league rankings.
  * @param {string} view - "matchup", "rankings", "overview", or "fantasy".
  * @returns {void}
  */
@@ -2572,6 +2626,7 @@ function setView(view) {
   $('rankings-view').classList.toggle('hidden', view !== 'rankings');
   $('overview-view').classList.toggle('hidden', view !== 'overview');
   $('fantasy-view').classList.toggle('hidden', view !== 'fantasy');
+  updateStatsToggle();
   render();
   loadWeather(state.snapshot);
   trackView(view);

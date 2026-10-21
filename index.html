@@ -16,8 +16,10 @@
     defense, and net EPA per play in a sortable table, with the selected
     matchup's teams highlighted. A Raw / Opponent-adjusted toggle switches the
     stat tables and rankings to versions adjusted for the opponents each team
-    has faced; the composite box shows both, plus a QB-adjusted line that
-    counts games started by a different QB for less. A "Weekly overview" view lists
+    has faced. On league rankings, a third choice, QB-adjusted, ranks this week's
+    expected starter (other QBs count less) and rebuilds net from that offense;
+    defense stays raw. The composite box shows raw, opponent-adjusted, and
+    QB-adjusted lines. A "Weekly overview" view lists
     every game of the week with its lines, raw and opponent-adjusted composites,
     estimated spreads, underdog flags, results, weather, and injury tags, all sortable; tapping a game
     opens it in the Matchup view. A "Fantasy" view ranks this week's offenses,
@@ -110,7 +112,8 @@
       <label>Stats</label>
       <div class="segmented" id="stats-toggle">
         <button type="button" data-stats="raw" class="active">Raw</button>
-        <button type="button" data-stats="adj">Opponent-adjusted</button>
+        <button type="button" data-stats="adj"><span class="name-full">Opponent-adjusted</span><span class="name-short">Opp-adj</span></button>
+        <button type="button" data-stats="qb" class="hidden"><span class="name-full">QB-adjusted</span><span class="name-short">QB-adj</span></button>
       </div>
       <p class="meta hidden" id="stats-hint"></p>
     </div>
