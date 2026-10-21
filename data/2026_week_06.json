@@ -8615,8 +8615,8 @@
    "stadium_id": "LON00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 34.0,
+   "home_score": 31.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8657,8 +8657,8 @@
    "stadium_id": "CLE00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 10.0,
+   "home_score": 13.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8699,8 +8699,8 @@
    "stadium_id": "PHI00",
    "away_rest": 14,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 25.0,
+   "home_score": 14.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8737,12 +8737,12 @@
    "total_line": 51.5,
    "away_moneyline": -120.0,
    "home_moneyline": 100.0,
-   "roof": null,
+   "roof": "closed",
    "stadium_id": "ATL97",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 31.0,
+   "home_score": 23.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8783,8 +8783,8 @@
    "stadium_id": "NYC01",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 34.0,
+   "home_score": 27.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8825,8 +8825,8 @@
    "stadium_id": "BOS00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 19.0,
+   "home_score": 26.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8860,8 +8860,8 @@
    "stadium_id": "TAM00",
    "away_rest": 7,
    "home_rest": 10,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 26.0,
+   "home_score": 19.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8898,12 +8898,12 @@
    "total_line": 43.5,
    "away_moneyline": 235.0,
    "home_moneyline": -290.0,
-   "roof": null,
+   "roof": "open",
    "stadium_id": "IND00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 26.0,
+   "home_score": 20.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8937,8 +8937,8 @@
    "stadium_id": "LAX01",
    "away_rest": 7,
    "home_rest": 6,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 18.0,
+   "home_score": 16.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -8972,8 +8972,8 @@
    "stadium_id": "VEG00",
    "away_rest": 6,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 33.0,
+   "home_score": 30.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -9014,8 +9014,8 @@
    "stadium_id": "KAN00",
    "away_rest": 7,
    "home_rest": 14,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 6.0,
+   "home_score": 22.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -9056,8 +9056,8 @@
    "stadium_id": "GNB00",
    "away_rest": 10,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 13.0,
+   "home_score": 23.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
@@ -9098,8 +9098,8 @@
    "stadium_id": "SFO01",
    "away_rest": 8,
    "home_rest": 8,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 17.0,
+   "home_score": 23.0,
    "line_history": [
     {
      "time": "2026-10-13T11:38:20-04:00",
