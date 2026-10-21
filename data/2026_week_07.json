@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 7,
  "stats_through_week": 6,
- "generated_at": "2026-10-20T20:03:36-04:00",
+ "generated_at": "2026-10-21T15:04:09-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -5107,8 +5107,8 @@
   }
  },
  "injuries": {
-  "report_available": false,
-  "depth_chart_date": "2026-10-20T12:41:41Z",
+  "report_available": true,
+  "depth_chart_date": "2026-10-21T12:53:27Z",
   "teams": {
    "ARI": [
     {
@@ -5471,27 +5471,6 @@
       "string": 1,
       "gsis_id": "00-0036337"
      }
-    },
-    {
-     "gsis_id": "00-0035386",
-     "name": "T.J. Edwards",
-     "position": "MLB",
-     "group": "LB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Hamstring",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.88,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Noah Sewell",
-      "string": 2,
-      "gsis_id": "00-0038390"
-     }
     }
    ],
    "CIN": [
@@ -5525,7 +5504,7 @@
      "status": "IR",
      "injury": null,
      "practice": null,
-     "string": 1,
+     "string": 4,
      "snap_pct": 0.61,
      "games_missed": 2,
      "reserve_since": 4,
@@ -5950,6 +5929,27 @@
    ],
    "LA": [
     {
+     "gsis_id": "00-0031381",
+     "name": "Davante Adams",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "IR",
+     "injury": "Not injury related",
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.74,
+     "games_missed": 0,
+     "reserve_since": 7,
+     "return_week": 12,
+     "report_week": null,
+     "next_up": {
+      "name": "Puka Nacua",
+      "string": 1,
+      "gsis_id": "00-0039075"
+     }
+    },
+    {
      "gsis_id": "00-0033868",
      "name": "Myles Garrett",
      "position": "SLB",
@@ -6136,11 +6136,7 @@
      "reserve_since": 5,
      "return_week": 9,
      "report_week": null,
-     "next_up": {
-      "name": "DeMario Douglas",
-      "string": 1,
-      "gsis_id": "00-0038621"
-     }
+     "next_up": null
     },
     {
      "gsis_id": "00-0037816",
@@ -6157,11 +6153,7 @@
      "reserve_since": 7,
      "return_week": 12,
      "report_week": null,
-     "next_up": {
-      "name": "Efton Chism III",
-      "string": 1,
-      "gsis_id": "00-0040563"
-     }
+     "next_up": null
     },
     {
      "gsis_id": "00-0036198",
@@ -6182,27 +6174,6 @@
       "name": "Ben Brown",
       "string": 1,
       "gsis_id": "00-0037413"
-     }
-    },
-    {
-     "gsis_id": "00-0034778",
-     "name": "Carlton Davis III",
-     "position": "LCB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Neck",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.95,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Charles Woods",
-      "string": 2,
-      "gsis_id": "00-0039770"
      }
     }
    ],
@@ -6630,9 +6601,9 @@
      "return_week": null,
      "report_week": 6,
      "next_up": {
-      "name": "Jordan Watkins",
+      "name": "Jacob Cowing",
       "string": 2,
-      "gsis_id": "00-0040172"
+      "gsis_id": "00-0039365"
      }
     },
     {
@@ -6753,7 +6724,7 @@
      "status": "IR",
      "injury": "Shoulder",
      "practice": null,
-     "string": 1,
+     "string": 3,
      "snap_pct": 0.67,
      "games_missed": 3,
      "reserve_since": 4,
@@ -6774,7 +6745,7 @@
      "status": "IR",
      "injury": null,
      "practice": null,
-     "string": 2,
+     "string": 4,
      "snap_pct": 0.98,
      "games_missed": 3,
      "reserve_since": 4,
@@ -6784,27 +6755,6 @@
       "name": "Atonio Mafi",
       "string": 1,
       "gsis_id": "00-0038586"
-     }
-    },
-    {
-     "gsis_id": "00-0036266",
-     "name": "Jordan Elliott",
-     "position": "RDT",
-     "group": "DL",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Not injury related",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.34,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Solomon Thomas",
-      "string": 2,
-      "gsis_id": "00-0033870"
      }
     },
     {
@@ -6850,7 +6800,7 @@
       "epa_per_play": -0.0298
      }
     ],
-    "epa_per_play_rank": 17
+    "epa_per_play_rank": 18
    },
    "ATL": {
     "starter": "Michael Penix Jr.",
@@ -6878,7 +6828,7 @@
       "epa_per_play": -0.3881
      }
     ],
-    "epa_per_play_rank": 16
+    "epa_per_play_rank": 17
    },
    "BAL": {
     "starter": "Tyler Huntley",
@@ -7073,7 +7023,7 @@
       "epa_per_play": -0.0304
      }
     ],
-    "epa_per_play_rank": 18
+    "epa_per_play_rank": 19
    },
    "HOU": {
     "starter": "C.J. Stroud",
@@ -7276,17 +7226,17 @@
       "epa_per_play": -0.0375
      }
     ],
-    "epa_per_play_rank": 19
+    "epa_per_play_rank": 20
    },
    "NYG": {
-    "starter": "Jameis Winston",
-    "starter_games": 4,
+    "starter": "J.J. McCarthy",
+    "starter_games": 0,
     "games": 6,
     "changed": true,
     "replaced": null,
-    "switch": null,
-    "switch_adj": 0.0,
-    "epa_per_play": -0.0469,
+    "switch": "starter_for_backup",
+    "switch_adj": 0.016,
+    "epa_per_play": -0.0117,
     "by_qb": [
      {
       "name": "Jameis Winston",
@@ -7299,7 +7249,7 @@
       "epa_per_play": 0.0421
      }
     ],
-    "epa_per_play_rank": 21
+    "epa_per_play_rank": 15
    },
    "NYJ": {
     "starter": "Geno Smith",
@@ -7317,7 +7267,7 @@
       "epa_per_play": -0.0414
      }
     ],
-    "epa_per_play_rank": 20
+    "epa_per_play_rank": 21
    },
    "PHI": {
     "starter": "Tanner McKee",
@@ -7466,7 +7416,7 @@
       "epa_per_play": -0.1792
      }
     ],
-    "epa_per_play_rank": 15
+    "epa_per_play_rank": 16
    }
   }
  },
@@ -7509,8 +7459,8 @@
    "home_team": "NO",
    "spread_line": -3.5,
    "total_line": 44.5,
-   "away_moneyline": -180.0,
-   "home_moneyline": 150.0,
+   "away_moneyline": -185.0,
+   "home_moneyline": 154.0,
    "roof": "dome",
    "stadium_id": "PAR00",
    "away_rest": 7,
@@ -7524,6 +7474,13 @@
      "total_line": 44.5,
      "away_moneyline": -180.0,
      "home_moneyline": 150.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": -3.5,
+     "total_line": 44.5,
+     "away_moneyline": -185.0,
+     "home_moneyline": 154.0
     }
    ]
   },
@@ -7535,10 +7492,10 @@
    "gametime": "13:00",
    "away_team": "CIN",
    "home_team": "BAL",
-   "spread_line": 3.0,
-   "total_line": 51.5,
-   "away_moneyline": 124.0,
-   "home_moneyline": -148.0,
+   "spread_line": 1.5,
+   "total_line": 48.5,
+   "away_moneyline": -112.0,
+   "home_moneyline": -108.0,
    "roof": "outdoors",
    "stadium_id": "BAL00",
    "away_rest": 14,
@@ -7552,6 +7509,13 @@
      "total_line": 51.5,
      "away_moneyline": 124.0,
      "home_moneyline": -148.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": 1.5,
+     "total_line": 48.5,
+     "away_moneyline": -112.0,
+     "home_moneyline": -108.0
     }
    ]
   },
@@ -7620,9 +7584,9 @@
    "away_team": "MIA",
    "home_team": "NYJ",
    "spread_line": 4.5,
-   "total_line": 38.5,
-   "away_moneyline": 190.0,
-   "home_moneyline": -230.0,
+   "total_line": 39.5,
+   "away_moneyline": 185.0,
+   "home_moneyline": -225.0,
    "roof": "outdoors",
    "stadium_id": "NYC01",
    "away_rest": 14,
@@ -7636,6 +7600,13 @@
      "total_line": 38.5,
      "away_moneyline": 190.0,
      "home_moneyline": -230.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": 4.5,
+     "total_line": 39.5,
+     "away_moneyline": 185.0,
+     "home_moneyline": -225.0
     }
    ]
   },
@@ -7647,10 +7618,10 @@
    "gametime": "13:00",
    "away_team": "NYG",
    "home_team": "HOU",
-   "spread_line": 10.0,
+   "spread_line": 10.5,
    "total_line": 42.5,
-   "away_moneyline": 400.0,
-   "home_moneyline": -535.0,
+   "away_moneyline": 390.0,
+   "home_moneyline": -520.0,
    "roof": null,
    "stadium_id": "HOU00",
    "away_rest": 7,
@@ -7664,6 +7635,13 @@
      "total_line": 42.5,
      "away_moneyline": 400.0,
      "home_moneyline": -535.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": 10.5,
+     "total_line": 42.5,
+     "away_moneyline": 390.0,
+     "home_moneyline": -520.0
     }
    ]
   },
@@ -7676,7 +7654,7 @@
    "away_team": "SF",
    "home_team": "ATL",
    "spread_line": -3.0,
-   "total_line": 49.5,
+   "total_line": 50.5,
    "away_moneyline": -175.0,
    "home_moneyline": 145.0,
    "roof": null,
@@ -7692,6 +7670,13 @@
      "total_line": 49.5,
      "away_moneyline": -175.0,
      "home_moneyline": 145.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": -3.0,
+     "total_line": 50.5,
+     "away_moneyline": -175.0,
+     "home_moneyline": 145.0
     }
    ]
   },
@@ -7705,8 +7690,8 @@
    "home_team": "CAR",
    "spread_line": 3.5,
    "total_line": 44.5,
-   "away_moneyline": 154.0,
-   "home_moneyline": -185.0,
+   "away_moneyline": 145.0,
+   "home_moneyline": -175.0,
    "roof": "outdoors",
    "stadium_id": "CAR00",
    "away_rest": 7,
@@ -7720,6 +7705,13 @@
      "total_line": 44.5,
      "away_moneyline": 154.0,
      "home_moneyline": -185.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": 3.5,
+     "total_line": 44.5,
+     "away_moneyline": 145.0,
+     "home_moneyline": -175.0
     }
    ]
   },
@@ -7761,8 +7753,8 @@
    "home_team": "DET",
    "spread_line": 3.0,
    "total_line": 53.5,
-   "away_moneyline": 136.0,
-   "home_moneyline": -162.0,
+   "away_moneyline": 140.0,
+   "home_moneyline": -166.0,
    "roof": "dome",
    "stadium_id": "DET00",
    "away_rest": 7,
@@ -7776,6 +7768,13 @@
      "total_line": 53.5,
      "away_moneyline": 136.0,
      "home_moneyline": -162.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": 3.0,
+     "total_line": 53.5,
+     "away_moneyline": 140.0,
+     "home_moneyline": -166.0
     }
    ]
   },
@@ -7789,8 +7788,8 @@
    "home_team": "LV",
    "spread_line": -4.5,
    "total_line": 48.5,
-   "away_moneyline": -225.0,
-   "home_moneyline": 185.0,
+   "away_moneyline": -218.0,
+   "home_moneyline": 180.0,
    "roof": "dome",
    "stadium_id": "VEG00",
    "away_rest": 7,
@@ -7804,6 +7803,13 @@
      "total_line": 48.5,
      "away_moneyline": -225.0,
      "home_moneyline": 185.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": -4.5,
+     "total_line": 48.5,
+     "away_moneyline": -218.0,
+     "home_moneyline": 180.0
     }
    ]
   },
@@ -7815,10 +7821,10 @@
    "gametime": "20:20",
    "away_team": "KC",
    "home_team": "SEA",
-   "spread_line": 3.0,
+   "spread_line": 2.5,
    "total_line": 42.5,
-   "away_moneyline": 130.0,
-   "home_moneyline": -155.0,
+   "away_moneyline": 124.0,
+   "home_moneyline": -148.0,
    "roof": "outdoors",
    "stadium_id": "SEA00",
    "away_rest": 7,
@@ -7832,6 +7838,13 @@
      "total_line": 42.5,
      "away_moneyline": 130.0,
      "home_moneyline": -155.0
+    },
+    {
+     "time": "2026-10-21T15:04:09-04:00",
+     "spread_line": 2.5,
+     "total_line": 42.5,
+     "away_moneyline": 124.0,
+     "home_moneyline": -148.0
     }
    ]
   },
