@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 7,
  "stats_through_week": 6,
- "generated_at": "2026-10-21T15:04:09-04:00",
+ "generated_at": "2026-10-21T15:11:59-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -7492,10 +7492,10 @@
    "gametime": "13:00",
    "away_team": "CIN",
    "home_team": "BAL",
-   "spread_line": 1.5,
+   "spread_line": -1.5,
    "total_line": 48.5,
-   "away_moneyline": -112.0,
-   "home_moneyline": -108.0,
+   "away_moneyline": -118.0,
+   "home_moneyline": -102.0,
    "roof": "outdoors",
    "stadium_id": "BAL00",
    "away_rest": 14,
@@ -7516,6 +7516,13 @@
      "total_line": 48.5,
      "away_moneyline": -112.0,
      "home_moneyline": -108.0
+    },
+    {
+     "time": "2026-10-21T15:11:59-04:00",
+     "spread_line": -1.5,
+     "total_line": 48.5,
+     "away_moneyline": -118.0,
+     "home_moneyline": -102.0
     }
    ]
   },
@@ -7620,8 +7627,8 @@
    "home_team": "HOU",
    "spread_line": 10.5,
    "total_line": 42.5,
-   "away_moneyline": 390.0,
-   "home_moneyline": -520.0,
+   "away_moneyline": 400.0,
+   "home_moneyline": -535.0,
    "roof": null,
    "stadium_id": "HOU00",
    "away_rest": 7,
@@ -7642,6 +7649,13 @@
      "total_line": 42.5,
      "away_moneyline": 390.0,
      "home_moneyline": -520.0
+    },
+    {
+     "time": "2026-10-21T15:11:59-04:00",
+     "spread_line": 10.5,
+     "total_line": 42.5,
+     "away_moneyline": 400.0,
+     "home_moneyline": -535.0
     }
    ]
   },
@@ -7654,7 +7668,7 @@
    "away_team": "SF",
    "home_team": "ATL",
    "spread_line": -3.0,
-   "total_line": 50.5,
+   "total_line": 49.5,
    "away_moneyline": -175.0,
    "home_moneyline": 145.0,
    "roof": null,
@@ -7675,6 +7689,13 @@
      "time": "2026-10-21T15:04:09-04:00",
      "spread_line": -3.0,
      "total_line": 50.5,
+     "away_moneyline": -175.0,
+     "home_moneyline": 145.0
+    },
+    {
+     "time": "2026-10-21T15:11:59-04:00",
+     "spread_line": -3.0,
+     "total_line": 49.5,
      "away_moneyline": -175.0,
      "home_moneyline": 145.0
     }
