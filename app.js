@@ -40,6 +40,7 @@
  *   data/weeks.json           - Index of available weeks.
  *   data/<season>_week_NN.json - One snapshot per week (made by nfl_team_stats.py).
  *   stadiums.json             - Stadium coordinates and roof types (for weather).
+ *   helmets/<abbr>.png        - Small team helmet shown next to each name.
  *   config.js                 - Site settings: support link, GoatCounter code, DFS link
  *                               (loaded by index.html before this file).
  * Online services (fetched live, not saved):
@@ -445,14 +446,24 @@ function team(abbr) {
 }
 
 /**
- * Build a team label with a small color swatch.
+ * Small helmet image for a team. Falls back to the color square if the file is missing.
+ * @param {string} abbr - Team abbreviation.
+ * @returns {string} HTML image.
+ */
+function helmetHtml(abbr) {
+  const color = esc(team(abbr).color);
+  return `<img class="team-helmet" src="helmets/${esc(abbr)}.png" alt="" onerror="this.outerHTML='<span class=&quot;team-swatch&quot; style=&quot;background:${color}&quot;></span>'">`;
+}
+
+/**
+ * Build a team label with its helmet.
  * @param {string} abbr - Team abbreviation.
  * @param {boolean} [full=true] - Full name if true, nickname if false.
  * @returns {string} HTML for the badge.
  */
 function teamBadge(abbr, full = true) {
   const info = team(abbr);
-  return `<span class="team-badge"><span class="team-swatch" style="background:${esc(info.color)}"></span>${esc(full ? info.name : info.nick)}</span>`;
+  return `<span class="team-badge">${helmetHtml(abbr)}${esc(full ? info.name : info.nick)}</span>`;
 }
 
 /**
@@ -1960,7 +1971,7 @@ function renderRankings() {
     return `
     <tr class="${r.abbr === away || r.abbr === home ? 'selected' : ''}">
       <td class="pos-col">${i + 1}</td>
-      <td><span class="team-badge"><span class="team-swatch" style="background:${esc(team(r.abbr).color)}"></span>
+      <td><span class="team-badge">${helmetHtml(r.abbr)}
         <span class="name-full">${esc(team(r.abbr).name)}</span><span class="name-short">${esc(team(r.abbr).nick)}</span></span></td>
       <td class="num">${fmtStat(r.off, 'epa')}<br>${rankHtml(r.offRank)}${starter}</td>
       <td class="num">${fmtStat(r.def, 'epa')}<br>${rankHtml(r.defRank)}</td>
@@ -2176,7 +2187,7 @@ function renderOverview() {
     const weather = weatherLine(game);
     return `<tr class="clickable${game.game_id === state.gameId ? ' selected' : ''}" data-game="${esc(game.game_id)}" tabindex="0">
       <td>${starButton(game.game_id)}<span class="name-full">${teamBadge(away, false)} @ ${teamBadge(home, false)}</span>
-        <span class="name-short">${esc(away)}<br>@ ${esc(home)}</span>
+        <span class="name-short">${helmetHtml(away)} ${esc(away)}<br>${helmetHtml(home)} @ ${esc(home)}</span>
         <span class="sub"><span class="name-full">${esc(kickoff)}</span><span class="name-short">${esc(kickoff.replace(/ \d+\/\d+ ·/, '').replace(' ET', ''))}</span></span>${final}
         ${weather ? `<span class="sub wx">${esc(weather)}</span>` : ''}
         ${tags ? `<span class="sub result-chips">${tags}</span>` : ''}</td>
