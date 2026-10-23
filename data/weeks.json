@@ -1,7 +1,7 @@
 {
  "season": 2026,
  "current_week": 7,
- "updated_at": "2026-10-21T15:17:34-04:00",
+ "updated_at": "2026-10-23T15:13:38-04:00",
  "weeks": [
   {
    "week": 2,
@@ -48,7 +48,7 @@
    "file": "2026_week_07.json",
    "stats_through_week": 6,
    "games": 14,
-   "games_final": 0,
+   "games_final": 1,
    "backfilled": false
   }
  ]

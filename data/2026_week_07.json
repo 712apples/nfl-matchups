@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 7,
  "stats_through_week": 6,
- "generated_at": "2026-10-21T15:17:33-04:00",
+ "generated_at": "2026-10-23T15:13:37-04:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -5108,7 +5108,7 @@
  },
  "injuries": {
   "report_available": true,
-  "depth_chart_date": "2026-10-21T12:53:27Z",
+  "depth_chart_date": "2026-10-22T12:59:29Z",
   "teams": {
    "ARI": [
     {
@@ -5173,44 +5173,6 @@
       "string": 1,
       "gsis_id": "00-0039007"
      }
-    },
-    {
-     "gsis_id": "00-0041027",
-     "name": "Jeremiyah Love",
-     "position": "RB",
-     "group": "RB",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Ankle",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.48,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Tyler Allgeier",
-      "string": 2,
-      "gsis_id": "00-0037263"
-     }
-    },
-    {
-     "gsis_id": "00-0035378",
-     "name": "Andrew Wingard",
-     "position": "FS",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Knee",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.76,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": null
     }
    ],
    "ATL": [
@@ -5230,30 +5192,9 @@
      "return_week": 7,
      "report_week": null,
      "next_up": {
-      "name": "Avieon Terrell",
-      "string": 2,
-      "gsis_id": "00-0041469"
-     }
-    },
-    {
-     "gsis_id": "00-0036281",
-     "name": "C.J. Henderson",
-     "position": "LCB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Groin",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.66,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Avieon Terrell",
-      "string": 2,
-      "gsis_id": "00-0041469"
+      "name": "C.J. Henderson",
+      "string": 1,
+      "gsis_id": "00-0036281"
      }
     }
    ],
@@ -5274,51 +5215,9 @@
      "return_week": 8,
      "report_week": null,
      "next_up": {
-      "name": "Olaivavega Ioane",
-      "string": 2,
-      "gsis_id": "00-0040866"
-     }
-    },
-    {
-     "gsis_id": "00-0034796",
-     "name": "Lamar Jackson",
-     "position": "QB",
-     "group": "QB",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Ankle",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.88,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Tyler Huntley",
-      "string": 2,
-      "gsis_id": "00-0035993"
-     }
-    },
-    {
-     "gsis_id": "00-0038112",
-     "name": "Cam Jurgens",
-     "position": "C",
-     "group": "OL",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Concussion",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 1.0,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Olaivavega Ioane",
-      "string": 2,
-      "gsis_id": "00-0040866"
+      "name": "Cam Jurgens",
+      "string": 1,
+      "gsis_id": "00-0038112"
      }
     }
    ],
@@ -5395,7 +5294,7 @@
      "status": "IR",
      "injury": null,
      "practice": null,
-     "string": 1,
+     "string": 2,
      "snap_pct": 0.69,
      "games_missed": 2,
      "reserve_since": 4,
@@ -5405,27 +5304,6 @@
       "name": "Akayleb Evans",
       "string": 1,
       "gsis_id": "00-0038101"
-     }
-    },
-    {
-     "gsis_id": "00-0041034",
-     "name": "Monroe Freeling",
-     "position": "RT",
-     "group": "OL",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Knee",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.89,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Taylor Moton",
-      "string": 1,
-      "gsis_id": "00-0033284"
      }
     }
    ],
@@ -5471,6 +5349,48 @@
       "string": 1,
       "gsis_id": "00-0036337"
      }
+    },
+    {
+     "gsis_id": "00-0035386",
+     "name": "T.J. Edwards",
+     "position": "MLB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Doubtful",
+     "injury": "Hamstring",
+     "practice": "Limited in practice",
+     "string": 1,
+     "snap_pct": 0.88,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Noah Sewell",
+      "string": 2,
+      "gsis_id": "00-0038390"
+     }
+    },
+    {
+     "gsis_id": "00-0039071",
+     "name": "Tyrique Stevenson",
+     "position": "RCB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Questionable",
+     "injury": "Hip",
+     "practice": "Full practice",
+     "string": 1,
+     "snap_pct": 0.65,
+     "games_missed": 1,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Malik Muhammad",
+      "string": 2,
+      "gsis_id": "00-0041060"
+     }
     }
    ],
    "CIN": [
@@ -5515,27 +5435,6 @@
       "string": 1,
       "gsis_id": "00-0037743"
      }
-    },
-    {
-     "gsis_id": "00-0036231",
-     "name": "Kyle Dugger",
-     "position": "SS",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Quadricep",
-     "practice": null,
-     "string": 2,
-     "snap_pct": 0.66,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 5,
-     "next_up": {
-      "name": "Jordan Battle",
-      "string": 1,
-      "gsis_id": "00-0038560"
-     }
     }
    ],
    "CLE": [],
@@ -5560,27 +5459,6 @@
       "string": 1,
       "gsis_id": "00-0040865"
      }
-    },
-    {
-     "gsis_id": "00-0037839",
-     "name": "Cobie Durant",
-     "position": "LCB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Hamstring",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.62,
-     "games_missed": 4,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Joey Porter Jr.",
-      "string": 1,
-      "gsis_id": "00-0039167"
-     }
     }
    ],
    "DEN": [
@@ -5603,48 +5481,6 @@
       "name": "Troy Franklin",
       "string": 1,
       "gsis_id": "00-0039868"
-     }
-    },
-    {
-     "gsis_id": "00-0036874",
-     "name": "Pat Surtain II",
-     "position": "LCB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Ankle",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.86,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Jahdae Barron",
-      "string": 2,
-      "gsis_id": "00-0040720"
-     }
-    },
-    {
-     "gsis_id": "00-0036564",
-     "name": "Talanoa Hufanga",
-     "position": "SS",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Ankle",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.93,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Devon Key",
-      "string": 2,
-      "gsis_id": "00-0036683"
      }
     }
    ],
@@ -5711,27 +5547,6 @@
       "string": 1,
       "gsis_id": "00-0041445"
      }
-    },
-    {
-     "gsis_id": "00-0035637",
-     "name": "Rock Ya-Sin",
-     "position": "RCB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Hamstring",
-     "practice": null,
-     "string": 2,
-     "snap_pct": 0.71,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 5,
-     "next_up": {
-      "name": "Ennis Rakestraw Jr.",
-      "string": 1,
-      "gsis_id": "00-0039862"
-     }
     }
    ],
    "GB": [
@@ -5778,46 +5593,7 @@
      }
     }
    ],
-   "HOU": [
-    {
-     "gsis_id": "00-0035685",
-     "name": "David Montgomery",
-     "position": "RB",
-     "group": "RB",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Groin",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.47,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Woody Marks",
-      "string": 2,
-      "gsis_id": "00-0040583"
-     }
-    },
-    {
-     "gsis_id": "00-0037246",
-     "name": "Jalen Pitre",
-     "position": "NB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Shoulder",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.92,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": null
-    }
-   ],
+   "HOU": [],
    "IND": [
     {
      "gsis_id": "00-0034825",
@@ -5838,27 +5614,6 @@
       "name": "Jaylahn Tuimoloau",
       "string": 1,
       "gsis_id": "00-0040744"
-     }
-    },
-    {
-     "gsis_id": "00-0039377",
-     "name": "Jaylon Carlies",
-     "position": "WLB",
-     "group": "LB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Ribs",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.6,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Tahj Chambers",
-      "string": 2,
-      "gsis_id": "00-0041227"
      }
     }
    ],
@@ -5885,41 +5640,20 @@
      }
     },
     {
-     "gsis_id": "00-0039067",
-     "name": "Rashee Rice",
-     "position": "WR",
-     "group": "WR",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Hamstring, Knee",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.62,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Cyrus Allen",
-      "string": 2,
-      "gsis_id": "00-0040890"
-     }
-    },
-    {
      "gsis_id": "00-0040116",
      "name": "Josh Simmons",
      "position": "LT",
      "group": "OL",
      "side": "offense",
-     "status": "Out last game",
+     "status": "IR",
      "injury": "Back",
      "practice": null,
      "string": 1,
      "snap_pct": null,
      "games_missed": 5,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
+     "reserve_since": 7,
+     "return_week": 11,
+     "report_week": null,
      "next_up": {
       "name": "Kahlil Benson",
       "string": 2,
@@ -5950,6 +5684,27 @@
      }
     },
     {
+     "gsis_id": "00-0039138",
+     "name": "Kobie Turner",
+     "position": "LDE",
+     "group": "DL",
+     "side": "defense",
+     "status": "IR",
+     "injury": null,
+     "practice": null,
+     "string": 1,
+     "snap_pct": 0.61,
+     "games_missed": 0,
+     "reserve_since": 7,
+     "return_week": 12,
+     "report_week": null,
+     "next_up": {
+      "name": "Braden Fiske",
+      "string": 1,
+      "gsis_id": "00-0039734"
+     }
+    },
+    {
      "gsis_id": "00-0033868",
      "name": "Myles Garrett",
      "position": "SLB",
@@ -5971,29 +5726,7 @@
      }
     }
    ],
-   "LV": [
-    {
-     "gsis_id": "00-0040169",
-     "name": "Tonka Hemingway",
-     "position": "RDE",
-     "group": "DL",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Concussion",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.52,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Folorunso Fatukasi",
-      "string": 2,
-      "gsis_id": "00-0034275"
-     }
-    }
-   ],
+   "LV": [],
    "MIA": [
     {
      "gsis_id": "00-0039040",
@@ -6014,27 +5747,6 @@
       "name": "Ollie Gordon II",
       "string": 1,
       "gsis_id": "00-0040198"
-     }
-    },
-    {
-     "gsis_id": "00-0041523",
-     "name": "Caleb Douglas",
-     "position": "WR",
-     "group": "WR",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Ankle",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.89,
-     "games_missed": 3,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 5,
-     "next_up": {
-      "name": "Jalen Tolbert",
-      "string": 2,
-      "gsis_id": "00-0037666"
      }
     }
    ],
@@ -6080,27 +5792,6 @@
       "string": 1,
       "gsis_id": "00-0040500"
      }
-    },
-    {
-     "gsis_id": "00-0036616",
-     "name": "Christian Darrisaw",
-     "position": "LT",
-     "group": "OL",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Concussion",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.89,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 5,
-     "next_up": {
-      "name": "Ryan Van Demark",
-      "string": 2,
-      "gsis_id": "00-0037404"
-     }
     }
    ],
    "NE": [
@@ -6136,7 +5827,11 @@
      "reserve_since": 5,
      "return_week": 9,
      "report_week": null,
-     "next_up": null
+     "next_up": {
+      "name": "DeMario Douglas",
+      "string": 1,
+      "gsis_id": "00-0038621"
+     }
     },
     {
      "gsis_id": "00-0037816",
@@ -6153,7 +5848,11 @@
      "reserve_since": 7,
      "return_week": 12,
      "report_week": null,
-     "next_up": null
+     "next_up": {
+      "name": "Efton Chism III",
+      "string": 1,
+      "gsis_id": "00-0040563"
+     }
     },
     {
      "gsis_id": "00-0036198",
@@ -6171,9 +5870,156 @@
      "return_week": 7,
      "report_week": null,
      "next_up": {
-      "name": "Ben Brown",
-      "string": 1,
-      "gsis_id": "00-0037413"
+      "name": "Matt Pryor",
+      "string": 2,
+      "gsis_id": "00-0034417"
+     }
+    },
+    {
+     "gsis_id": "00-0036979",
+     "name": "Alijah Vera-Tucker",
+     "position": "LG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out",
+     "injury": "Hamstring",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.89,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Walter Rouse",
+      "string": 2,
+      "gsis_id": "00-0039828"
+     }
+    },
+    {
+     "gsis_id": "00-0037413",
+     "name": "Ben Brown",
+     "position": "RG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Out",
+     "injury": "Knee",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.74,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Matt Pryor",
+      "string": 2,
+      "gsis_id": "00-0034417"
+     }
+    },
+    {
+     "gsis_id": "00-0034778",
+     "name": "Carlton Davis III",
+     "position": "LCB",
+     "group": "DB",
+     "side": "defense",
+     "status": "Out",
+     "injury": "Neck",
+     "practice": "Limited in practice",
+     "string": 1,
+     "snap_pct": 0.95,
+     "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Charles Woods",
+      "string": 2,
+      "gsis_id": "00-0039770"
+     }
+    },
+    {
+     "gsis_id": "00-0031330",
+     "name": "Morgan Moses",
+     "position": "RT",
+     "group": "OL",
+     "side": "offense",
+     "status": "Questionable",
+     "injury": "Foot",
+     "practice": "Limited in practice",
+     "string": 1,
+     "snap_pct": 0.79,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Caleb Lomu",
+      "string": 2,
+      "gsis_id": "00-0041541"
+     }
+    },
+    {
+     "gsis_id": "00-0036813",
+     "name": "Christian Elliss",
+     "position": "LILB",
+     "group": "LB",
+     "side": "defense",
+     "status": "Questionable",
+     "injury": "Chest",
+     "practice": "Full practice",
+     "string": 1,
+     "snap_pct": 0.96,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Darius Muasau",
+      "string": 2,
+      "gsis_id": "00-0039829"
+     }
+    },
+    {
+     "gsis_id": "00-0040716",
+     "name": "Craig Woodson",
+     "position": "SS",
+     "group": "DB",
+     "side": "defense",
+     "status": "Questionable",
+     "injury": "Shoulder",
+     "practice": "Full practice",
+     "string": 1,
+     "snap_pct": 0.9,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Jaylen Reed",
+      "string": 2,
+      "gsis_id": "00-0040204"
+     }
+    },
+    {
+     "gsis_id": "00-0033132",
+     "name": "Kevin Byard",
+     "position": "FS",
+     "group": "DB",
+     "side": "defense",
+     "status": "Questionable",
+     "injury": "Chest",
+     "practice": "Full practice",
+     "string": 1,
+     "snap_pct": 0.96,
+     "games_missed": 0,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Mike Brown",
+      "string": 2,
+      "gsis_id": "00-0037493"
      }
     }
    ],
@@ -6219,27 +6065,6 @@
       "string": 1,
       "gsis_id": "00-0038601"
      }
-    },
-    {
-     "gsis_id": "00-0035316",
-     "name": "Kaden Elliss",
-     "position": "LILB",
-     "group": "LB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Calf",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 1.0,
-     "games_missed": 3,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Isaiah Stalbird",
-      "string": 2,
-      "gsis_id": "00-0039622"
-     }
     }
    ],
    "NYG": [
@@ -6259,9 +6084,9 @@
      "return_week": 7,
      "report_week": null,
      "next_up": {
-      "name": "Jameis Winston",
+      "name": "J.J. McCarthy",
       "string": 1,
-      "gsis_id": "00-0031503"
+      "gsis_id": "00-0039923"
      }
     },
     {
@@ -6305,115 +6130,9 @@
       "string": 1,
       "gsis_id": "00-0037611"
      }
-    },
-    {
-     "gsis_id": "00-0041462",
-     "name": "Colton Hood",
-     "position": "LCB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Concussion",
-     "practice": null,
-     "string": 2,
-     "snap_pct": 0.68,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Deonte Banks",
-      "string": 1,
-      "gsis_id": "00-0039000"
-     }
-    },
-    {
-     "gsis_id": "00-0039861",
-     "name": "Tyler Nubin",
-     "position": "SS",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Neck",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.83,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Jason Pinnock",
-      "string": 2,
-      "gsis_id": "00-0036502"
-     }
     }
    ],
-   "NYJ": [
-    {
-     "gsis_id": "00-0038120",
-     "name": "Breece Hall",
-     "position": "RB",
-     "group": "RB",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Quadricep",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.57,
-     "games_missed": 3,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Braelon Allen",
-      "string": 2,
-      "gsis_id": "00-0039794"
-     }
-    },
-    {
-     "gsis_id": "00-0039890",
-     "name": "Adonai Mitchell",
-     "position": "WR",
-     "group": "WR",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Finger",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.75,
-     "games_missed": 4,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Isaiah Williams",
-      "string": 2,
-      "gsis_id": "00-0039451"
-     }
-    },
-    {
-     "gsis_id": "00-0037255",
-     "name": "Dylan Parham",
-     "position": "LG",
-     "group": "OL",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Knee",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.86,
-     "games_missed": 3,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Jordan Meredith",
-      "string": 2,
-      "gsis_id": "00-0036604"
-     }
-    }
-   ],
+   "NYJ": [],
    "PHI": [
     {
      "gsis_id": "00-0036389",
@@ -6443,7 +6162,7 @@
      "group": "OL",
      "side": "offense",
      "status": "IR",
-     "injury": "Knee",
+     "injury": "Knee, Pectoral",
      "practice": null,
      "string": 2,
      "snap_pct": 1.0,
@@ -6455,48 +6174,6 @@
       "name": "Willie Lampkin",
       "string": 1,
       "gsis_id": "00-0040631"
-     }
-    },
-    {
-     "gsis_id": "00-0034844",
-     "name": "Saquon Barkley",
-     "position": "RB",
-     "group": "RB",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Hamstring",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.41,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Dameon Pierce",
-      "string": 2,
-      "gsis_id": "00-0037258"
-     }
-    },
-    {
-     "gsis_id": "00-0039740",
-     "name": "Jalyx Hunt",
-     "position": "SLB",
-     "group": "LB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Knee, Ankle",
-     "practice": null,
-     "string": 2,
-     "snap_pct": 0.69,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Jonathan Greenard",
-      "string": 1,
-      "gsis_id": "00-0036224"
      }
     }
    ],
@@ -6528,15 +6205,15 @@
      "position": "WR",
      "group": "WR",
      "side": "offense",
-     "status": "Out last game",
+     "status": "Out",
      "injury": "Calf",
-     "practice": null,
+     "practice": "Did not practice",
      "string": 1,
      "snap_pct": 0.14,
      "games_missed": 1,
      "reserve_since": null,
      "return_week": null,
-     "report_week": 6,
+     "report_week": null,
      "next_up": null
     }
    ],
@@ -6548,7 +6225,7 @@
      "group": "OL",
      "side": "offense",
      "status": "IR",
-     "injury": "Knee, Hip",
+     "injury": "Knee",
      "practice": null,
      "string": 3,
      "snap_pct": 1.0,
@@ -6561,159 +6238,10 @@
       "string": 1,
       "gsis_id": "00-0039839"
      }
-    },
-    {
-     "gsis_id": "00-0038922",
-     "name": "Drake Thomas",
-     "position": "LILB",
-     "group": "LB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Ankle",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.87,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Tyrice Knight",
-      "string": 2,
-      "gsis_id": "00-0039815"
-     }
     }
    ],
-   "SF": [
-    {
-     "gsis_id": "00-0035719",
-     "name": "Deebo Samuel Sr.",
-     "position": "WR",
-     "group": "WR",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Hamstring",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.58,
-     "games_missed": 1,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Jacob Cowing",
-      "string": 2,
-      "gsis_id": "00-0039365"
-     }
-    },
-    {
-     "gsis_id": "00-0035717",
-     "name": "Nick Bosa",
-     "position": "RDE",
-     "group": "DL",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Knee, Calf",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.64,
-     "games_missed": 4,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Mykel Williams",
-      "string": 2,
-      "gsis_id": "00-0040660"
-     }
-    },
-    {
-     "gsis_id": "00-0040185",
-     "name": "Marques Sigle",
-     "position": "SS",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Ankle",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.88,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Malik Mustapha",
-      "string": 2,
-      "gsis_id": "00-0039360"
-     }
-    }
-   ],
-   "TB": [
-    {
-     "gsis_id": "00-0034855",
-     "name": "Baker Mayfield",
-     "position": "QB",
-     "group": "QB",
-     "side": "offense",
-     "status": "Out last game",
-     "injury": "Thumb",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.98,
-     "games_missed": 3,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Jalon Daniels",
-      "string": 2,
-      "gsis_id": "00-0041251"
-     }
-    },
-    {
-     "gsis_id": "00-0036411",
-     "name": "Antoine Winfield Jr.",
-     "position": "FS",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Rib",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.97,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Ifeatu Melifonwu",
-      "string": 2,
-      "gsis_id": "00-0036993"
-     }
-    },
-    {
-     "gsis_id": "00-0040747",
-     "name": "Benjamin Morrison",
-     "position": "RCB",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Quadricep",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 0.56,
-     "games_missed": 3,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Ayden Garnes",
-      "string": 2,
-      "gsis_id": "00-0041253"
-     }
-    }
-   ],
+   "SF": [],
+   "TB": [],
    "TEN": [
     {
      "gsis_id": "00-0040881",
@@ -6755,27 +6283,6 @@
       "name": "Atonio Mafi",
       "string": 1,
       "gsis_id": "00-0038586"
-     }
-    },
-    {
-     "gsis_id": "00-0040141",
-     "name": "Kevin Winston Jr.",
-     "position": "FS",
-     "group": "DB",
-     "side": "defense",
-     "status": "Out last game",
-     "injury": "Quadricep",
-     "practice": null,
-     "string": 1,
-     "snap_pct": 1.0,
-     "games_missed": 2,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": 6,
-     "next_up": {
-      "name": "Tony Adams",
-      "string": 2,
-      "gsis_id": "00-0037155"
      }
     }
    ]
@@ -6987,7 +6494,7 @@
       "epa_per_play": -0.0626
      }
     ],
-    "epa_per_play_rank": 23
+    "epa_per_play_rank": 24
    },
    "DET": {
     "starter": "Jared Goff",
@@ -7059,7 +6566,7 @@
       "epa_per_play": -0.0497
      }
     ],
-    "epa_per_play_rank": 22
+    "epa_per_play_rank": 23
    },
    "JAX": {
     "starter": "Trevor Lawrence",
@@ -7267,7 +6774,7 @@
       "epa_per_play": -0.0414
      }
     ],
-    "epa_per_play_rank": 21
+    "epa_per_play_rank": 22
    },
    "PHI": {
     "starter": "Tanner McKee",
@@ -7311,30 +6818,30 @@
       "epa_per_play": -0.0639
      }
     ],
-    "epa_per_play_rank": 24
+    "epa_per_play_rank": 25
    },
    "SEA": {
-    "starter": "Drew Lock",
-    "starter_games": 5,
+    "starter": "Sam Darnold",
+    "starter_games": 1,
     "games": 6,
     "changed": true,
     "replaced": null,
     "switch": null,
     "switch_adj": 0.0,
-    "epa_per_play": -0.0994,
+    "epa_per_play": -0.0389,
     "by_qb": [
-     {
-      "name": "Drew Lock",
-      "games": 5,
-      "epa_per_play": -0.106
-     },
      {
       "name": "Sam Darnold",
       "games": 1,
       "epa_per_play": 0.0656
+     },
+     {
+      "name": "Drew Lock",
+      "games": 5,
+      "epa_per_play": -0.106
      }
     ],
-    "epa_per_play_rank": 26
+    "epa_per_play_rank": 21
    },
    "SF": {
     "starter": "Brock Purdy",
@@ -7375,7 +6882,7 @@
       "epa_per_play": -0.2042
      }
     ],
-    "epa_per_play_rank": 25
+    "epa_per_play_rank": 26
    },
    "TEN": {
     "starter": "Cam Ward",
@@ -7437,8 +6944,8 @@
    "stadium_id": "CHI98",
    "away_rest": 4,
    "home_rest": 4,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 24.0,
+   "home_score": 30.0,
    "line_history": [
     {
      "time": "2026-10-20T20:03:36-04:00",
@@ -7457,10 +6964,10 @@
    "gametime": "09:30",
    "away_team": "PIT",
    "home_team": "NO",
-   "spread_line": -3.5,
+   "spread_line": -3.0,
    "total_line": 44.5,
-   "away_moneyline": -185.0,
-   "home_moneyline": 154.0,
+   "away_moneyline": -175.0,
+   "home_moneyline": 145.0,
    "roof": "dome",
    "stadium_id": "PAR00",
    "away_rest": 7,
@@ -7481,6 +6988,13 @@
      "total_line": 44.5,
      "away_moneyline": -185.0,
      "home_moneyline": 154.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": -3.0,
+     "total_line": 44.5,
+     "away_moneyline": -175.0,
+     "home_moneyline": 145.0
     }
    ]
   },
@@ -7492,10 +7006,10 @@
    "gametime": "13:00",
    "away_team": "CIN",
    "home_team": "BAL",
-   "spread_line": -1.5,
+   "spread_line": 1.5,
    "total_line": 48.5,
-   "away_moneyline": -120.0,
-   "home_moneyline": 100.0,
+   "away_moneyline": -105.0,
+   "home_moneyline": -115.0,
    "roof": "outdoors",
    "stadium_id": "BAL00",
    "away_rest": 14,
@@ -7530,6 +7044,13 @@
      "total_line": 48.5,
      "away_moneyline": -120.0,
      "home_moneyline": 100.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": 1.5,
+     "total_line": 48.5,
+     "away_moneyline": -105.0,
+     "home_moneyline": -115.0
     }
    ]
   },
@@ -7543,8 +7064,8 @@
    "home_team": "TEN",
    "spread_line": -1.5,
    "total_line": 37.5,
-   "away_moneyline": -125.0,
-   "home_moneyline": 105.0,
+   "away_moneyline": -130.0,
+   "home_moneyline": 110.0,
    "roof": "outdoors",
    "stadium_id": "NAS00",
    "away_rest": 7,
@@ -7558,6 +7079,13 @@
      "total_line": 37.5,
      "away_moneyline": -125.0,
      "home_moneyline": 105.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": -1.5,
+     "total_line": 37.5,
+     "away_moneyline": -130.0,
+     "home_moneyline": 110.0
     }
    ]
   },
@@ -7571,8 +7099,8 @@
    "home_team": "MIN",
    "spread_line": 6.5,
    "total_line": 41.5,
-   "away_moneyline": 235.0,
-   "home_moneyline": -290.0,
+   "away_moneyline": 230.0,
+   "home_moneyline": -285.0,
    "roof": "dome",
    "stadium_id": "MIN01",
    "away_rest": 7,
@@ -7586,6 +7114,13 @@
      "total_line": 41.5,
      "away_moneyline": 235.0,
      "home_moneyline": -290.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": 6.5,
+     "total_line": 41.5,
+     "away_moneyline": 230.0,
+     "home_moneyline": -285.0
     }
    ]
   },
@@ -7599,8 +7134,8 @@
    "home_team": "NYJ",
    "spread_line": 4.5,
    "total_line": 39.5,
-   "away_moneyline": 190.0,
-   "home_moneyline": -230.0,
+   "away_moneyline": 185.0,
+   "home_moneyline": -225.0,
    "roof": "outdoors",
    "stadium_id": "NYC01",
    "away_rest": 14,
@@ -7628,6 +7163,13 @@
      "total_line": 39.5,
      "away_moneyline": 190.0,
      "home_moneyline": -230.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": 4.5,
+     "total_line": 39.5,
+     "away_moneyline": 185.0,
+     "home_moneyline": -225.0
     }
    ]
   },
@@ -7641,8 +7183,8 @@
    "home_team": "HOU",
    "spread_line": 10.5,
    "total_line": 42.5,
-   "away_moneyline": 400.0,
-   "home_moneyline": -535.0,
+   "away_moneyline": 390.0,
+   "home_moneyline": -520.0,
    "roof": null,
    "stadium_id": "HOU00",
    "away_rest": 7,
@@ -7670,6 +7212,13 @@
      "total_line": 42.5,
      "away_moneyline": 400.0,
      "home_moneyline": -535.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": 10.5,
+     "total_line": 42.5,
+     "away_moneyline": 390.0,
+     "home_moneyline": -520.0
     }
    ]
   },
@@ -7681,10 +7230,10 @@
    "gametime": "13:00",
    "away_team": "SF",
    "home_team": "ATL",
-   "spread_line": -3.0,
+   "spread_line": -2.5,
    "total_line": 49.5,
-   "away_moneyline": -175.0,
-   "home_moneyline": 145.0,
+   "away_moneyline": -148.0,
+   "home_moneyline": 124.0,
    "roof": null,
    "stadium_id": "ATL97",
    "away_rest": 6,
@@ -7712,6 +7261,13 @@
      "total_line": 49.5,
      "away_moneyline": -175.0,
      "home_moneyline": 145.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": -2.5,
+     "total_line": 49.5,
+     "away_moneyline": -148.0,
+     "home_moneyline": 124.0
     }
    ]
   },
@@ -7723,10 +7279,10 @@
    "gametime": "13:00",
    "away_team": "TB",
    "home_team": "CAR",
-   "spread_line": 3.5,
+   "spread_line": 3.0,
    "total_line": 44.5,
-   "away_moneyline": 145.0,
-   "home_moneyline": -175.0,
+   "away_moneyline": 130.0,
+   "home_moneyline": -155.0,
    "roof": "outdoors",
    "stadium_id": "CAR00",
    "away_rest": 7,
@@ -7747,6 +7303,13 @@
      "total_line": 44.5,
      "away_moneyline": 145.0,
      "home_moneyline": -175.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": 3.0,
+     "total_line": 44.5,
+     "away_moneyline": 130.0,
+     "home_moneyline": -155.0
     }
    ]
   },
@@ -7788,8 +7351,8 @@
    "home_team": "DET",
    "spread_line": 3.0,
    "total_line": 53.5,
-   "away_moneyline": 140.0,
-   "home_moneyline": -166.0,
+   "away_moneyline": 145.0,
+   "home_moneyline": -175.0,
    "roof": "dome",
    "stadium_id": "DET00",
    "away_rest": 7,
@@ -7810,6 +7373,13 @@
      "total_line": 53.5,
      "away_moneyline": 140.0,
      "home_moneyline": -166.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": 3.0,
+     "total_line": 53.5,
+     "away_moneyline": 145.0,
+     "home_moneyline": -175.0
     }
    ]
   },
@@ -7821,10 +7391,10 @@
    "gametime": "16:25",
    "away_team": "LA",
    "home_team": "LV",
-   "spread_line": -4.5,
+   "spread_line": -3.5,
    "total_line": 48.5,
-   "away_moneyline": -218.0,
-   "home_moneyline": 180.0,
+   "away_moneyline": -180.0,
+   "home_moneyline": 150.0,
    "roof": "dome",
    "stadium_id": "VEG00",
    "away_rest": 7,
@@ -7845,6 +7415,13 @@
      "total_line": 48.5,
      "away_moneyline": -218.0,
      "home_moneyline": 180.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": -3.5,
+     "total_line": 48.5,
+     "away_moneyline": -180.0,
+     "home_moneyline": 150.0
     }
    ]
   },
@@ -7856,10 +7433,10 @@
    "gametime": "20:20",
    "away_team": "KC",
    "home_team": "SEA",
-   "spread_line": 2.5,
+   "spread_line": 3.0,
    "total_line": 42.5,
-   "away_moneyline": 124.0,
-   "home_moneyline": -148.0,
+   "away_moneyline": 120.0,
+   "home_moneyline": -142.0,
    "roof": "outdoors",
    "stadium_id": "SEA00",
    "away_rest": 7,
@@ -7880,6 +7457,13 @@
      "total_line": 42.5,
      "away_moneyline": 124.0,
      "home_moneyline": -148.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": 3.0,
+     "total_line": 42.5,
+     "away_moneyline": 120.0,
+     "home_moneyline": -142.0
     }
    ]
   },
@@ -7893,8 +7477,8 @@
    "home_team": "PHI",
    "spread_line": -4.5,
    "total_line": 44.5,
-   "away_moneyline": -225.0,
-   "home_moneyline": 185.0,
+   "away_moneyline": -218.0,
+   "home_moneyline": 180.0,
    "roof": "outdoors",
    "stadium_id": "PHI00",
    "away_rest": 8,
@@ -7908,6 +7492,13 @@
      "total_line": 44.5,
      "away_moneyline": -225.0,
      "home_moneyline": 185.0
+    },
+    {
+     "time": "2026-10-23T15:13:37-04:00",
+     "spread_line": -4.5,
+     "total_line": 44.5,
+     "away_moneyline": -218.0,
+     "home_moneyline": 180.0
     }
    ]
   }
