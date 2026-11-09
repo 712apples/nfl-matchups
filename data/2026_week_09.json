@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 9,
  "stats_through_week": 8,
- "generated_at": "2026-11-08T12:01:52-05:00",
+ "generated_at": "2026-11-08T22:53:24-05:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -8746,12 +8746,12 @@
    "total_line": 52.5,
    "away_moneyline": -180.0,
    "home_moneyline": 150.0,
-   "roof": null,
+   "roof": "closed",
    "stadium_id": "MAD01",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 34.0,
+   "home_score": 17.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -8784,16 +8784,16 @@
    "gametime": "13:00",
    "away_team": "CLE",
    "home_team": "NO",
-   "spread_line": 3.5,
-   "total_line": 42.5,
-   "away_moneyline": 160.0,
-   "home_moneyline": -192.0,
+   "spread_line": 4.5,
+   "total_line": 43.5,
+   "away_moneyline": 185.0,
+   "home_moneyline": -225.0,
    "roof": "dome",
    "stadium_id": "NOR00",
    "away_rest": 7,
    "home_rest": 14,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 22.0,
+   "home_score": 23.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -8815,6 +8815,13 @@
      "total_line": 42.5,
      "away_moneyline": 160.0,
      "home_moneyline": -192.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": 4.5,
+     "total_line": 43.5,
+     "away_moneyline": 185.0,
+     "home_moneyline": -225.0
     }
    ]
   },
@@ -8830,12 +8837,12 @@
    "total_line": 51.5,
    "away_moneyline": -218.0,
    "home_moneyline": 180.0,
-   "roof": null,
+   "roof": "open",
    "stadium_id": "IND00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 27.0,
+   "home_score": 23.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -8869,8 +8876,8 @@
    "stadium_id": "CAR00",
    "away_rest": 7,
    "home_rest": 10,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 26.0,
+   "home_score": 21.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -8911,8 +8918,8 @@
    "stadium_id": "MIA00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 19.0,
+   "home_score": 9.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -8939,15 +8946,15 @@
    "away_team": "LA",
    "home_team": "WAS",
    "spread_line": -4.5,
-   "total_line": 47.5,
-   "away_moneyline": -238.0,
-   "home_moneyline": 195.0,
+   "total_line": 48.5,
+   "away_moneyline": -225.0,
+   "home_moneyline": 185.0,
    "roof": "outdoors",
    "stadium_id": "WAS00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 20.0,
+   "home_score": 13.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -8969,6 +8976,13 @@
      "total_line": 47.5,
      "away_moneyline": -238.0,
      "home_moneyline": 195.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": -4.5,
+     "total_line": 48.5,
+     "away_moneyline": -225.0,
+     "home_moneyline": 185.0
     }
    ]
   },
@@ -8982,14 +8996,14 @@
    "home_team": "PHI",
    "spread_line": -3.0,
    "total_line": 38.5,
-   "away_moneyline": -155.0,
-   "home_moneyline": 130.0,
+   "away_moneyline": -162.0,
+   "home_moneyline": 136.0,
    "roof": "outdoors",
    "stadium_id": "PHI00",
    "away_rest": 14,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 19.0,
+   "home_score": 11.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -9011,6 +9025,13 @@
      "total_line": 38.5,
      "away_moneyline": -155.0,
      "home_moneyline": 130.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": -3.0,
+     "total_line": 38.5,
+     "away_moneyline": -162.0,
+     "home_moneyline": 136.0
     }
    ]
   },
@@ -9030,8 +9051,8 @@
    "stadium_id": "KAN00",
    "away_rest": 7,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 12.0,
+   "home_score": 35.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -9072,8 +9093,8 @@
    "stadium_id": "LAX01",
    "away_rest": 14,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 44.0,
+   "home_score": 22.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -9106,16 +9127,16 @@
    "gametime": "16:05",
    "away_team": "LV",
    "home_team": "SF",
-   "spread_line": 9.5,
+   "spread_line": 8.5,
    "total_line": 51.5,
-   "away_moneyline": 340.0,
-   "home_moneyline": -440.0,
+   "away_moneyline": 320.0,
+   "home_moneyline": -410.0,
    "roof": "outdoors",
    "stadium_id": "SFO01",
    "away_rest": 7,
    "home_rest": 14,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 17.0,
+   "home_score": 38.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -9137,6 +9158,13 @@
      "total_line": 51.5,
      "away_moneyline": 340.0,
      "home_moneyline": -440.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": 8.5,
+     "total_line": 51.5,
+     "away_moneyline": 320.0,
+     "home_moneyline": -410.0
     }
    ]
   },
@@ -9150,14 +9178,14 @@
    "home_team": "SEA",
    "spread_line": 8.5,
    "total_line": 39.5,
-   "away_moneyline": 340.0,
-   "home_moneyline": -440.0,
+   "away_moneyline": 350.0,
+   "home_moneyline": -455.0,
    "roof": "outdoors",
    "stadium_id": "SEA00",
    "away_rest": 7,
    "home_rest": 6,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 3.0,
+   "home_score": 17.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -9172,6 +9200,13 @@
      "total_line": 39.5,
      "away_moneyline": 340.0,
      "home_moneyline": -440.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": 8.5,
+     "total_line": 39.5,
+     "away_moneyline": 350.0,
+     "home_moneyline": -455.0
     }
    ]
   },
@@ -9185,14 +9220,14 @@
    "home_team": "NE",
    "spread_line": 3.0,
    "total_line": 44.5,
-   "away_moneyline": 142.0,
-   "home_moneyline": -170.0,
+   "away_moneyline": 154.0,
+   "home_moneyline": -185.0,
    "roof": "outdoors",
    "stadium_id": "BOS00",
    "away_rest": 10,
    "home_rest": 7,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 45.0,
+   "home_score": 27.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -9207,6 +9242,13 @@
      "total_line": 44.5,
      "away_moneyline": 142.0,
      "home_moneyline": -170.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": 3.0,
+     "total_line": 44.5,
+     "away_moneyline": 154.0,
+     "home_moneyline": -185.0
     }
    ]
   },
@@ -9218,10 +9260,10 @@
    "gametime": "20:20",
    "away_team": "TB",
    "home_team": "CHI",
-   "spread_line": 6.0,
+   "spread_line": 6.5,
    "total_line": 47.5,
-   "away_moneyline": 220.0,
-   "home_moneyline": -270.0,
+   "away_moneyline": 235.0,
+   "home_moneyline": -290.0,
    "roof": "outdoors",
    "stadium_id": "CHI98",
    "away_rest": 7,
@@ -9242,6 +9284,13 @@
      "total_line": 47.5,
      "away_moneyline": 220.0,
      "home_moneyline": -270.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": 6.5,
+     "total_line": 47.5,
+     "away_moneyline": 235.0,
+     "home_moneyline": -290.0
     }
    ]
   },
@@ -9255,8 +9304,8 @@
    "home_team": "MIN",
    "spread_line": -3.0,
    "total_line": 43.5,
-   "away_moneyline": -175.0,
-   "home_moneyline": 145.0,
+   "away_moneyline": -170.0,
+   "home_moneyline": 142.0,
    "roof": "dome",
    "stadium_id": "MIN01",
    "away_rest": 8,
@@ -9277,6 +9326,13 @@
      "total_line": 43.5,
      "away_moneyline": -175.0,
      "home_moneyline": 145.0
+    },
+    {
+     "time": "2026-11-08T22:53:24-05:00",
+     "spread_line": -3.0,
+     "total_line": 43.5,
+     "away_moneyline": -170.0,
+     "home_moneyline": 142.0
     }
    ]
   }
