@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 9,
  "stats_through_week": 8,
- "generated_at": "2026-11-08T22:53:24-05:00",
+ "generated_at": "2026-11-09T15:05:27-05:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -5133,27 +5133,6 @@
      }
     },
     {
-     "gsis_id": "00-0039808",
-     "name": "Isaiah Adams",
-     "position": "RG",
-     "group": "OL",
-     "side": "offense",
-     "status": "IR",
-     "injury": "Ankle",
-     "practice": "Limited in practice",
-     "string": 2,
-     "snap_pct": 0.81,
-     "games_missed": 4,
-     "reserve_since": 5,
-     "return_week": 9,
-     "report_week": null,
-     "next_up": {
-      "name": "Hayden Conner",
-      "string": 2,
-      "gsis_id": "00-0040219"
-     }
-    },
-    {
      "gsis_id": "00-0038540",
      "name": "Paris Johnson Jr.",
      "position": "LT",
@@ -5228,6 +5207,27 @@
      "string": 1,
      "snap_pct": 0.9,
      "games_missed": 2,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Hayden Conner",
+      "string": 2,
+      "gsis_id": "00-0040219"
+     }
+    },
+    {
+     "gsis_id": "00-0039808",
+     "name": "Isaiah Adams",
+     "position": "RG",
+     "group": "OL",
+     "side": "offense",
+     "status": "Questionable",
+     "injury": "Ankle",
+     "practice": "Limited in practice",
+     "string": 2,
+     "snap_pct": 0.81,
+     "games_missed": 4,
      "reserve_since": null,
      "return_week": null,
      "report_week": null,
@@ -6029,24 +6029,24 @@
    ],
    "DEN": [
     {
-     "gsis_id": "00-0040134",
-     "name": "Pat Bryant",
-     "position": "WR",
-     "group": "WR",
-     "side": "offense",
+     "gsis_id": "00-0038106",
+     "name": "Eyioma Uwazurike",
+     "position": "RDE",
+     "group": "DL",
+     "side": "defense",
      "status": "IR",
-     "injury": "Ankle",
-     "practice": "Full practice",
-     "string": 2,
-     "snap_pct": 0.58,
-     "games_missed": 4,
-     "reserve_since": 5,
-     "return_week": 9,
+     "injury": "Shoulder",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.52,
+     "games_missed": 0,
+     "reserve_since": 9,
+     "return_week": 14,
      "report_week": null,
      "next_up": {
-      "name": "Troy Franklin",
-      "string": 1,
-      "gsis_id": "00-0039868"
+      "name": "Malcolm Roach",
+      "string": 2,
+      "gsis_id": "00-0035763"
      }
     },
     {
@@ -6068,27 +6068,6 @@
       "name": "Jonathon Cooper",
       "string": 1,
       "gsis_id": "00-0036952"
-     }
-    },
-    {
-     "gsis_id": "00-0038106",
-     "name": "Eyioma Uwazurike",
-     "position": "RDE",
-     "group": "DL",
-     "side": "defense",
-     "status": "Out",
-     "injury": "Shoulder",
-     "practice": "Did not practice",
-     "string": 1,
-     "snap_pct": 0.52,
-     "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": null,
-     "next_up": {
-      "name": "Malcolm Roach",
-      "string": 2,
-      "gsis_id": "00-0035763"
      }
     },
     {
@@ -6134,6 +6113,27 @@
      }
     },
     {
+     "gsis_id": "00-0040134",
+     "name": "Pat Bryant",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Questionable",
+     "injury": "Ankle",
+     "practice": "Full practice",
+     "string": 2,
+     "snap_pct": 0.58,
+     "games_missed": 4,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Troy Franklin",
+      "string": 1,
+      "gsis_id": "00-0039868"
+     }
+    },
+    {
      "gsis_id": "00-0036564",
      "name": "Talanoa Hufanga",
      "position": "SS",
@@ -6175,6 +6175,27 @@
       "name": "Christian Mahogany",
       "string": 1,
       "gsis_id": "00-0039408"
+     }
+    },
+    {
+     "gsis_id": "00-0039018",
+     "name": "Jack Campbell",
+     "position": "MLB",
+     "group": "LB",
+     "side": "defense",
+     "status": "IR",
+     "injury": "Neck",
+     "practice": "Did not practice",
+     "string": 1,
+     "snap_pct": 0.97,
+     "games_missed": 0,
+     "reserve_since": 9,
+     "return_week": 13,
+     "report_week": null,
+     "next_up": {
+      "name": "Amen Ogbongbemiga",
+      "string": 2,
+      "gsis_id": "00-0036716"
      }
     },
     {
@@ -6259,27 +6280,6 @@
       "name": "Tyler Lacy",
       "string": 1,
       "gsis_id": "00-0038940"
-     }
-    },
-    {
-     "gsis_id": "00-0039018",
-     "name": "Jack Campbell",
-     "position": "MLB",
-     "group": "LB",
-     "side": "defense",
-     "status": "Out",
-     "injury": "Neck",
-     "practice": "Did not practice",
-     "string": 1,
-     "snap_pct": 0.97,
-     "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
-     "report_week": null,
-     "next_up": {
-      "name": "Amen Ogbongbemiga",
-      "string": 2,
-      "gsis_id": "00-0036716"
      }
     },
     {
@@ -6799,40 +6799,19 @@
      }
     },
     {
-     "gsis_id": "00-0033868",
-     "name": "Myles Garrett",
-     "position": "SLB",
-     "group": "LB",
-     "side": "defense",
-     "status": "IR",
-     "injury": "Knee",
-     "practice": null,
-     "string": 3,
-     "snap_pct": 0.62,
-     "games_missed": 7,
-     "reserve_since": 2,
-     "return_week": 6,
-     "report_week": null,
-     "next_up": {
-      "name": "Desjuan Johnson",
-      "string": 1,
-      "gsis_id": "00-0039061"
-     }
-    },
-    {
      "gsis_id": "00-0037195",
      "name": "Jaylen Watson",
      "position": "LCB",
      "group": "DB",
      "side": "defense",
-     "status": "Out",
+     "status": "IR",
      "injury": "Shoulder",
      "practice": "Did not practice",
      "string": 1,
      "snap_pct": 0.84,
      "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
+     "reserve_since": 9,
+     "return_week": 14,
      "report_week": null,
      "next_up": {
       "name": "Josh Wallace",
@@ -7158,27 +7137,6 @@
      "next_up": null
     },
     {
-     "gsis_id": "00-0033555",
-     "name": "Mack Hollins",
-     "position": "WR",
-     "group": "WR",
-     "side": "offense",
-     "status": "IR",
-     "injury": "Calf",
-     "practice": "Limited in practice",
-     "string": 2,
-     "snap_pct": 0.65,
-     "games_missed": 4,
-     "reserve_since": 5,
-     "return_week": 9,
-     "report_week": null,
-     "next_up": {
-      "name": "DeMario Douglas",
-      "string": 1,
-      "gsis_id": "00-0038621"
-     }
-    },
-    {
      "gsis_id": "00-0037816",
      "name": "Romeo Doubs",
      "position": "WR",
@@ -7260,6 +7218,27 @@
       "name": "Kyle Williams",
       "string": 2,
       "gsis_id": "00-0040131"
+     }
+    },
+    {
+     "gsis_id": "00-0033555",
+     "name": "Mack Hollins",
+     "position": "WR",
+     "group": "WR",
+     "side": "offense",
+     "status": "Questionable",
+     "injury": "Calf",
+     "practice": "Limited in practice",
+     "string": 2,
+     "snap_pct": 0.65,
+     "games_missed": 4,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "DeMario Douglas",
+      "string": 1,
+      "gsis_id": "00-0038621"
      }
     },
     {
@@ -7370,27 +7349,6 @@
      }
     },
     {
-     "gsis_id": "00-0040125",
-     "name": "Kelvin Banks Jr.",
-     "position": "LT",
-     "group": "OL",
-     "side": "offense",
-     "status": "IR",
-     "injury": "Ankle",
-     "practice": "Limited in practice",
-     "string": 3,
-     "snap_pct": 0.79,
-     "games_missed": 5,
-     "reserve_since": 3,
-     "return_week": 7,
-     "report_week": null,
-     "next_up": {
-      "name": "Asim Richards",
-      "string": 1,
-      "gsis_id": "00-0038601"
-     }
-    },
-    {
      "gsis_id": "00-0038601",
      "name": "Asim Richards",
      "position": "LT",
@@ -7409,6 +7367,27 @@
       "name": "Mason Murphy",
       "string": 2,
       "gsis_id": "00-0041173"
+     }
+    },
+    {
+     "gsis_id": "00-0040125",
+     "name": "Kelvin Banks Jr.",
+     "position": "LT",
+     "group": "OL",
+     "side": "offense",
+     "status": "Questionable",
+     "injury": "Ankle",
+     "practice": "Limited in practice",
+     "string": 3,
+     "snap_pct": 0.79,
+     "games_missed": 5,
+     "reserve_since": null,
+     "return_week": null,
+     "report_week": null,
+     "next_up": {
+      "name": "Asim Richards",
+      "string": 1,
+      "gsis_id": "00-0038601"
      }
     },
     {
@@ -7843,14 +7822,14 @@
      "position": "WR",
      "group": "WR",
      "side": "offense",
-     "status": "Out",
+     "status": "IR",
      "injury": "Knee",
      "practice": "Did not practice",
      "string": 1,
      "snap_pct": 0.3,
      "games_missed": 0,
-     "reserve_since": null,
-     "return_week": null,
+     "reserve_since": 9,
+     "return_week": 13,
      "report_week": null,
      "next_up": {
       "name": "Jacob Cowing",
@@ -9268,8 +9247,8 @@
    "stadium_id": "CHI98",
    "away_rest": 7,
    "home_rest": 6,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 24.0,
+   "home_score": 27.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
@@ -9302,10 +9281,10 @@
    "gametime": "20:15",
    "away_team": "BUF",
    "home_team": "MIN",
-   "spread_line": -3.0,
-   "total_line": 43.5,
-   "away_moneyline": -170.0,
-   "home_moneyline": 142.0,
+   "spread_line": -3.5,
+   "total_line": 45.5,
+   "away_moneyline": -198.0,
+   "home_moneyline": 164.0,
    "roof": "dome",
    "stadium_id": "MIN01",
    "away_rest": 8,
@@ -9333,6 +9312,13 @@
      "total_line": 43.5,
      "away_moneyline": -170.0,
      "home_moneyline": 142.0
+    },
+    {
+     "time": "2026-11-09T15:05:27-05:00",
+     "spread_line": -3.5,
+     "total_line": 45.5,
+     "away_moneyline": -198.0,
+     "home_moneyline": 164.0
     }
    ]
   }
