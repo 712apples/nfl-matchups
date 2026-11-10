@@ -2,7 +2,7 @@
  "season": 2026,
  "week": 9,
  "stats_through_week": 8,
- "generated_at": "2026-11-09T15:05:27-05:00",
+ "generated_at": "2026-11-09T19:06:58-05:00",
  "backfilled": false,
  "teams": {
   "ARI": {
@@ -9283,8 +9283,8 @@
    "home_team": "MIN",
    "spread_line": -3.5,
    "total_line": 45.5,
-   "away_moneyline": -198.0,
-   "home_moneyline": 164.0,
+   "away_moneyline": -192.0,
+   "home_moneyline": 160.0,
    "roof": "dome",
    "stadium_id": "MIN01",
    "away_rest": 8,
@@ -9319,6 +9319,13 @@
      "total_line": 45.5,
      "away_moneyline": -198.0,
      "home_moneyline": 164.0
+    },
+    {
+     "time": "2026-11-09T19:06:58-05:00",
+     "spread_line": -3.5,
+     "total_line": 45.5,
+     "away_moneyline": -192.0,
+     "home_moneyline": 160.0
     }
    ]
   }
