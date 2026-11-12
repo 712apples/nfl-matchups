@@ -9289,8 +9289,8 @@
    "stadium_id": "MIN01",
    "away_rest": 8,
    "home_rest": 8,
-   "away_score": null,
-   "home_score": null,
+   "away_score": 23.0,
+   "home_score": 6.0,
    "line_history": [
     {
      "time": "2026-11-05T13:33:39-05:00",
